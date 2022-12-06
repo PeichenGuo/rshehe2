@@ -1,1 +1,0 @@
-pub const B_CONST: u32 = 2;

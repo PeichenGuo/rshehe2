@@ -1,2 +1,2 @@
 pub mod memory_cfg;
-pub mod b;
+pub mod core_cfg;

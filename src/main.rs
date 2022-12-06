@@ -1,16 +1,15 @@
 
 use crate::memory::memory_hello_world;
 use crate::cfg::memory_cfg::*;
-use crate::cfg::b;
+use crate::cfg::core_cfg;
 
 pub mod memory;
 pub mod cfg;
+pub mod instr;
 
 fn main() {
     println!("Hello, world!");
     memory_hello_world();
-    println!("{}", A_CONST);
-    println!("{}", b::B_CONST);
 
     let mut mem = memory::Memory::new();
     mem.read_file("./isa_tests/add.hex", 0);
