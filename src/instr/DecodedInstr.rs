@@ -41,9 +41,9 @@ impl DecodedInstr{
             0b0110111 | 0b0010111=> InstrType::U,
             0b1101111 => InstrType::J,
             0b1100011 => InstrType::B,
-            0b1100111 | 0b0000011 | 0b0010011 | 0b0001111 | 0b1110011 => InstrType::I,
+            0b1100111 | 0b0000011 | 0b0010011 | 0b0001111 | 0b1110011 | 0b0011011 => InstrType::I,
             0b0100011 => InstrType::S,
-            0b0110011 => InstrType::R,
+            0b0110011 | 0b0111011 => InstrType::R,
 
             // rv64i
             // no new opcode
@@ -81,6 +81,9 @@ impl DecodedInstr{
                     0b001 => InstrOpcode::LH,
                     0b101 => InstrOpcode::LHU,
                     0b010 => InstrOpcode::LW,
+                    // rv64i
+                    0b110 => InstrOpcode::LWU,
+                    0b011 => InstrOpcode::LD,
                     _ => panic!("illegale functs3 {:03b} while opcode is InstrI (load)", funct3)      
                 }
                 0b0010011 => match funct3{ // alu
@@ -119,35 +122,67 @@ impl DecodedInstr{
                     0b101 => InstrOpcode::CSRRWI,
                     0b110 => InstrOpcode::CSRRSI,
                     0b111 => InstrOpcode::CSRRCI,
-                    _ => panic!("illegale functs3 {:03b} while opcode is InstrI-1110011 (InstrI s)", funct3)      
+                    _ => panic!("illegale functs3 {:03b} while opcode is InstrI (InstrI s)", funct3)      
+                },
+                0b0011011 => match funct3 { // iw
+                    0b000 => InstrOpcode::ADDIW,
+                    0b001 => InstrOpcode::SLLIW,
+                    0b101 => match funct7{
+                        0b0000000 => InstrOpcode::SRLIW,
+                        0b0100000 => InstrOpcode::SRAIW,
+                        _ => panic!("illegale functs7 {:07b} while opcode is InstrI and funct3 is 101 (shift right w)", funct7)
+                    },
+                    _ => panic!("illegale functs3 {:03b} while opcode is InstrI (iw)", funct3)      
                 },
                 _ => panic!("should not happened, add panic anyway")
             },
-            InstrType::R => match funct3{
-                0b000 => match funct7 {
-                    0b0000000 => InstrOpcode::ADD,
-                    0b0100000 => InstrOpcode::SUB,
-                    _ => panic!("illegale functs7 {:07b} while InstrR
-                                    (InstrI-alu) and funct3 is 000 (add and sub)", funct7)
+            InstrType::R => match opcode {
+                0b0110011 => match funct3 {
+                    0b000 => match funct7 {
+                        0b0000000 => InstrOpcode::ADD,
+                        0b0100000 => InstrOpcode::SUB,
+                        _ => panic!("illegale functs7 {:07b} while InstrR
+                                        (InstrI-alu) and funct3 is 000 (add and sub)", funct7)
+                    },
+                    0b001 => InstrOpcode::SLL,
+                    0b010 => InstrOpcode::SLT,
+                    0b011 => InstrOpcode::SLTU,
+                    0b100 => InstrOpcode::XOR,
+                    0b101 => match funct7{
+                        0b0000000 => InstrOpcode::SRL,
+                        0b0100000 => InstrOpcode::SRA,
+                        _ => panic!("illegale functs7 {:07b} while opcode is InstrR 
+                                    and funct3 is 101 (shift right)", funct7)
+                    },
+                    0b110 => InstrOpcode::OR,
+                    0b111 => InstrOpcode::AND,
+                    _ => panic!("illegale functs3 {:03b} while opcode is InstrR (alu)", funct3)      
                 },
-                0b001 => InstrOpcode::SLL,
-                0b010 => InstrOpcode::SLT,
-                0b011 => InstrOpcode::SLTU,
-                0b100 => InstrOpcode::XOR,
-                0b101 => match funct7{
-                    0b0000000 => InstrOpcode::SRL,
-                    0b0100000 => InstrOpcode::SRA,
-                    _ => panic!("illegale functs7 {:07b} while opcode is InstrR 
-                                 and funct3 is 101 (shift right)", funct7)
+                0b0111011 => match funct3{ // rv64i
+                    0b000 => match funct7 {
+                        0b0000000 => InstrOpcode::ADDW,
+                        0b0100000 => InstrOpcode::SUBW,
+                        _ => panic!("illegale functs7 {:07b} while InstrR
+                                        (InstrI-alu) and funct3 is 000 (add and sub rv64i)", funct7)
+                    },
+                    0b001 => InstrOpcode::SLLW,
+                    0b101 => match funct7{
+                        0b0000000 => InstrOpcode::SRLW,
+                        0b0100000 => InstrOpcode::SRAW,
+                        _ => panic!("illegale functs7 {:07b} while opcode is InstrR 
+                                    and funct3 is 101 (shift right rv64i)", funct7)
+                    },
+                    _ => panic!("illegale functs3 {:03b} while opcode is InstrR (rv64i)", funct3) 
                 },
-                0b110 => InstrOpcode::OR,
-                0b111 => InstrOpcode::AND,
-                _ => panic!("illegale functs3 {:03b} while opcode is InstrR (alu)", funct3)      
-            },
+                _ => panic!("should not happened, add panic anyway")
+            }
+            
             InstrType::S => match funct3 {
                 0b000 => InstrOpcode::SB,
                 0b001 => InstrOpcode::SH,
                 0b010 => InstrOpcode::SW,
+                // rv64i
+                0b011 => InstrOpcode::SD,
                 _ => panic!("illegale functs3 {:03b} while opcode is InstrS ", funct3)      
             },
         };
@@ -199,5 +234,13 @@ mod test{
         // 把控制状态寄存器 csr 的值写入 x[rd]，等同于 csrrs rd, csr, x0.
         let instr = DecodedInstr::new(0xf1402573);
         assert_eq!(instr.opcode_type, InstrOpcode::CSRRS);
+    }
+
+    #[test]
+    fn basic_decoded_instr_test_rv64i_on_add_hex(){
+        // 8000004c:	0012829b          	addiw	t0,t0,1
+        let instr = DecodedInstr::new(0x0012829b);
+        assert_eq!(instr.opcode_type, InstrOpcode::ADDIW);
+
     }
 }
