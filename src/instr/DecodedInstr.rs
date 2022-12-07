@@ -1,4 +1,5 @@
 use crate::instr::InstrType::*;
+#[derive(Default, Debug)]
 pub struct DecodedInstr{
     pub opcode: u8,
     pub rd:u8,

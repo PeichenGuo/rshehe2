@@ -1,5 +1,6 @@
-#[derive(Debug)]
 #[derive(PartialEq)]
+#[derive( Debug)]
+// #[derive(Default)]
 pub enum InstrType{
     R,
     I,
@@ -8,9 +9,15 @@ pub enum InstrType{
     U,
     J
 } 
-#[derive(Debug)]
+impl Default for InstrType {
+    fn default() -> Self {
+        InstrType::R
+    }
+}
 #[derive(PartialEq)]
 // #[deriving(Show)]
+#[derive(Debug)]
+// #[derive(Default)]
 pub enum InstrOpcode{
     // R
     ADD,
@@ -91,4 +98,10 @@ pub enum InstrOpcode{
     // J
     JAL
 
+}
+
+impl Default for InstrOpcode {
+    fn default() -> Self {
+        InstrOpcode::ADD
+    }
 }

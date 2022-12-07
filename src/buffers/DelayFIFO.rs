@@ -1,6 +1,8 @@
 use std::{fmt::Debug, default};
 
 use crate::interface::Interface;
+use crate::interface::CtrlSignals;
+
 #[derive(Default, Debug)]
 pub struct DelayFIFO<T>{
     max_size:u16,
@@ -17,11 +19,12 @@ pub struct DelayFIFO<T>{
 }
 
 impl<T> Interface for DelayFIFO<T>
-    where T: Copy + Debug + Default
+    where T: Clone + Debug + Default
 {
-    type Item = T;
+    type Input = T;
+    type Output = T;
 
-    fn req_i(&mut self, req:(bool, Self::Item)){
+    fn req_i(&mut self, req:(bool, Self::Input)){
         self.rdy_o = !self.full;
         if self.rdy_o && req.0{
             // enque
@@ -48,7 +51,7 @@ impl<T> Interface for DelayFIFO<T>
         self.rdy_o
     }
 
-    fn resp_o(&self) -> (bool, Self::Item){
+    fn resp_o(&self) -> (bool, Self::Output){
         if (self.head as usize) < self.data.len(){ 
             (self.delays[self.head as usize] == 0 && !self.empty, self.data[self.head as usize].clone())
         }
@@ -69,7 +72,9 @@ impl<T> Interface for DelayFIFO<T>
             }
         }
     }
+}
 
+impl<T> CtrlSignals for DelayFIFO<T>{
     fn tik(&mut self){
         for i in 0..self.delays.len(){
             if self.delays[i] > 0{
@@ -94,7 +99,7 @@ impl<T> Interface for DelayFIFO<T>
 }
 
 impl<T> DelayFIFO<T>{
-    fn new(size: u16, delay_options:Vec<u16>) -> Self{
+    pub fn new(size: u16, delay_options:Vec<u16>) -> Self{
         assert_ne!(size, 0);
         DelayFIFO { 
             max_size: (size), 
@@ -112,7 +117,7 @@ impl<T> DelayFIFO<T>{
 
 #[cfg(test)]
 mod test{
-    use crate::{buffers::DelayFIFO::DelayFIFO, interface::Interface};
+    use crate::{buffers::DelayFIFO::DelayFIFO, interface::{Interface, CtrlSignals}};
     #[test]
     fn basic_delay_fifo_test(){
         // 0 delay

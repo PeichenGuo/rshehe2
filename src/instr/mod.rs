@@ -4,27 +4,28 @@ use crate::instr::DecodedInstr::*;
 pub mod InstrType;
 pub mod DecodedInstr;
 
+#[derive(Default, Debug)]
 pub struct Instr{
-    pc_vld: bool,
-    pc: u32,
+    pub pc_vld: bool,
+    pub pc: u32,
 
-    raw_vld: bool,
-    raw: u32,
+    pub raw_vld: bool,
+    pub raw: u32,
 
-    decoded_vld:bool,
-    decoded: Option<DecodedInstr::DecodedInstr>,
+    pub decoded_vld:bool,
+    pub decoded: Option<DecodedInstr::DecodedInstr>,
 
-    reg_data_vld:bool,
-    rs1_data:u64,
-    rs2_data:u64,
+    pub reg_data_vld:bool,
+    pub rs1_data:u64,
+    pub rs2_data:u64,
 
-    wb_vld:bool,
-    wb_data:u64,
+    pub wb_vld:bool,
+    pub wb_data:u64,
 
-    exception_vld:bool,
-    ecause:u64,
+    pub exception_vld:bool,
+    pub ecause:u64,
 
-    done: bool
+    pub done: bool
 }
 
 impl Instr {

@@ -8,7 +8,7 @@ pub mod cfg;
 pub mod instr;
 pub mod interface;
 pub mod buffers;
-
+pub mod stages;
 fn main() {
     println!("Hello, world!");
     memory_hello_world();
