@@ -6,6 +6,8 @@ use crate::cfg::core_cfg;
 pub mod memory;
 pub mod cfg;
 pub mod instr;
+pub mod interface;
+pub mod buffers;
 
 fn main() {
     println!("Hello, world!");

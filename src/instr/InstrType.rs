@@ -38,6 +38,9 @@ pub enum InstrOpcode{
     LW,
     LBU,
     LHU,
+    // rv64i
+    LWU,
+    LD,
 
     ADDI,
     SLTI,
@@ -48,6 +51,12 @@ pub enum InstrOpcode{
     SLLI,
     SRLI,
     SRAI,
+    // rv64i
+    ADDIW,
+    SLTIW,
+    SLLIW,
+    SRLIW,
+    SRAIW,
 
     FENCE,
     FENCEI,
@@ -59,16 +68,6 @@ pub enum InstrOpcode{
     CSRRWI,
     CSRRSI,
     CSRRCI,
-
-    // rv64i
-    LWU,
-    LD,
-    
-    ADDIW,
-    SLTIW,
-    SLLIW,
-    SRLIW,
-    SRAIW,
 
     // S
     SB,

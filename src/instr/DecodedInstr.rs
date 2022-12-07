@@ -1,19 +1,27 @@
 use crate::instr::InstrType::*;
 pub struct DecodedInstr{
-    opcode: u8,
-    rd:u8,
-    funct3:u8,
-    rs1:u8,
-    rs2:u8,
-    funct7:u8,
-    immi:u16,
-    imms:u16,
-    immb:u16,
-    immu:u32,
-    immj:u32,
+    pub opcode: u8,
+    pub rd:u8,
+    pub funct3:u8,
+    pub rs1:u8,
+    pub rs2:u8,
+    pub funct7:u8,
+    pub immi:u16,
+    pub imms:u16,
+    pub immb:u16,
+    pub immu:u32,
+    pub immj:u32,
 
-    instr_type: InstrType,
-    opcode_type: InstrOpcode
+    pub instr_type: InstrType,
+    pub opcode_type: InstrOpcode,
+
+    pub is_ld: bool,
+    pub is_st: bool,
+    pub is_alu: bool,
+    pub is_branch: bool,
+    pub is_fence: bool,
+    pub is_csr:bool,
+    pub is_syscall:bool
 }
 
 impl DecodedInstr{
@@ -186,7 +194,39 @@ impl DecodedInstr{
                 _ => panic!("illegale functs3 {:03b} while opcode is InstrS ", funct3)      
             },
         };
-        DecodedInstr { 
+
+        let is_st = instr_type == InstrType::S;
+        let is_ld = (opcode_type == InstrOpcode::LB) || (opcode_type == InstrOpcode::LBU) || 
+                        (opcode_type == InstrOpcode::LH) || (opcode_type == InstrOpcode::LHU) ||
+                        (opcode_type == InstrOpcode::LW) || (opcode_type == InstrOpcode::LWU) ||
+                        (opcode_type == InstrOpcode::LD);
+        let is_alu = 
+            (opcode_type == InstrOpcode::ADD) || (opcode_type == InstrOpcode::SUB) || 
+            (opcode_type == InstrOpcode::SLL) || (opcode_type == InstrOpcode::SLT) || 
+            (opcode_type == InstrOpcode::SLTU) || (opcode_type == InstrOpcode::XOR) || 
+            (opcode_type == InstrOpcode::SRL) || (opcode_type == InstrOpcode::SRA) || 
+            (opcode_type == InstrOpcode::OR) || (opcode_type == InstrOpcode::AND) || 
+            (opcode_type == InstrOpcode::ADDW) || (opcode_type == InstrOpcode::SUBW) || 
+            (opcode_type == InstrOpcode::SLLW) || (opcode_type == InstrOpcode::SRLW) || 
+            (opcode_type == InstrOpcode::SRAW) || (opcode_type == InstrOpcode::ADDI) || 
+            (opcode_type == InstrOpcode::SLTI) || (opcode_type == InstrOpcode::SLTIU) || 
+            (opcode_type == InstrOpcode::XORI) || (opcode_type == InstrOpcode::ORI) || 
+            (opcode_type == InstrOpcode::ANDI) || (opcode_type == InstrOpcode::SLLI) || 
+            (opcode_type == InstrOpcode::SRLI) || (opcode_type == InstrOpcode::SRAI) || 
+            (opcode_type == InstrOpcode::ADDIW) || (opcode_type == InstrOpcode::SLTIW) || 
+            (opcode_type == InstrOpcode::SLLIW) || (opcode_type == InstrOpcode::SRLIW) || 
+            (opcode_type == InstrOpcode::SRAIW) ||  
+            (opcode_type == InstrOpcode::AUIPC) || (opcode_type == InstrOpcode::LUI);
+        let is_branch = instr_type == InstrType::B || instr_type == InstrType::J ||
+                                opcode_type == InstrOpcode::JALR;
+        let is_fence = opcode_type == InstrOpcode::FENCE || opcode_type == InstrOpcode::FENCEI;
+        let is_csr = 
+            (opcode_type == InstrOpcode::CSRRW) || (opcode_type == InstrOpcode::CSRRS) || 
+            (opcode_type == InstrOpcode::CSRRC) || (opcode_type == InstrOpcode::CSRRWI) || 
+            (opcode_type == InstrOpcode::CSRRSI) || (opcode_type == InstrOpcode::CSRRCI);
+        let is_syscall = 
+            (opcode_type == InstrOpcode::ECALL) || (opcode_type == InstrOpcode::EBREAK);
+            DecodedInstr { 
             opcode: opcode, 
             rd: rd, 
             funct3: funct3, 
@@ -199,7 +239,14 @@ impl DecodedInstr{
             immu: immu, 
             immj: immj,
             instr_type: instr_type, 
-            opcode_type: opcode_type 
+            opcode_type: opcode_type,
+            is_ld: is_ld,
+            is_st: is_st,
+            is_alu: is_alu,
+            is_branch: is_branch,
+            is_fence: is_fence,
+            is_csr:is_csr,
+            is_syscall:is_syscall
         }
     }
 }
@@ -215,6 +262,7 @@ mod test{
         assert_eq!(instr.instr_type, InstrType::J);
         assert_eq!(instr.opcode_type, InstrOpcode::JAL);
         assert_eq!(instr.immj, (0x8000005c & 0x1fffe));
+        assert!(instr.is_branch);
 
         // 800000dc:	00051063          	bnez	a0,800000dc <reset_vector+0x80>
         let instr = DecodedInstr::new(0x00051063);
@@ -222,6 +270,7 @@ mod test{
         assert_eq!(instr.rs1, 10);
         assert_eq!(instr.rs2, 0);
         assert_eq!(instr.immb, 0);
+        assert!(instr.is_branch);
 
         // 80000144:	00055c63          	bgez	a0,8000015c <reset_vector+0x100>
         let instr = DecodedInstr::new(0x00055c63);
@@ -229,11 +278,13 @@ mod test{
         assert_eq!(instr.rs1, 10);
         assert_eq!(instr.rs2, 0);
         assert_eq!(instr.immb, (0x015c - 0x0144) & 0x1ffe);
+        assert!(instr.is_branch);
 
         // 800000d8:	f1402573          	csrr	a0,mhartid
         // 把控制状态寄存器 csr 的值写入 x[rd]，等同于 csrrs rd, csr, x0.
         let instr = DecodedInstr::new(0xf1402573);
         assert_eq!(instr.opcode_type, InstrOpcode::CSRRS);
+        assert!(instr.is_csr);
     }
 
     #[test]
@@ -241,6 +292,7 @@ mod test{
         // 8000004c:	0012829b          	addiw	t0,t0,1
         let instr = DecodedInstr::new(0x0012829b);
         assert_eq!(instr.opcode_type, InstrOpcode::ADDIW);
+        assert!(instr.is_alu);
 
     }
 }
