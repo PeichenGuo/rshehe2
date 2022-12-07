@@ -7,7 +7,7 @@ pub mod DecodedInstr;
 #[derive(Default, Debug)]
 pub struct Instr{
     pub pc_vld: bool,
-    pub pc: u32,
+    pub pc: u64,
 
     pub raw_vld: bool,
     pub raw: u32,
@@ -29,7 +29,7 @@ pub struct Instr{
 }
 
 impl Instr {
-    pub fn new(pc:u32) -> Self{
+    pub fn new(pc:u64) -> Self{
         Instr{
             pc_vld: true,
             pc: pc,

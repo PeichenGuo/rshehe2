@@ -15,7 +15,8 @@ pub struct DelayFIFO<T>{
     head: u16,
     tail: u16,
 
-    rdy_o:bool
+    rdy_o:bool,
+    resp_o: (bool, T)
 }
 
 impl<T> Interface for DelayFIFO<T>
@@ -74,7 +75,9 @@ impl<T> Interface for DelayFIFO<T>
     }
 }
 
-impl<T> CtrlSignals for DelayFIFO<T>{
+impl<T> CtrlSignals for DelayFIFO<T>
+    where T: Default + Debug + Clone
+{
     fn tik(&mut self){
         for i in 0..self.delays.len(){
             if self.delays[i] > 0{
@@ -88,6 +91,8 @@ impl<T> CtrlSignals for DelayFIFO<T>{
             self.tail = 0;
             self.empty = true;
             self.full = false;
+            self.resp_o = Default::default();
+            self.rdy_o = true;
         }
     }
     fn flush(&mut self,rst:bool){
@@ -98,7 +103,9 @@ impl<T> CtrlSignals for DelayFIFO<T>{
     // }
 }
 
-impl<T> DelayFIFO<T>{
+impl<T> DelayFIFO<T>
+    where T: Default + Debug + Clone
+{
     pub fn new(size: u16, delay_options:Vec<u16>) -> Self{
         assert_ne!(size, 0);
         DelayFIFO { 
@@ -111,6 +118,7 @@ impl<T> DelayFIFO<T>{
             head: (0), 
             tail: (0), 
             rdy_o:(true),
+            resp_o: (false, Default::default())
         }
     }
 }
@@ -163,6 +171,19 @@ mod test{
         fifo2.tik();
         assert_eq!((true, 1), fifo2.resp_o());
         fifo2.rdy_i(true);
+
+        // 1 delay
+        let mut fifo = DelayFIFO::<u32>::new(4, vec![1;1]);
+        fifo.req_i((true, 1));
+        assert_eq!(false, fifo.resp_o().0);
+        fifo.tik();
+        assert_eq!((true, 1), fifo.resp_o());
+        fifo.rdy_i(false);
+        assert_eq!((true, 1), fifo.resp_o());
+        fifo.tik();
+        assert_eq!((true, 1), fifo.resp_o());
+        fifo.rdy_i(true);
+        assert_eq!(false, fifo.resp_o().0);
 
     }
 }

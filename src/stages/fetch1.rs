@@ -8,8 +8,8 @@ use std::sync::Arc;
 // use std::
 pub struct Fetch1{ // get pc and visit pht/btb to get a new pc
     // pc_i: Vec<(bool, u32)>,
-    pc_mux: Mux<u32>, 
-    ouput: DelayFIFO<Arc<RefCell<Instr>>>,
+    pc_mux: Mux<u64>, 
+    output: DelayFIFO<Arc<RefCell<Instr>>>,
     
 }
 
@@ -18,21 +18,21 @@ impl Fetch1 {
         Fetch1{
             // pc_i: vec![(false, 0); pc_i_size as usize],
             pc_mux: Mux::new(pc_i_size, 1),
-            ouput: DelayFIFO::<Arc<RefCell<Instr>>>::new(1, vec![1]),
+            output: DelayFIFO::<Arc<RefCell<Instr>>>::new(1, vec![1]),
         }
     }
 
-    pub fn pc_i(&mut self, pc_i: Vec<(bool, u32)>){
+    pub fn pc_i(&mut self, pc_i: Vec<(bool, u64)>){
         self.pc_mux.req_i(pc_i);
         self.pc_mux.rdy_i(self.gen_rdy_o());
-        if self.pc_mux.resp_o().get(0).unwrap().0 && self.ouput.rdy_o(){ // hsk
+        if self.pc_mux.resp_o().get(0).unwrap().0 && self.output.rdy_o(){ // hsk
             let tmp = Arc::new(RefCell::new(Instr::new(self.pc_mux.resp_o().get(0).unwrap().1)));
-            self.ouput.req_i((true, tmp.clone()));
+            self.output.req_i((true, tmp.clone()));
         }
     }
 
     fn gen_rdy_o(&self) -> Vec<bool>{
-        vec![self.ouput.rdy_o(); 1]
+        vec![self.output.rdy_o(); 1]
     }
 }
 
@@ -48,22 +48,22 @@ impl Interface for Fetch1{
     }}
 
     fn resp_o(&self) -> (bool, Self::Output){
-        self.ouput.resp_o()
+        self.output.resp_o()
     }
     fn rdy_i(&mut self, rdy:bool){
-        self.ouput.rdy_i(rdy);
+        self.output.rdy_i(rdy);
     }
 }
 
 impl CtrlSignals for Fetch1{
     fn tik(&mut self){
-        self.ouput.tik();
+        self.output.tik();
     }
     fn rst(&mut self, rst:bool){
-        self.ouput.rst(rst);
+        self.output.rst(rst);
     }
     fn flush(&mut self, rst:bool){
-        self.ouput.flush(rst)
+        self.output.flush(rst)
     }
 }
 
@@ -74,7 +74,7 @@ mod test{
     #[test]
     fn basic_fetch1_test(){
         let mut fetch1 = Fetch1::new(4);
-        let mut addr:u32 = 0x8000_0000;
+        let mut addr:u64 = 0x8000_0000;
 
         fetch1.pc_i(vec![
             (false, 0), // branch unit
