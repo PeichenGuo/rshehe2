@@ -1,2 +1,2 @@
-pub mod DelayFIFO;
-pub mod Mux;
+pub mod delay_fifo;
+pub mod mux;

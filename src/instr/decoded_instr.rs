@@ -1,4 +1,4 @@
-use crate::instr::InstrType::*;
+use crate::instr::intsr_type::*;
 #[derive(Default, Debug, PartialEq)]
 pub struct DecodedInstr{
     pub opcode: u8,
@@ -254,7 +254,7 @@ impl DecodedInstr{
 
 #[cfg(test)]
 mod test{
-    use crate::instr::DecodedInstr::*;
+    use crate::instr::decoded_instr::*;
 
     #[test]
     fn basic_decoded_instr_test_on_add_hex(){

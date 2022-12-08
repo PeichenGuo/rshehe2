@@ -1,8 +1,8 @@
-use std::cell::{RefCell, Ref, RefMut};
+use std::cell::{RefCell};
 
-use crate::buffers::DelayFIFO::{DelayFIFO};
+use crate::buffers::delay_fifo::{DelayFIFO};
 use crate::interface::{CtrlSignals, Interface};
-use crate::instr::{Instr, DecodedInstr::DecodedInstr};
+use crate::instr::{Instr, decoded_instr::DecodedInstr};
 use std::sync::Arc;
 
 use crate::utils::*;
@@ -63,7 +63,7 @@ mod test{
     use std::{cell::RefCell};
 
     use crate::{frontend::decode::Decode, interface::{Interface, CtrlSignals}};
-    use crate::instr::{Instr, DecodedInstr::DecodedInstr};
+    use crate::instr::{Instr};
     use std::sync::Arc;
     use crate::utils::*;
     #[test]

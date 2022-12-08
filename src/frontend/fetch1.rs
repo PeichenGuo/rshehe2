@@ -1,7 +1,7 @@
-use std::cell::{RefCell, Ref};
+use std::cell::{RefCell};
 
-use crate::buffers::DelayFIFO::{DelayFIFO};
-use crate::buffers::Mux::{Mux};
+use crate::buffers::delay_fifo::{DelayFIFO};
+use crate::buffers::mux::{Mux};
 use crate::interface::{CtrlSignals, Interface};
 use crate::instr::Instr;
 use std::sync::Arc;
@@ -41,12 +41,11 @@ impl Interface for Fetch1{
     type Input = u32;
     type Output = Arc<RefCell<Instr>>;
 
-    fn req_i(&mut self, req:(bool, Self::Input)){
+    fn req_i(&mut self, _req:(bool, Self::Input)){
         panic!("fetch1 do not impl Interface::req_i, please use pc_i.");
     }
     fn rdy_o(&self) -> bool{{
         panic!("fetch1 do not impl Interface::rdy_o, please use pc_i.");
-        false
     }}
 
     fn resp_o(&self) -> (bool, Self::Output){
@@ -72,7 +71,6 @@ impl CtrlSignals for Fetch1{
 #[cfg(test)]
 mod test{
     use crate::{frontend::fetch1::Fetch1, interface::{Interface, CtrlSignals}};
-    use crate::instr::Instr;
     #[test]
     fn basic_fetch1_test(){
         let mut fetch1 = Fetch1::new(4);
@@ -93,7 +91,7 @@ mod test{
             "fetch1 resp data wrong 0x{:8x} - 0x{:8x}", fetch1.resp_o().1.borrow().pc, addr);
         fetch1.rdy_i(true);
         
-        for i in 0..100{
+        for _i in 0..100{
             addr += 4;
             fetch1.pc_i(vec![
                 (false, 0), // branch unit

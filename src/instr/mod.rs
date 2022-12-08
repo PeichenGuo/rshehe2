@@ -1,8 +1,5 @@
-use crate::instr::InstrType::*;
-use crate::instr::DecodedInstr::*;
-
-pub mod InstrType;
-pub mod DecodedInstr;
+pub mod intsr_type;
+pub mod decoded_instr;
 
 #[derive(Default, Debug, PartialEq)]
 pub struct Instr{
@@ -13,7 +10,7 @@ pub struct Instr{
     pub raw: u32,
 
     pub decoded_vld:bool,
-    pub decoded: DecodedInstr::DecodedInstr,
+    pub decoded: decoded_instr::DecodedInstr,
 
     pub reg_data_vld:bool,
     pub rs1_data:u64,
@@ -59,7 +56,7 @@ impl Instr {
         self.raw = raw;
     }
 
-    pub fn decode(&mut self, decoded:DecodedInstr::DecodedInstr ){
+    pub fn decode(&mut self, decoded:decoded_instr::DecodedInstr ){
         self.decoded_vld = true;
         self.decoded = decoded;
     }

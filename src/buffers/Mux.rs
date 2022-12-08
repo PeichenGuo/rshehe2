@@ -1,5 +1,4 @@
-use crate::interface::Interface;
-use std::{fmt::Debug, default};
+use std::{fmt::Debug};
 use std::default::Default;
 #[derive(Default, Debug)]
 pub struct Mux<T>{ // Mux n-m
@@ -64,7 +63,7 @@ where T : Default + Debug + Clone
 }
 #[cfg(test)]
 mod test{
-    use crate::buffers::Mux::Mux;
+    use crate::buffers::mux::Mux;
     #[test]
     fn basic_mux_test(){
         let mut mux = Mux::<u32>::new(3, 2);

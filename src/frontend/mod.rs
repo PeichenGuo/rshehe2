@@ -1,6 +1,6 @@
 
 
-use std::cell::{RefCell, Ref};
+use std::cell::{RefCell};
 use std::sync::Arc;
 
 use crate::frontend::{fetch1::Fetch1, fetch2::Fetch2, decode::Decode};
@@ -55,7 +55,7 @@ impl CtrlSignals for Frontend{
             (f1_resp.0, f1_resp.1.borrow().pc + 4), // pc + 4
             (true, 0x8000_0000) // start_pc
         ];
-        let f1_rdy_o = ref_cell_borrow_mut(&self.fetch1).pc_i(f1_pc_i);
+        let _f1_rdy_o = ref_cell_borrow_mut(&self.fetch1).pc_i(f1_pc_i);
         // no need to give rdy
 
         
@@ -80,19 +80,17 @@ impl CtrlSignals for Frontend{
 
 #[cfg(test)]
 mod test{
-    use std::cell::{RefCell, Ref};
+    use std::cell::{RefCell};
     use std::sync::Arc;
 
-    use crate::frontend::{fetch1::Fetch1, fetch2::Fetch2, decode::Decode};
     use crate::memory::Memory;
-    use crate::interface::{CtrlSignals, Interface};
-    use crate::instr::{Instr, DecodedInstr::DecodedInstr, InstrType::InstrOpcode};
+    use crate::interface::{CtrlSignals};
+    use crate::instr::{intsr_type::InstrOpcode};
     use crate::frontend::Frontend;
-    use crate::utils::*;
 
     #[test]
     fn frontend_basic_test_on_add(){
-        let mut mem = Arc::new(RefCell::new(Memory::new()));
+        let mem = Arc::new(RefCell::new(Memory::new()));
         mem.borrow_mut().read_file("./isa_tests/add.hex", 0x8000_0000);
 
         let mut frontend = Frontend::new(mem.clone());

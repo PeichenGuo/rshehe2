@@ -1,9 +1,5 @@
-use std::borrow::BorrowMut;
-use std::cell::{RefCell, Ref, RefMut};
-use std::process::Output;
-
-use crate::buffers::DelayFIFO::{DelayFIFO};
-use crate::buffers::Mux::{Mux};
+use std::cell::{RefCell};
+use crate::buffers::delay_fifo::{DelayFIFO};
 use crate::interface::{CtrlSignals, Interface};
 use crate::instr::Instr;
 use crate::memory::Memory;
@@ -76,14 +72,13 @@ mod test{
     use crate::memory::Memory;
     #[test]
     fn basic_fetch2_test(){
-        let mut mem = Arc::new(RefCell::new(Memory::new()));
+        let mem = Arc::new(RefCell::new(Memory::new()));
         mem.borrow_mut().read_file("./isa_tests/add.hex", 0x8000_0000);
         let mut fetch2 = Fetch2::new(mem.clone());
-        let mut addr:u64 = 0x8000_0000;
+        let addr:u64 = 0x8000_0000;
 
         
         fetch2.req_i((true, Arc::new(RefCell::new(Instr::new(addr)))));
-        addr += 4;
         assert_eq!(fetch2.resp_o().0, false);
         fetch2.tik();
         assert_eq!(fetch2.resp_o().0, true);
