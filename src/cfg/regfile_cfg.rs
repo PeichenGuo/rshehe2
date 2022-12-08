@@ -1,6 +1,7 @@
 use crate::cfg::core_cfg::*;
 
 pub const APF_SIZE:usize = 32 + 1;
+pub const CSRF_SIZE: usize = 4096;
 
 lazy_static! {
     static  ref APF_MAPPING: Vec<String> = Vec::from([
@@ -79,8 +80,6 @@ const _MSTATUS_TSR: usize = 0b1 << _MSTATUS_TSR_LOW;
 const _MSTATUS_SD_LOW: usize = XLEN - 1;
 const _MSTATUS_SD: usize = 0b1 << _MSTATUS_SD_LOW;
 
-
-const CSRF_SIZE: usize = 4096;
 
 const _CSR_USTATUS_ADDRESS: u16 = 0x000;
 const _CSR_FFLAGS_ADDRESS: u16 = 0x001;
