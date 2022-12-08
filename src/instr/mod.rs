@@ -22,6 +22,9 @@ pub struct Instr{
     pub wb_vld:bool,
     pub wb_data:u64,
 
+    pub csr_vld:bool,
+    pub csr_data:u64,
+
     pub predict_fail:bool,
     pub branch_pc:u64,
 
@@ -53,6 +56,9 @@ impl Instr {
 
             wb_vld:false,
             wb_data:0,
+
+            csr_vld:false,
+            csr_data:0,
 
             exception_vld:false,
             ecause:0,
