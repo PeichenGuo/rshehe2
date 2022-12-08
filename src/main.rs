@@ -9,6 +9,8 @@ pub mod instr;
 pub mod interface;
 pub mod buffers;
 pub mod stages;
+pub mod utils;
+pub mod frontend;
 fn main() {
     println!("Hello, world!");
     memory_hello_world();

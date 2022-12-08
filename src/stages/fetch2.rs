@@ -47,7 +47,7 @@ impl Interface for Fetch2{
     }
 
     fn resp_o(&self) -> (bool, Self::Output){
-        self.output.resp_o()
+        self.output.resp_o().clone()
     }
     fn rdy_i(&mut self, rdy:bool){
         self.output.rdy_i(rdy);

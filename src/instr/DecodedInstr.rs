@@ -1,5 +1,5 @@
 use crate::instr::InstrType::*;
-#[derive(Default, Debug)]
+#[derive(Default, Debug, PartialEq)]
 pub struct DecodedInstr{
     pub opcode: u8,
     pub rd:u8,
@@ -26,7 +26,7 @@ pub struct DecodedInstr{
 }
 
 impl DecodedInstr{
-    fn new(raw: u32) -> Self{
+    pub fn new(raw: u32) -> Self{
         let opcode = (raw & 0x7f) as u8; // [6:0]
         let rd:u8 = ((raw >> 7) & 0x1f) as u8; // 11:7
         let funct3: u8 = ((raw >> 12) & 0x7) as u8; // [14:12]

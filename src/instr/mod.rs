@@ -4,7 +4,7 @@ use crate::instr::DecodedInstr::*;
 pub mod InstrType;
 pub mod DecodedInstr;
 
-#[derive(Default, Debug)]
+#[derive(Default, Debug, PartialEq)]
 pub struct Instr{
     pub pc_vld: bool,
     pub pc: u64,
@@ -13,7 +13,7 @@ pub struct Instr{
     pub raw: u32,
 
     pub decoded_vld:bool,
-    pub decoded: Option<DecodedInstr::DecodedInstr>,
+    pub decoded: DecodedInstr::DecodedInstr,
 
     pub reg_data_vld:bool,
     pub rs1_data:u64,
@@ -38,7 +38,7 @@ impl Instr {
             raw: 0,
 
             decoded_vld:false,
-            decoded: None,
+            decoded: Default::default(),
 
             reg_data_vld:false,
             rs1_data:0,
@@ -61,7 +61,7 @@ impl Instr {
 
     pub fn decode(&mut self, decoded:DecodedInstr::DecodedInstr ){
         self.decoded_vld = true;
-        self.decoded = Some(decoded);
+        self.decoded = decoded;
     }
 
     pub fn dispatch(&mut self, rs1: u64, rs2: u64){
