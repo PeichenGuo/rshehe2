@@ -70,7 +70,7 @@ impl CtrlSignals for Fetch2 {
 mod test{
     use std::cell::RefCell;
 
-    use crate::{stages::fetch2::Fetch2, interface::{Interface, CtrlSignals}};
+    use crate::{frontend::fetch2::Fetch2, interface::{Interface, CtrlSignals}};
     use crate::instr::Instr;
     use std::sync::Arc;
     use crate::memory::Memory;

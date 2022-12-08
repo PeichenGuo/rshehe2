@@ -62,7 +62,7 @@ impl CtrlSignals for Decode {
 mod test{
     use std::{cell::RefCell};
 
-    use crate::{stages::decode::Decode, interface::{Interface, CtrlSignals}};
+    use crate::{frontend::decode::Decode, interface::{Interface, CtrlSignals}};
     use crate::instr::{Instr, DecodedInstr::DecodedInstr};
     use std::sync::Arc;
     use crate::utils::*;

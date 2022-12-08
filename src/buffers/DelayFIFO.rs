@@ -139,9 +139,17 @@ mod test{
         let mut fifo = DelayFIFO::<u32>::new(4, vec![1;1]);
         fifo.req_i((true, 1));
         assert_eq!(false, fifo.resp_o().0);
+
         fifo.tik();
+        fifo.req_i((true, 2));
         assert_eq!((true, 1), fifo.resp_o());
         fifo.rdy_i(true);
+
+        fifo.tik();
+        assert_eq!((true, 2), fifo.resp_o());
+        fifo.rdy_i(true);
+
+        fifo.tik();
         assert_eq!(false, fifo.resp_o().0);
 
         // 5 delay

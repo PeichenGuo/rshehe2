@@ -22,13 +22,14 @@ impl Fetch1 {
         }
     }
 
-    pub fn pc_i(&mut self, pc_i: Vec<(bool, u64)>){
+    pub fn pc_i(&mut self, pc_i: Vec<(bool, u64)>) -> Vec<bool>{
         self.pc_mux.req_i(pc_i);
         self.pc_mux.rdy_i(self.gen_rdy_o());
         if self.pc_mux.resp_o().get(0).unwrap().0 && self.output.rdy_o(){ // hsk
             let tmp = Arc::new(RefCell::new(Instr::new(self.pc_mux.resp_o().get(0).unwrap().1)));
             self.output.req_i((true, tmp.clone()));
         }
+        self.pc_mux.rdy_o()
     }
 
     fn gen_rdy_o(&self) -> Vec<bool>{
@@ -44,7 +45,8 @@ impl Interface for Fetch1{
         panic!("fetch1 do not impl Interface::req_i, please use pc_i.");
     }
     fn rdy_o(&self) -> bool{{
-        self.gen_rdy_o()[0]
+        panic!("fetch1 do not impl Interface::rdy_o, please use pc_i.");
+        false
     }}
 
     fn resp_o(&self) -> (bool, Self::Output){
@@ -69,7 +71,7 @@ impl CtrlSignals for Fetch1{
 
 #[cfg(test)]
 mod test{
-    use crate::{stages::fetch1::Fetch1, interface::{Interface, CtrlSignals}};
+    use crate::{frontend::fetch1::Fetch1, interface::{Interface, CtrlSignals}};
     use crate::instr::Instr;
     #[test]
     fn basic_fetch1_test(){
@@ -81,7 +83,7 @@ mod test{
             (false, 0), // predict
             (false, 0), // pc + 4
             (true, addr) // start pc
-        ]);
+        ]); 
         fetch1.rdy_i(true);
         assert_eq!(fetch1.resp_o().0, false);
         fetch1.tik();
