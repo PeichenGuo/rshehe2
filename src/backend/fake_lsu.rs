@@ -2,7 +2,7 @@ use std::cell::{RefCell};
 
 use crate::buffers::delay_fifo::{DelayFIFO};
 use crate::interface::{CtrlSignals, Interface};
-use crate::instr::{Instr, decoded_instr::DecodedInstr};
+use crate::instr::{Instr};
 use crate::memory::Memory;
 use std::sync::Arc;
 use crate::instr::intsr_type::InstrOpcode::*;
@@ -88,6 +88,7 @@ impl CtrlSignals for FakeLSU {
     }
 }
 
+#[cfg(test)]
 mod test{
     use std::cell::{RefCell};
     use crate::backend::fake_lsu::FakeLSU;

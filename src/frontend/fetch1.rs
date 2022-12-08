@@ -4,6 +4,7 @@ use crate::buffers::delay_fifo::{DelayFIFO};
 use crate::buffers::mux::{Mux};
 use crate::interface::{CtrlSignals, Interface};
 use crate::instr::Instr;
+use crate::utils::ref_cell_borrow_mut;
 use std::sync::Arc;
 // use std::
 pub struct Fetch1{ // get pc and visit pht/btb to get a new pc
@@ -27,6 +28,8 @@ impl Fetch1 {
         self.pc_mux.rdy_i(self.gen_rdy_o());
         if self.pc_mux.resp_o().get(0).unwrap().0 && self.output.rdy_o(){ // hsk
             let tmp = Arc::new(RefCell::new(Instr::new(self.pc_mux.resp_o().get(0).unwrap().1)));
+            ref_cell_borrow_mut(&tmp.clone()).predicted_direction = false;
+            ref_cell_borrow_mut(&tmp.clone()).predicted_pc = self.pc_mux.resp_o().get(0).unwrap().1 + 4;
             self.output.req_i((true, tmp.clone()));
         }
         self.pc_mux.rdy_o()

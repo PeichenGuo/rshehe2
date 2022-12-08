@@ -6,6 +6,9 @@ pub struct Instr{
     pub pc_vld: bool,
     pub pc: u64,
 
+    pub predicted_direction: bool, // 1 for branch, 0 for not branch
+    pub predicted_pc: u64,
+
     pub raw_vld: bool,
     pub raw: u32,
 
@@ -30,6 +33,9 @@ impl Instr {
         Instr{
             pc_vld: true,
             pc: pc,
+
+            predicted_direction: false, // 1 for branch, 0 for not branch
+            predicted_pc: 0,
 
             raw_vld: false,
             raw: 0,

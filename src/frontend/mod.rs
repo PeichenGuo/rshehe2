@@ -52,7 +52,7 @@ impl CtrlSignals for Frontend{
         let f1_pc_i: Vec<(bool, u64)> = vec![
             (false, 0), // branch unit
             (false, 0), // branch predict
-            (f1_resp.0, f1_resp.1.borrow().pc + 4), // pc + 4
+            (true, f1_resp.1.borrow().predicted_pc), // pc + 4
             (true, 0x8000_0000) // start_pc
         ];
         let _f1_rdy_o = ref_cell_borrow_mut(&self.fetch1).pc_i(f1_pc_i);
