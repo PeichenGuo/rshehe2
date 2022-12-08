@@ -6,6 +6,7 @@ use crate::instr::{Instr};
 use crate::memory::Memory;
 use std::sync::Arc;
 use crate::instr::intsr_type::InstrOpcode::*;
+use std::mem::drop;
 
 use crate::utils::*;
 
@@ -57,8 +58,12 @@ impl Interface for FakeLSU{
                 let mut tmp = ref_cell_borrow_mut(&instr);
                 tmp.wb_vld = true;
                 tmp.wb_data = val;
+                tmp.exec = true;
             }
             else{
+                let mut tmp = ref_cell_borrow_mut(&instr);
+                tmp.exec = true;
+                drop(tmp);
                 self.store(&instr.borrow());
             }
             self.output.req_i((true, req.1.clone()));

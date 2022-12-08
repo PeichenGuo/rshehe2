@@ -75,6 +75,7 @@ impl Interface for ALU{
             let mut tmp = ref_cell_borrow_mut(&instr);
             tmp.wb_vld = true;
             tmp.wb_data = val;
+            tmp.exec = true;
             self.output.req_i((true, req.1.clone()));
         }
     }

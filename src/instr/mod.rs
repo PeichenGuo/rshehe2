@@ -22,9 +22,13 @@ pub struct Instr{
     pub wb_vld:bool,
     pub wb_data:u64,
 
+    pub predict_fail:bool,
+    pub branch_pc:u64,
+
     pub exception_vld:bool,
     pub ecause:u64,
 
+    pub exec:bool,
     pub done: bool
 }
 
@@ -53,6 +57,10 @@ impl Instr {
             exception_vld:false,
             ecause:0,
 
+            predict_fail:false,
+            branch_pc:0,
+
+            exec:false,
             done: false
         }
     }

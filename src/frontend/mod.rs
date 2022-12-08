@@ -49,6 +49,9 @@ impl CtrlSignals for Frontend{
     fn tik(&mut self){
         // ! 严格注意这里的vld rdy顺序。只有给了rdy，resp那条才会commit，才会给后面的指令腾地方。
         // ! 因此比较反直觉的是，这里的vld-rdy握手是逆序的，从后面往前处理，才能让后面的接受者有地方接受
+
+
+        // * 所有的前传都不进行握手！合理的
         if self.branch_vld {
             ref_cell_borrow_mut(&self.fetch2).flush(true);
             ref_cell_borrow_mut(&self.fetch1).flush(true);
