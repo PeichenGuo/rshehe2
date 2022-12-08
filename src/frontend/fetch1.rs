@@ -29,7 +29,7 @@ impl Fetch1 {
         if self.pc_mux.resp_o().get(0).unwrap().0 && self.output.rdy_o(){ // hsk
             let tmp = Arc::new(RefCell::new(Instr::new(self.pc_mux.resp_o().get(0).unwrap().1)));
             ref_cell_borrow_mut(&tmp.clone()).predicted_direction = false;
-            ref_cell_borrow_mut(&tmp.clone()).predicted_pc = self.pc_mux.resp_o().get(0).unwrap().1 + 4;
+            ref_cell_borrow_mut(&tmp.clone()).predicted_pc = 0;
             self.output.req_i((true, tmp.clone()));
         }
         self.pc_mux.rdy_o()
