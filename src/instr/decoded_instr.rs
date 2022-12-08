@@ -12,6 +12,7 @@ pub struct DecodedInstr{
     pub immb:u16,
     pub immu:u32,
     pub immj:u32,
+    pub shamt:u8,
 
     pub instr_type: InstrType,
     pub opcode_type: InstrOpcode,
@@ -44,7 +45,7 @@ impl DecodedInstr{
                         (((raw >> 12) & 0xff) << 12) + // imm[19:12]
                         (((raw >> 20) & 0x1) << 11) + // imm[11]
                         (((raw >> 21) & 0x3ff) << 1); // imm[10:1]     
-        
+        let shamt: u8 = ((raw >> 20) & 0x3f) as u8;
         let instr_type = match opcode{
             // rv32i
             0b0110111 | 0b0010111=> InstrType::U,
@@ -214,7 +215,7 @@ impl DecodedInstr{
             (opcode_type == InstrOpcode::XORI) || (opcode_type == InstrOpcode::ORI) || 
             (opcode_type == InstrOpcode::ANDI) || (opcode_type == InstrOpcode::SLLI) || 
             (opcode_type == InstrOpcode::SRLI) || (opcode_type == InstrOpcode::SRAI) || 
-            (opcode_type == InstrOpcode::ADDIW) || (opcode_type == InstrOpcode::SLTIW) || 
+            (opcode_type == InstrOpcode::ADDIW) || 
             (opcode_type == InstrOpcode::SLLIW) || (opcode_type == InstrOpcode::SRLIW) || 
             (opcode_type == InstrOpcode::SRAIW) ||  
             (opcode_type == InstrOpcode::AUIPC) || (opcode_type == InstrOpcode::LUI);
@@ -239,6 +240,7 @@ impl DecodedInstr{
             immb: immb, 
             immu: immu, 
             immj: immj,
+            shamt: shamt,
             instr_type: instr_type, 
             opcode_type: opcode_type,
             is_ld: is_ld,
@@ -286,11 +288,7 @@ mod test{
         let instr = DecodedInstr::new(0xf1402573);
         assert_eq!(instr.opcode_type, InstrOpcode::CSRRS);
         assert!(instr.is_csr);
-    }
 
-    #[test]
-    fn basic_decoded_instr_test_rv64i_on_add_hex(){
-        // 8000004c:	0012829b          	addiw	t0,t0,1
         let instr = DecodedInstr::new(0x0012829b);
         assert_eq!(instr.opcode_type, InstrOpcode::ADDIW);
         assert!(instr.is_alu);

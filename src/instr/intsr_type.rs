@@ -60,7 +60,6 @@ pub enum InstrOpcode{
     SRAI,
     // rv64i
     ADDIW,
-    SLTIW,
     SLLIW,
     SRLIW,
     SRAIW,
