@@ -1,4 +1,5 @@
-pub const B_CONST: u32 = 2;
+pub const XLEN: usize = 64;
+
 
 pub const RV32I: u8 = 0b1;
 pub const RV32E: u8 = 0b10;

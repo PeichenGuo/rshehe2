@@ -3,7 +3,7 @@ use std::cell::{RefCell};
 use crate::buffers::delay_fifo::{DelayFIFO};
 use crate::interface::{CtrlSignals, Interface};
 use crate::instr::{Instr};
-use crate::memory::Memory;
+use crate::memory::memory::Memory;
 use std::sync::Arc;
 use crate::instr::intsr_type::InstrOpcode::*;
 use std::mem::drop;
@@ -102,7 +102,7 @@ mod test{
     use crate::instr::intsr_type::InstrOpcode::*;
     use crate::utils::ref_cell_borrow_mut;
     use std::sync::Arc;
-    use crate::memory::Memory;
+    use crate::memory::memory::Memory;
     use std::mem::drop;
 
     #[test]

@@ -138,13 +138,9 @@ impl Memory {
     }
 }
 
-pub fn memory_hello_world(){
-    println!("memory hello world");
-}
-
 #[cfg(test)]
 mod test {
-    use crate::memory::Memory;
+    use crate::memory::memory::Memory;
     #[test]
     fn basic_load_on_add_hex(){
         let mut mem = Memory::new();

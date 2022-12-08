@@ -2,7 +2,7 @@ use std::cell::{RefCell};
 use crate::buffers::delay_fifo::{DelayFIFO};
 use crate::interface::{CtrlSignals, Interface};
 use crate::instr::Instr;
-use crate::memory::Memory;
+use crate::memory::memory::Memory;
 use std::sync::Arc;
 pub struct Fetch2{ // get pc and visit pht/btb to get a new pc
     // pc_i: Vec<(bool, u32)>,
@@ -69,7 +69,7 @@ mod test{
     use crate::{frontend::fetch2::Fetch2, interface::{Interface, CtrlSignals}};
     use crate::instr::Instr;
     use std::sync::Arc;
-    use crate::memory::Memory;
+    use crate::memory::memory::Memory;
     #[test]
     fn basic_fetch2_test(){
         let mem = Arc::new(RefCell::new(Memory::new()));
