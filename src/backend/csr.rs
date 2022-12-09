@@ -1,5 +1,4 @@
 use crate::buffers::delay_fifo::{DelayFIFO};
-use crate::memory::regfiles::CSRF;
 use std::sync::Arc;
 use std::cell::RefCell;
 
@@ -44,8 +43,8 @@ impl Interface for CSR{
             let mut tmp = ref_cell_borrow_mut(&instr);
             tmp.wb_vld = true;
             tmp.wb_data = old_csr_val;
-            tmp.csr_vld = true;
-            tmp.csr_data = csr_val;
+            tmp.csr_wb_vld = true;
+            tmp.csr_wb_data = csr_val;
             tmp.exec = true;
             self.output.req_i((true, req.1.clone()));
         }
@@ -56,8 +55,8 @@ impl Interface for CSR{
             let mut tmp = ref_cell_borrow_mut(&instr);
             tmp.predict_fail = true;
             tmp.branch_pc = tmp.csr_data; // mtvec 
-            tmp.csr_vld = true;
-            tmp.csr_data = tmp.pc + 4; // mepc
+            tmp.csr_wb_vld = true;
+            tmp.csr_wb_data = tmp.pc + 4; // mepc
             tmp.exec = true;
             self.output.req_i((true, req.1.clone()));
         }
@@ -115,8 +114,8 @@ mod test{
         assert_eq!(csr.resp_o().0, true);
         assert_eq!(csr.resp_o().1.borrow().wb_vld, true);
         assert_eq!(csr.resp_o().1.borrow().wb_data, 0xf0);
-        assert_eq!(csr.resp_o().1.borrow().csr_vld, true);
-        assert_eq!(csr.resp_o().1.borrow().csr_data, 0);
+        assert_eq!(csr.resp_o().1.borrow().csr_wb_vld, true);
+        assert_eq!(csr.resp_o().1.borrow().csr_wb_data, 0);
         csr.rdy_i(true);
 
         // ecall
@@ -135,8 +134,8 @@ mod test{
         assert_eq!(csr.resp_o().0, true);
         assert_eq!(csr.resp_o().1.borrow().wb_vld, false);
         // assert_eq!(csr.resp_o().1.borrow().wb_data, 0xf0);
-        assert_eq!(csr.resp_o().1.borrow().csr_vld, true);
-        assert_eq!(csr.resp_o().1.borrow().csr_data, 0x8000_0004);
+        assert_eq!(csr.resp_o().1.borrow().csr_wb_vld, true);
+        assert_eq!(csr.resp_o().1.borrow().csr_wb_data, 0x8000_0004);
         assert_eq!(csr.resp_o().1.borrow().predict_fail, true);
         assert_eq!(csr.resp_o().1.borrow().branch_pc, 0x8000_1000);
         csr.rdy_i(true);

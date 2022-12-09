@@ -39,11 +39,11 @@ impl CSRF{
             regs: vec![0; CSRF_SIZE],
         }
     }
-    pub fn get(&self, rd: u8) -> u64{
+    pub fn get(&self, rd: u16) -> u64{
         self.regs.get(rd as usize).unwrap().clone()
     }
 
-    pub fn set(&mut self, rd:u8, data:u64){
+    pub fn set(&mut self, rd:u16, data:u64){
         self.regs[rd as usize] = data;
     }
 }
