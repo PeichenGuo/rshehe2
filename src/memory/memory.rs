@@ -4,24 +4,19 @@ use std::fs::File;
 use std::io::{self, BufRead};
 // use std::path::Path;
 use hex;
-
+use crate::interface::CtrlSignals;
 use crate::cfg::memory_cfg::*;
 
 pub struct Memory{
-    data: Vec<u8> 
+    data: Vec<u8> ,
+    test_done: bool,
 }
 
 impl Memory {
     pub fn new() -> Self {
         let mem = Memory {
-			data: {
-                // let mut tmp = Vec::with_capacity(MEMORY_SIZE as usize);
-                // for _i in 0..MEMORY_SIZE {
-                //     tmp.push(0);
-                // }
-                // tmp
-                vec![0;MEMORY_SIZE as usize]
-            }
+			data:  vec![0;MEMORY_SIZE as usize],
+            test_done: false
 		};
         
         mem
@@ -136,6 +131,27 @@ impl Memory {
             self.data[addr + i] = (data >> (8 * i)) as u8;
         }
     }
+
+    pub fn test_done(&self) -> bool{
+        self.test_done
+    }
+}
+ 
+impl CtrlSignals for Memory {
+    fn tik(&mut self){
+        if(self.data[TOHOST_PADDR as usize % MEMORY_SIZE as usize] != 0x1) && (self.data[TOHOST_PADDR as usize % MEMORY_SIZE as usize] != 0x0){
+            panic!("writr tohost fail: {}", self.data[TOHOST_PADDR as usize % MEMORY_SIZE as usize]);
+        }
+        else{
+            self.test_done = true;
+        }
+    }
+    fn rst(&mut self, _rst:bool){
+
+    }
+    fn flush(&mut self, _rst:bool){
+
+    }
 }
 
 #[cfg(test)]
@@ -158,12 +174,6 @@ mod test {
         assert_eq!(mem.lwu(0x4), 0x34202f73);
 
         assert_eq!(mem.ld(0x0), 0x34202f7305c0006f);
-    }
-
-    #[test]
-    fn basic_st_on_add_hex(){
-        let mut mem = Memory::new();
-        mem.read_file("./isa_tests/add.hex", 0);
 
         mem.sb(0, 0x2b);
         assert_eq!(mem.lb(0x0), 0x2b);

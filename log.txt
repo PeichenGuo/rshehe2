@@ -1,0 +1,856 @@
+
+running 15 tests
+test buffers::mux::test::basic_mux_test ... ok
+test backend::alu::test::basic_alu_test ... ok
+test backend::branch_unit::test::basic_bru_test ... ok
+test backend::csr::test::basic_csr_test ... ok
+test buffers::delay_fifo::test::basic_delay_fifo_test ... ok
+test frontend::decode::test::basic_fetch2_test ... ok
+test instr::decoded_instr::test::basic_decoded_instr_test_on_add_hex ... ok
+test frontend::fetch1::test::basic_fetch1_test ... ok
+test backend::fake_rcu::test::basic_fake_rcu_test ... ok
+test backend::test::basic_backend_test ... ok
+test frontend::fetch2::test::basic_fetch2_test ... ok
+test frontend::test::frontend_basic_test_on_add ... ok
+test backend::fake_lsu::test::basic_fake_lsu_test_on_add_hex ... ok
+test memory::memory::test::basic_load_on_add_hex ... ok
+test test::add_isa_test ... FAILED
+
+failures:
+
+---- test::add_isa_test stdout ----
+fetch2_req(false, 
+	pc:0x0000000000000000
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 0, rd: 0, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 0, immb: 0, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: R, opcode_type: ADD, is_ld: false, is_st: false, is_alu: false, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(false, 
+	pc:0x0000000000000000
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 0, rd: 0, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 0, immb: 0, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: R, opcode_type: ADD, is_ld: false, is_st: false, is_alu: false, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(false, 
+	pc:0x0000000000000000
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 0, rd: 0, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 0, immb: 0, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: R, opcode_type: ADD, is_ld: false, is_st: false, is_alu: false, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000000
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 111, rd: 0, funct3: 0, rs1: 0, rs2: 28, funct7: 2, immi: 92, imms: 64, immb: 64, immu: 96468992, immj: 92, shamt: 28, csr: 92, zimm: 0, instr_type: J, opcode_type: JAL, is_ld: false, is_st: false, is_alu: false, is_branch: true, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000004
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 115, rd: 30, funct3: 2, rs1: 0, rs2: 2, funct7: 26, immi: 834, imms: 862, immb: 862, immu: 874520576, immj: 9026, shamt: 2, csr: 834, zimm: 0, instr_type: I, opcode_type: CSRRS, is_ld: false, is_st: false, is_alu: false, is_branch: false, is_fence: false, is_csr: true, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000008
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 31, funct3: 0, rs1: 0, rs2: 8, funct7: 0, immi: 8, imms: 31, immb: 2078, immu: 8388608, immj: 8, shamt: 8, csr: 8, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x000000008000000c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 99, rd: 20, funct3: 0, rs1: 30, rs2: 31, funct7: 1, immi: 63, imms: 52, immb: 52, immu: 67043328, immj: 985150, shamt: 63, csr: 63, zimm: 30, instr_type: B, opcode_type: BEQ, is_ld: false, is_st: false, is_alu: false, is_branch: true, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+flush!
+branch true - 0x8000005c
+fetch2_req(false, 
+	pc:0x0000000080000000
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 111, rd: 0, funct3: 0, rs1: 0, rs2: 28, funct7: 2, immi: 92, imms: 64, immb: 64, immu: 96468992, immj: 92, shamt: 28, csr: 92, zimm: 0, instr_type: J, opcode_type: JAL, is_ld: false, is_st: false, is_alu: false, is_branch: true, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:true, branch_pc: 0x000000008000005c
+	exex: true, done:true)
+fetch2_req(false, 
+	pc:0x0000000080000000
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 111, rd: 0, funct3: 0, rs1: 0, rs2: 28, funct7: 2, immi: 92, imms: 64, immb: 64, immu: 96468992, immj: 92, shamt: 28, csr: 92, zimm: 0, instr_type: J, opcode_type: JAL, is_ld: false, is_st: false, is_alu: false, is_branch: true, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000000000000
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:true, branch_pc: 0x000000008000005c
+	exex: true, done:true)
+fetch2_req(true, 
+	pc:0x0000000080000000
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 111, rd: 0, funct3: 0, rs1: 0, rs2: 28, funct7: 2, immi: 92, imms: 64, immb: 64, immu: 96468992, immj: 92, shamt: 28, csr: 92, zimm: 0, instr_type: J, opcode_type: JAL, is_ld: false, is_st: false, is_alu: false, is_branch: true, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000000000000
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:true, branch_pc: 0x000000008000005c
+	exex: true, done:true)
+fetch2_req(true, 
+	pc:0x0000000080000004
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 115, rd: 30, funct3: 2, rs1: 0, rs2: 2, funct7: 26, immi: 834, imms: 862, immb: 862, immu: 874520576, immj: 9026, shamt: 2, csr: 834, zimm: 0, instr_type: I, opcode_type: CSRRS, is_ld: false, is_st: false, is_alu: false, is_branch: false, is_fence: false, is_csr: true, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000000000000
+	wb:true wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:true, csr_wb_data: 0x0000000080000004
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: true, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000008
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 31, funct3: 0, rs1: 0, rs2: 8, funct7: 0, immi: 8, imms: 31, immb: 2078, immu: 8388608, immj: 8, shamt: 8, csr: 8, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+flush!
+branch true - 0x8000005c
+fetch2_req(false, 
+	pc:0x0000000080000000
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 111, rd: 0, funct3: 0, rs1: 0, rs2: 28, funct7: 2, immi: 92, imms: 64, immb: 64, immu: 96468992, immj: 92, shamt: 28, csr: 92, zimm: 0, instr_type: J, opcode_type: JAL, is_ld: false, is_st: false, is_alu: false, is_branch: true, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000000000000
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:true, branch_pc: 0x000000008000005c
+	exex: true, done:true)
+fetch2_req(false, 
+	pc:0x0000000080000000
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 111, rd: 0, funct3: 0, rs1: 0, rs2: 28, funct7: 2, immi: 92, imms: 64, immb: 64, immu: 96468992, immj: 92, shamt: 28, csr: 92, zimm: 0, instr_type: J, opcode_type: JAL, is_ld: false, is_st: false, is_alu: false, is_branch: true, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000000000000
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:true, branch_pc: 0x000000008000005c
+	exex: true, done:true)
+fetch2_req(true, 
+	pc:0x0000000080000000
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 111, rd: 0, funct3: 0, rs1: 0, rs2: 28, funct7: 2, immi: 92, imms: 64, immb: 64, immu: 96468992, immj: 92, shamt: 28, csr: 92, zimm: 0, instr_type: J, opcode_type: JAL, is_ld: false, is_st: false, is_alu: false, is_branch: true, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000000000000
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:true, branch_pc: 0x000000008000005c
+	exex: true, done:true)
+fetch2_req(true, 
+	pc:0x0000000080000060
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 2, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 2, immb: 2, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000064
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 3, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 3, immb: 2050, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+flush!
+branch true - 0x8000005c
+fetch2_req(false, 
+	pc:0x0000000080000000
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 111, rd: 0, funct3: 0, rs1: 0, rs2: 28, funct7: 2, immi: 92, imms: 64, immb: 64, immu: 96468992, immj: 92, shamt: 28, csr: 92, zimm: 0, instr_type: J, opcode_type: JAL, is_ld: false, is_st: false, is_alu: false, is_branch: true, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000000000000
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:true, branch_pc: 0x000000008000005c
+	exex: true, done:true)
+fetch2_req(false, 
+	pc:0x0000000080000000
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 111, rd: 0, funct3: 0, rs1: 0, rs2: 28, funct7: 2, immi: 92, imms: 64, immb: 64, immu: 96468992, immj: 92, shamt: 28, csr: 92, zimm: 0, instr_type: J, opcode_type: JAL, is_ld: false, is_st: false, is_alu: false, is_branch: true, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000000000000
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:true, branch_pc: 0x000000008000005c
+	exex: true, done:true)
+fetch2_req(true, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000060
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 2, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 2, immb: 2, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000064
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 3, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 3, immb: 2050, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000068
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 4, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 4, immb: 4, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+flush!
+branch true - 0x8000005c
+fetch2_req(false, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000080000004
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: true, done:true)
+fetch2_req(false, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000080000004
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: true, done:true)
+fetch2_req(true, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000060
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 2, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 2, immb: 2, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000064
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 3, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 3, immb: 2050, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000068
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 4, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 4, immb: 4, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+flush!
+branch true - 0x8000005c
+fetch2_req(false, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000080000004
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: true, done:true)
+fetch2_req(false, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000080000004
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: true, done:true)
+fetch2_req(true, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000060
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 2, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 2, immb: 2, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000064
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 3, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 3, immb: 2050, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000068
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 4, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 4, immb: 4, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+flush!
+branch true - 0x8000005c
+fetch2_req(false, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000080000004
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: true, done:true)
+fetch2_req(false, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000080000004
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: true, done:true)
+fetch2_req(true, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000060
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 2, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 2, immb: 2, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000064
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 3, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 3, immb: 2050, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000068
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 4, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 4, immb: 4, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+flush!
+branch true - 0x8000005c
+fetch2_req(false, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000080000004
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: true, done:true)
+fetch2_req(false, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000080000004
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: true, done:true)
+fetch2_req(true, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000060
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 2, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 2, immb: 2, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000064
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 3, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 3, immb: 2050, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000068
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 4, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 4, immb: 4, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+flush!
+branch true - 0x8000005c
+fetch2_req(false, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000080000004
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: true, done:true)
+fetch2_req(false, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000080000004 rs2_data:0x0000000080000004
+	wb:true wb_data:0x0000000080000004
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: true, done:true)
+fetch2_req(true, 
+	pc:0x000000008000005c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 1, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 1, immb: 2048, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000060
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 2, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 2, immb: 2, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000064
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 3, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 3, immb: 2050, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000068
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 4, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 4, immb: 4, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x000000008000006c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 5, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 5, immb: 2052, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000070
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 6, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 6, immb: 6, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000074
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 7, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 7, immb: 2054, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000078
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 8, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 8, immb: 8, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x000000008000007c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 9, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 9, immb: 2056, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000080
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 10, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 10, immb: 10, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000084
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 11, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 11, immb: 2058, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000088
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 12, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 12, immb: 12, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x000000008000008c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 13, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 13, immb: 2060, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000090
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 14, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 14, immb: 14, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000094
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 15, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 15, immb: 2062, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x0000000080000098
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 16, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 16, immb: 16, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x000000008000009c
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 17, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 17, immb: 2064, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000a0
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 18, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 18, immb: 18, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000a4
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 19, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 19, immb: 2066, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000a8
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 20, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 20, immb: 20, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000ac
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 21, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 21, immb: 2068, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000b0
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 22, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 22, immb: 22, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000b4
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 23, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 23, immb: 2070, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000b8
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 24, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 24, immb: 24, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000bc
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 25, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 25, immb: 2072, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000c0
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 26, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 26, immb: 26, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000c4
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 27, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 27, immb: 2074, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000c8
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 28, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 28, immb: 28, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000cc
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 29, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 29, immb: 2076, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000d0
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 30, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 30, immb: 30, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000d4
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 31, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 31, immb: 2078, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000d8
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 115, rd: 10, funct3: 2, rs1: 0, rs2: 20, funct7: 120, immi: 3860, imms: 3850, immb: 5898, immu: 4047511552, immj: 1058580, shamt: 20, csr: 3860, zimm: 0, instr_type: I, opcode_type: CSRRS, is_ld: false, is_st: false, is_alu: false, is_branch: false, is_fence: false, is_csr: true, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000dc
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 99, rd: 0, funct3: 1, rs1: 10, rs2: 0, funct7: 0, immi: 0, imms: 0, immb: 0, immu: 331776, immj: 331776, shamt: 0, csr: 0, zimm: 10, instr_type: B, opcode_type: BNE, is_ld: false, is_st: false, is_alu: false, is_branch: true, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000e0
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 23, rd: 5, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 5, immb: 2052, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: U, opcode_type: AUIPC, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000e4
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 5, funct3: 0, rs1: 5, rs2: 16, funct7: 0, immi: 16, imms: 5, immb: 2052, immu: 16941056, immj: 163856, shamt: 16, csr: 16, zimm: 5, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000e8
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 115, rd: 0, funct3: 1, rs1: 5, rs2: 5, funct7: 24, immi: 773, imms: 768, immb: 768, immu: 810717184, immj: 170756, shamt: 5, csr: 773, zimm: 5, instr_type: I, opcode_type: CSRRW, is_ld: false, is_st: false, is_alu: false, is_branch: false, is_fence: false, is_csr: true, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000ec
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 115, rd: 0, funct3: 5, rs1: 0, rs2: 0, funct7: 12, immi: 384, imms: 384, immb: 384, immu: 402673664, immj: 20864, shamt: 0, csr: 384, zimm: 0, instr_type: I, opcode_type: CSRRWI, is_ld: false, is_st: false, is_alu: false, is_branch: false, is_fence: false, is_csr: true, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000f0
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 23, rd: 5, funct3: 0, rs1: 0, rs2: 0, funct7: 0, immi: 0, imms: 5, immb: 2052, immu: 0, immj: 0, shamt: 0, csr: 0, zimm: 0, instr_type: U, opcode_type: AUIPC, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000f4
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 19, rd: 5, funct3: 0, rs1: 5, rs2: 4, funct7: 1, immi: 36, imms: 37, immb: 2084, immu: 37912576, immj: 163876, shamt: 36, csr: 36, zimm: 5, instr_type: I, opcode_type: ADDI, is_ld: false, is_st: false, is_alu: true, is_branch: false, is_fence: false, is_csr: false, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000f8
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 115, rd: 0, funct3: 1, rs1: 5, rs2: 5, funct7: 24, immi: 773, imms: 768, immb: 768, immu: 810717184, immj: 170756, shamt: 5, csr: 773, zimm: 5, instr_type: I, opcode_type: CSRRW, is_ld: false, is_st: false, is_alu: false, is_branch: false, is_fence: false, is_csr: true, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+fetch2_req(true, 
+	pc:0x00000000800000f8
+	predict direction: false @ 0x0000000000000000
+	decode:DecodedInstr { opcode: 115, rd: 0, funct3: 1, rs1: 5, rs2: 5, funct7: 24, immi: 773, imms: 768, immb: 768, immu: 810717184, immj: 170756, shamt: 5, csr: 773, zimm: 5, instr_type: I, opcode_type: CSRRW, is_ld: false, is_st: false, is_alu: false, is_branch: false, is_fence: false, is_csr: true, is_syscall: false }
+	rs1_data:0x0000000000000000 rs2_data:0x0000000000000000
+	wb:false wb_data:0x0000000000000000
+	csr_vld:false csr_data:0x0000000000000000 csr_wb:false, csr_wb_data: 0x0000000000000000
+	predict_fail:false, branch_pc: 0x0000000000000000
+	exex: false, done:false)
+thread 'test::add_isa_test' panicked at 'illegale functs7 0000001 while opcode is InstrI and funct3 is 001 (shift left)', src/instr/decoded_instr.rs:112:30
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+
+failures:
+    test::add_isa_test
+
+test result: FAILED. 14 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+

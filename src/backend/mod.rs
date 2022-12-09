@@ -46,7 +46,7 @@ impl FakeBackend {
     pub fn req_i(&mut self, req:(bool, Arc<RefCell<Instr>>)){
         ref_cell_borrow_mut(&self.rcu).req_i(req); // no need to clone. req itself is a clone, and req_i does a clone too
     }
-    pub fn resp_o(&self) -> bool{
+    pub fn rdy_o(&self) -> bool{
         self.rcu.borrow().rdy_o()
     }
 }
@@ -62,7 +62,7 @@ impl  CtrlSignals for FakeBackend {
             let lsu_resp = self.lsu.borrow().resp_o();
             let csr_resp = self.csr.borrow().resp_o();
             let alu_resp = self.alu.borrow().resp_o();
-            println!("alu_resp({}, {})", alu_resp.0, alu_resp.1.borrow());
+            // println!("alu_resp({}, {})", alu_resp.0, alu_resp.1.borrow());
             
             let mut tmp = ref_cell_borrow_mut(&self.rcu);
             let rdy = tmp.commit(vec![bru_resp, lsu_resp, csr_resp, alu_resp]);
@@ -87,7 +87,7 @@ impl  CtrlSignals for FakeBackend {
             // fu req
             let mut rcu_tmp = ref_cell_borrow_mut(&self.rcu);
             let rcu_req = rcu_tmp.resp_o();
-            println!("rcu_req({}, {})", rcu_req.0, rcu_req.1.borrow());
+            // println!("rcu_req({}, {})", rcu_req.0, rcu_req.1.borrow());
 
             if rcu_req.1.borrow().decoded.is_alu{
                 let mut alu_tmp = ref_cell_borrow_mut(&self.alu);
@@ -119,17 +119,17 @@ impl  CtrlSignals for FakeBackend {
 
             // rcu req in
             drop(rcu_tmp);
-            
-            ref_cell_borrow_mut(&self.alu).tik();
-            ref_cell_borrow_mut(&self.lsu).tik();
-            ref_cell_borrow_mut(&self.bru).tik();
-            ref_cell_borrow_mut(&self.csr).tik();
-            ref_cell_borrow_mut(&self.rcu).tik();
-            println!();
-            println!();
-            println!();
+            // println!();
+            // println!();
+            // println!();
         }
+        ref_cell_borrow_mut(&self.alu).tik();
+        ref_cell_borrow_mut(&self.lsu).tik();
+        ref_cell_borrow_mut(&self.bru).tik();
+        ref_cell_borrow_mut(&self.csr).tik();
+        ref_cell_borrow_mut(&self.rcu).tik();
     }
+    
     fn rst(&mut self, rst:bool){
         ref_cell_borrow_mut(&self.alu).rst(rst);
         ref_cell_borrow_mut(&self.lsu).rst(rst);
@@ -150,9 +150,9 @@ impl  CtrlSignals for FakeBackend {
 mod test{
     use std::{sync::Arc, cell::RefCell};
 
-    use crate::{backend::{alu::ALU, fake_lsu::FakeLSU, branch_unit::BRU, csr::CSR, fake_rcu::FakeRCU}, memory::{memory::Memory, regfiles::{ARF, CSRF}}, utils::ref_cell_borrow_mut};
+    use crate::{memory::{memory::Memory, regfiles::{ARF, CSRF}}, utils::ref_cell_borrow_mut};
     use crate::instr::Instr;
-    use crate::interface::{CtrlSignals, Interface};
+    use crate::interface::{CtrlSignals};
     use crate::instr::intsr_type::{InstrOpcode::*, InstrType::*};
 
     use super::FakeBackend;
@@ -177,7 +177,7 @@ mod test{
         // bne arf[1] arf[2] (predict fail)
         // nop                                      bne arf[1] arf[2]       
         // nop                                                              flush_vld 
-
+        // TODO: need check flush did happend
 
         // addi 0xf -> arf[1]
         let instr = Arc::new(RefCell::new(Instr::new(0x8000_0000)));

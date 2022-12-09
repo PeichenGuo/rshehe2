@@ -50,11 +50,11 @@ impl Interface for BRU{
             let instr = req.1.clone();
             let (branch, val) = self.calc(&instr.borrow());
             let final_bru_pc:u64 = if branch {val} else {instr.borrow().pc + 4};
-            println!("branch {} val {:08x}", branch, val);
+            // println!("branch {} val {:08x}", branch, val);
             let final_predict_pc:u64 = if instr.borrow().predicted_direction {instr.borrow().predicted_pc} 
                                         else {instr.borrow().pc + 4};
-            println!("predicted_direction {} predicted_pc {:08x}", instr.borrow().predicted_direction, instr.borrow().predicted_pc);
-            println!("final_bru_pc 0x{:08x} final_predict_pc {:08x}\n", final_bru_pc, final_predict_pc);
+            // println!("predicted_direction {} predicted_pc {:08x}", instr.borrow().predicted_direction, instr.borrow().predicted_pc);
+            // println!("final_bru_pc 0x{:08x} final_predict_pc {:08x}\n", final_bru_pc, final_predict_pc);
             let predict_succ = final_bru_pc == final_predict_pc;
             let (wb_vld, wb_data) = self.wb(&instr.borrow());
             

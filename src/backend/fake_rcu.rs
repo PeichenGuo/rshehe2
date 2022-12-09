@@ -72,13 +72,13 @@ impl FakeRCU{
         }
     }
     fn set_busy(&self){
-        println!("set busy");
+        // println!("set busy");
         match self.output.resp_o().1.borrow().decoded.instr_type{
             InstrType::R | InstrType::U | InstrType::I | InstrType::J => {
                 let mut tmp = ref_cell_borrow_mut(&self.arf);
                 tmp.set_busy(self.output.resp_o().1.borrow().decoded.rd, true);
                 drop(tmp);
-                if(self.output.resp_o().1.borrow().decoded.is_csr){
+                if self.output.resp_o().1.borrow().decoded.is_csr{
                     ref_cell_borrow_mut(&self.csrf).set_busy(self.output.resp_o().1.borrow().decoded.csr, true)
                 }
             },
@@ -107,12 +107,12 @@ impl Interface for FakeRCU{
 
     fn resp_o(&self) -> (bool, Self::Output){
         let instr:Arc<RefCell<Instr>> = self.output.resp_o().1;
-        println!("self.iss_rdy():{}", self.iss_rdy());
+        // println!("self.iss_rdy():{}", self.iss_rdy());
         if self.iss_rdy(){
             let rs1_data = self.arf.borrow().get(instr.borrow().decoded.rs1);
             let rs2_data = self.arf.borrow().get(instr.borrow().decoded.rs2);
             let csr_data = self.csrf.borrow().get(instr.borrow().decoded.csr);
-            println!("read arf: rs1:{:16x} rs2:{:16x} csrf:{:16x}", &rs1_data, &rs2_data, &csr_data);
+            // println!("read arf: rs1:{:16x} rs2:{:16x} csrf:{:16x}", &rs1_data, &rs2_data, &csr_data);
             let mut tmp = ref_cell_borrow_mut(&instr);
             tmp.rs1_data = rs1_data;
             tmp.rs2_data = rs2_data;
