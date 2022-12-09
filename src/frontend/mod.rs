@@ -80,7 +80,7 @@ impl CtrlSignals for Frontend{
         ref_cell_borrow_mut(&self.fetch1).tik();
         ref_cell_borrow_mut(&self.fetch2).tik();
         ref_cell_borrow_mut(&self.decode).tik();
-        println!();
+        // println!();
     }
     fn rst(&mut self, rst:bool){
         ref_cell_borrow_mut(&self.fetch1).rst(rst);
