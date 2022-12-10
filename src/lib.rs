@@ -54,6 +54,10 @@ impl HeHeCore{
         self.mem.borrow().test_done()
         
     }
+
+    pub fn read_from_host(&self) -> u32{
+        self.mem.borrow().lw(TOHOST_PADDR) as u32
+    }
 }
 
 impl CtrlSignals for HeHeCore{
@@ -61,6 +65,9 @@ impl CtrlSignals for HeHeCore{
         let frontend_req = self.frontend.borrow().resp_o();
         ref_cell_borrow_mut(&self.backend).req_i(self.frontend.borrow().resp_o());
         ref_cell_borrow_mut(&self.frontend).rdy_i(self.backend.borrow().rdy_o());
+        if self.frontend.borrow().resp_o().0{
+            println!("frontend req: pc-{:016x}", self.frontend.borrow().resp_o().1.borrow().pc)
+        }
         // println!("frontend_req({}, {})", frontend_req.0, frontend_req.1.borrow());
 
         ref_cell_borrow_mut(&self.frontend).flush(self.backend.borrow().flush_o());
@@ -89,17 +96,23 @@ impl CtrlSignals for HeHeCore{
 }
 #[cfg(test)]
 mod test{
+    use std::thread::panicking;
+
     use crate::{HeHeCore, interface::CtrlSignals};
     #[test]
     fn add_isa_test(){
         let mut core = HeHeCore::new();
         core.load_elf("./isa_tests/add.hex");
-        for _i in 0..10000{
+        for _i in 0..1000{
             core.tik();
-            if core.test_done(){
+            if core.read_from_host() == 1{
+                println!("test succ!");
                 break;
             }
+            else if core.read_from_host() != 0{
+                panic!("test fail @ {}", core.read_from_host());
+            }
         }
-        assert!(core.test_done());
+        panic!("time limit reach");
     }
 }

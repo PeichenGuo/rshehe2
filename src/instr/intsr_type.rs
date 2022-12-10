@@ -1,5 +1,5 @@
 #[derive(PartialEq)]
-#[derive( Debug)]
+#[derive(Debug, Clone, Copy)]
 // #[derive(Default)]
 pub enum InstrType{
     R,
@@ -16,7 +16,7 @@ impl Default for InstrType {
 }
 #[derive(PartialEq)]
 // #[deriving(Show)]
-#[derive(Debug)]
+#[derive(Debug, Clone, Copy)]
 // #[derive(Default)]
 pub enum InstrOpcode{
     // R

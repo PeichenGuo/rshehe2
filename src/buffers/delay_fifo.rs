@@ -29,7 +29,7 @@ impl<T> Interface for DelayFIFO<T>
         self.rdy_o = !self.full;
         if self.rdy_o && req.0{
             // enque
-            if self.data.len() < self.max_size as usize{
+            if self.data.len() < self.max_size as usize && (self.tail >= self.data.len() as u16){
                 self.data.push(req.1);
                 self.delays.push(self.delay_options.get(0).unwrap().clone());
             }

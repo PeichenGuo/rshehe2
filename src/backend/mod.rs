@@ -28,8 +28,8 @@ impl FakeBackend {
             alu: Arc::new(RefCell::new(ALU::new())), 
             lsu: Arc::new(RefCell::new(FakeLSU::new(mem.clone()))), 
             bru: Arc::new(RefCell::new(BRU::new())), 
-            csr: Arc::new(RefCell::new(CSR::new())), 
-            rcu: Arc::new(RefCell::new(FakeRCU::new(arf.clone(), csrf.clone()))), 
+            csr: Arc::new(RefCell::new(CSR::new(csrf.clone()))), 
+            rcu: Arc::new(RefCell::new(FakeRCU::new(arf.clone()))), 
             // mem: (mem.clone()), 
             // arf: (arf.clone()), 
             // csrf: (csrf.clone()) 
