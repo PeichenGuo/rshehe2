@@ -51,7 +51,7 @@ impl Interface for FakeLSU{
     type Output = Arc<RefCell<Instr>>;
 
     fn req_i(&mut self, req:(bool, Self::Input)){
-        if self.rdy_o() && req.0 && (req.1.borrow().decoded.is_st || req.1.borrow().decoded.is_ld) { //hsk
+        if self.rdy_o() && req.0 && (req.1.borrow().decoded.is_st || req.1.borrow().decoded.is_ld || req.1.borrow().decoded.is_fence) { //hsk
             let instr = req.1.clone();
             if instr.borrow().decoded.is_ld{
                 let val = self.load(&instr.borrow());
@@ -60,11 +60,14 @@ impl Interface for FakeLSU{
                 tmp.wb_data = val;
                 tmp.exec = true;
             }
-            else{
+            else if instr.borrow().decoded.is_st{
                 let mut tmp = ref_cell_borrow_mut(&instr);
                 tmp.exec = true;
                 drop(tmp);
                 self.store(&instr.borrow());
+            }
+            else if instr.borrow().decoded.is_fence{
+                // pass
             }
             self.output.req_i((true, req.1.clone()));
         }

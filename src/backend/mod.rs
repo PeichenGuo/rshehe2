@@ -101,7 +101,7 @@ impl  CtrlSignals for FakeBackend {
                 rcu_tmp.rdy_i(csr_tmp.rdy_o());
                 drop(csr_tmp);
             }
-            else if rcu_req.1.borrow().decoded.is_ld || rcu_req.1.borrow().decoded.is_st{
+            else if rcu_req.1.borrow().decoded.is_ld || rcu_req.1.borrow().decoded.is_st || rcu_req.1.borrow().decoded.is_fence{
                 let mut lsu_tmp = ref_cell_borrow_mut(&self.lsu);
                 lsu_tmp.req_i(rcu_req);
                 rcu_tmp.rdy_i(lsu_tmp.rdy_o());
