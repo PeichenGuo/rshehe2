@@ -5,6 +5,8 @@ use crate::interface::{CtrlSignals, Interface};
 use crate::instr::{Instr, decoded_instr::DecodedInstr};
 use std::sync::Arc;
 
+use crate::cfg::core_cfg::*;
+
 use crate::utils::*;
 pub struct Decode{ // get pc and visit pht/btb to get a new pc
     // pc_i: Vec<(bool, u32)>,
@@ -25,13 +27,19 @@ impl Interface for Decode{
     type Output = Arc<RefCell<Instr>>;
 
     fn req_i(&mut self, req:(bool, Self::Input)){
-        let req_i = (req.0, req.1.clone());
         if req.0 && self.rdy_o(){ // hsk
-            let tmp:Arc<RefCell<Instr>> = req.1.clone();
-            let docoded_instr: DecodedInstr = DecodedInstr::new(tmp.clone().borrow().raw);
-            ref_cell_borrow_mut(&tmp).decoded_vld = true;
-            ref_cell_borrow_mut(&tmp).decoded = docoded_instr;
+            let docoded_instr: DecodedInstr = DecodedInstr::new(req.1.borrow().raw);
+            let mut tmp = ref_cell_borrow_mut(&req.1);
+            if docoded_instr.illegale_instr{
+                println!("exception!");
+                tmp.exception_vld = true;
+                tmp.ecause = MCAUSE_UNIMPL_INSTR;
+            }
+            tmp.decoded_vld = true;
+            tmp.decoded = docoded_instr;
+            drop(tmp);
         }
+        let req_i = (req.0, req.1.clone());
         self.output.req_i(req_i);
     }
     fn rdy_o(&self) -> bool{

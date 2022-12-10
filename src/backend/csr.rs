@@ -41,10 +41,12 @@ impl Interface for CSR{
     type Output = Arc<RefCell<Instr>>;
 
     fn req_i(&mut self, req:(bool, Self::Input)){
-        if req.0{
-            println!("csr req in: {:08x}, csr rdy:{}", req.1.borrow().pc, self.rdy_o());
+        // if req.0{
+        //     println!("csr req in: {:08x}, csr rdy:{}", req.1.borrow().pc, self.rdy_o());
+        // }
+        if req.1.borrow().exception_vld{
+            self.output.req_i((true, req.1.clone()));
         }
-        
         if self.output.rdy_o() && req.0 && (req.1.borrow().decoded.is_csr){ // csr
             println!("11111");
             let instr = req.1.clone();
@@ -69,8 +71,6 @@ impl Interface for CSR{
             tmp.wb_data = old_csr_val;
             tmp.exec = true;
             drop(tmp);
-            
-            self.output.req_i((true, req.1.clone()));
         }
         else if self.output.rdy_o() && req.0 && (req.1.borrow().decoded.is_syscall){
             // FIXME: ebreak == ecause, wrong 
@@ -86,7 +86,6 @@ impl Interface for CSR{
                     tmp.branch_pc = csr_val; // mtvec 
                     tmp.exec = true;
                     drop(tmp);
-                    self.output.req_i((true, req.1.clone()));
                 },
                 InstrOpcode::MRET => {
 
@@ -96,6 +95,7 @@ impl Interface for CSR{
                 }
             }   
         }
+        self.output.req_i((true, req.1.clone()));
     }
     fn rdy_o(&self) -> bool{
         self.output.rdy_o()

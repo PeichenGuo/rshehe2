@@ -19,3 +19,5 @@ pub const RISCVJ: u16 = 0b10_0000_0000;
 pub const RISCVT: u16 = 0b100_0000_0000;
 pub const RISCVV: u16 = 0b1000_0000_0000;
 pub const RISCVN: u16 = 0b1_0000_0000_0000;
+
+pub const MCAUSE_UNIMPL_INSTR: u64 = 0x2;

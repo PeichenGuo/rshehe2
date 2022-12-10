@@ -30,6 +30,7 @@ pub struct Instr{
 
     pub exception_vld:bool,
     pub ecause:u64,
+    pub exception_msg: String,
 
     pub exec:bool,
     pub done: bool
@@ -62,6 +63,8 @@ impl Instr {
 
             exception_vld:false,
             ecause:0,
+            exception_msg:Default::default(),
+
 
             predict_fail:false,
             branch_pc:0,

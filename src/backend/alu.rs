@@ -70,12 +70,14 @@ impl Interface for ALU{
 
     fn req_i(&mut self, req:(bool, Self::Input)){
         if self.rdy_o() && req.0 && req.1.borrow().decoded.is_alu{ //hsk
-            let instr = req.1.clone();
-            let val = self.calc(&instr.borrow());
-            let mut tmp = ref_cell_borrow_mut(&instr);
-            tmp.wb_vld = true;
-            tmp.wb_data = val;
-            tmp.exec = true;
+            if !req.1.borrow().exception_vld{
+                let instr = req.1.clone();
+                let val = self.calc(&instr.borrow());
+                let mut tmp = ref_cell_borrow_mut(&instr);
+                tmp.wb_vld = true;
+                tmp.wb_data = val;
+                tmp.exec = true;
+            }
             self.output.req_i((true, req.1.clone()));
         }
     }

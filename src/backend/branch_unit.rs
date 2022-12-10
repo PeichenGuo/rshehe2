@@ -47,26 +47,28 @@ impl Interface for BRU{
 
     fn req_i(&mut self, req:(bool, Self::Input)){
         if self.rdy_o() && req.0 && req.1.borrow().decoded.is_branch{ //hsk
-            let instr = req.1.clone();
-            let (branch, val) = self.calc(&instr.borrow());
-            let final_bru_pc:u64 = if branch {val} else {instr.borrow().pc + 4};
-            // println!("branch {} val {:08x}", branch, val);
-            let final_predict_pc:u64 = if instr.borrow().predicted_direction {instr.borrow().predicted_pc} 
-                                        else {instr.borrow().pc + 4};
-            // println!("predicted_direction {} predicted_pc {:08x}", instr.borrow().predicted_direction, instr.borrow().predicted_pc);
-            // println!("final_bru_pc 0x{:08x} final_predict_pc {:08x}\n", final_bru_pc, final_predict_pc);
-            let predict_succ = final_bru_pc == final_predict_pc;
-            let (wb_vld, wb_data) = self.wb(&instr.borrow());
-            
-            let mut tmp = ref_cell_borrow_mut(&instr);
-            tmp.exec = true;
-            if wb_vld{
-                tmp.wb_vld = true;
-                tmp.wb_data = wb_data;
-            }
-            if !predict_succ{
-                tmp.predict_fail = true;
-                tmp.branch_pc = final_bru_pc;
+            if !req.1.borrow().exception_vld{
+                let instr = req.1.clone();
+                let (branch, val) = self.calc(&instr.borrow());
+                let final_bru_pc:u64 = if branch {val} else {instr.borrow().pc + 4};
+                // println!("branch {} val {:08x}", branch, val);
+                let final_predict_pc:u64 = if instr.borrow().predicted_direction {instr.borrow().predicted_pc} 
+                                            else {instr.borrow().pc + 4};
+                // println!("predicted_direction {} predicted_pc {:08x}", instr.borrow().predicted_direction, instr.borrow().predicted_pc);
+                // println!("final_bru_pc 0x{:08x} final_predict_pc {:08x}\n", final_bru_pc, final_predict_pc);
+                let predict_succ = final_bru_pc == final_predict_pc;
+                let (wb_vld, wb_data) = self.wb(&instr.borrow());
+                
+                let mut tmp = ref_cell_borrow_mut(&instr);
+                tmp.exec = true;
+                if wb_vld{
+                    tmp.wb_vld = true;
+                    tmp.wb_data = wb_data;
+                }
+                if !predict_succ{
+                    tmp.predict_fail = true;
+                    tmp.branch_pc = final_bru_pc;
+                }
             }
             self.output.req_i((true, req.1.clone()));
         }

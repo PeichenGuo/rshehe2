@@ -39,11 +39,13 @@ impl FakeRCU{
         self.commit_mux.rdy_i(self.gen_rdy_o());
         let instr = &self.commit_mux.resp_o()[0].1;
         if self.commit_mux.resp_o().get(0).unwrap().0 && self.commit.rdy_o(){
-            if instr.borrow().wb_vld{
-                let mut tmp = ref_cell_borrow_mut(&self.arf);
-                tmp.set(instr.borrow().decoded.rd, instr.borrow().wb_data);
-                tmp.set_busy(instr.borrow().decoded.rd, false);
-                drop(tmp);
+            if !self.commit_mux.resp_o().get(0).unwrap().1.borrow().exception_vld{
+                if instr.borrow().wb_vld{
+                    let mut tmp = ref_cell_borrow_mut(&self.arf);
+                    tmp.set(instr.borrow().decoded.rd, instr.borrow().wb_data);
+                    tmp.set_busy(instr.borrow().decoded.rd, false);
+                    drop(tmp);
+                }
             }
             ref_cell_borrow_mut(&instr).done = true;
             self.commit.req_i((true, instr.clone()));
@@ -130,6 +132,9 @@ impl CtrlSignals for FakeRCU{
         self.output.tik();
         self.commit.tik();
         // TODO: handle finished req
+        if self.commit.resp_o().0 && self.commit.resp_o().1.borrow().exception_vld{
+            panic!("exception {:0x} happened. {}", self.commit.resp_o().1.borrow().ecause, self.commit.resp_o().1.borrow().exception_msg);
+        }
         if self.commit.resp_o().0 && self.commit.resp_o().1.borrow().predict_fail{
             self.flush = true;
             self.branch = (true, self.commit.resp_o().1.borrow().branch_pc);
