@@ -107,13 +107,13 @@ impl DecodedInstr{
                     0b100 => InstrOpcode::XORI,
                     0b110 => InstrOpcode::ORI,
                     0b111 => InstrOpcode::ANDI,
-                    0b001 => match funct7{
-                        0b0000000 => InstrOpcode::SLLI,
+                    0b001 => match funct7 >> 1{
+                        0b000000 => InstrOpcode::SLLI,
                         _ => panic!("illegale functs7 {:07b} while opcode is InstrI and funct3 is 001 (shift left)", funct7)
                     },
-                    0b101 => match funct7{
-                        0b0000000 => InstrOpcode::SRLI,
-                        0b0100000 => InstrOpcode::SRAI,
+                    0b101 => match funct7 >> 1{
+                        0b000000 => InstrOpcode::SRLI,
+                        0b010000 => InstrOpcode::SRAI,
                         _ => panic!("illegale functs7 {:07b} while opcode is InstrI and funct3 is 101 (shift right)", funct7)
                     },
                     _ => panic!("illegale functs3 {:03b} while opcode is InstrI (alu)", funct3)      
@@ -127,6 +127,7 @@ impl DecodedInstr{
                     0b000 => match  immi{ // system call
                         0b000000000000 => InstrOpcode::ECALL,
                         0b000000000001 => InstrOpcode::EBREAK,
+                        0b001100000010 => InstrOpcode::MRET,
                         _=> panic!("illegale immi {:012b} while opcode is InstrI-1110011 
                                     (s) and funct3 is 000 (sys call)", immi)
                     }
@@ -141,9 +142,9 @@ impl DecodedInstr{
                 0b0011011 => match funct3 { // iw
                     0b000 => InstrOpcode::ADDIW,
                     0b001 => InstrOpcode::SLLIW,
-                    0b101 => match funct7{
-                        0b0000000 => InstrOpcode::SRLIW,
-                        0b0100000 => InstrOpcode::SRAIW,
+                    0b101 => match funct7 >> 1{
+                        0b000000 => InstrOpcode::SRLIW,
+                        0b010000 => InstrOpcode::SRAIW,
                         _ => panic!("illegale functs7 {:07b} while opcode is InstrI and funct3 is 101 (shift right w)", funct7)
                     },
                     _ => panic!("illegale functs3 {:03b} while opcode is InstrI (iw)", funct3)      
@@ -162,9 +163,9 @@ impl DecodedInstr{
                     0b010 => InstrOpcode::SLT,
                     0b011 => InstrOpcode::SLTU,
                     0b100 => InstrOpcode::XOR,
-                    0b101 => match funct7{
-                        0b0000000 => InstrOpcode::SRL,
-                        0b0100000 => InstrOpcode::SRA,
+                    0b101 => match funct7 >> 1{
+                        0b000000 => InstrOpcode::SRL,
+                        0b010000 => InstrOpcode::SRA,
                         _ => panic!("illegale functs7 {:07b} while opcode is InstrR 
                                     and funct3 is 101 (shift right)", funct7)
                     },
@@ -180,9 +181,9 @@ impl DecodedInstr{
                                         (InstrI-alu) and funct3 is 000 (add and sub rv64i)", funct7)
                     },
                     0b001 => InstrOpcode::SLLW,
-                    0b101 => match funct7{
-                        0b0000000 => InstrOpcode::SRLW,
-                        0b0100000 => InstrOpcode::SRAW,
+                    0b101 => match funct7 >> 1{
+                        0b000000 => InstrOpcode::SRLW,
+                        0b010000 => InstrOpcode::SRAW,
                         _ => panic!("illegale functs7 {:07b} while opcode is InstrR 
                                     and funct3 is 101 (shift right rv64i)", funct7)
                     },
@@ -231,7 +232,8 @@ impl DecodedInstr{
             (opcode_type == InstrOpcode::CSRRC) || (opcode_type == InstrOpcode::CSRRWI) || 
             (opcode_type == InstrOpcode::CSRRSI) || (opcode_type == InstrOpcode::CSRRCI);
         let is_syscall = 
-            (opcode_type == InstrOpcode::ECALL) || (opcode_type == InstrOpcode::EBREAK);
+            (opcode_type == InstrOpcode::ECALL) || (opcode_type == InstrOpcode::EBREAK) || 
+            (opcode_type == InstrOpcode::MRET);
             DecodedInstr { 
             opcode: opcode, 
             rd: rd, 

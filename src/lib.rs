@@ -58,23 +58,25 @@ impl HeHeCore{
 
 impl CtrlSignals for HeHeCore{
     fn tik(&mut self){
-        let fetch2_req = self.frontend.borrow().resp_o();
+        let frontend_req = self.frontend.borrow().resp_o();
         ref_cell_borrow_mut(&self.backend).req_i(self.frontend.borrow().resp_o());
         ref_cell_borrow_mut(&self.frontend).rdy_i(self.backend.borrow().rdy_o());
-        println!("fetch2_req({}, {})", fetch2_req.0, fetch2_req.1.borrow());
+        // println!("frontend_req({}, {})", frontend_req.0, frontend_req.1.borrow());
 
         ref_cell_borrow_mut(&self.frontend).flush(self.backend.borrow().flush_o());
-        if self.backend.borrow().flush_o(){
-            println!("flush!");
-        }
+        // if self.backend.borrow().flush_o(){
+        //     println!("flush!");
+        // }
         ref_cell_borrow_mut(&self.frontend).branch_i(self.backend.borrow().branch_o());
-        if self.backend.borrow().branch_o().0 {
-            println!("branch {} - 0x{:0x}", self.backend.borrow().branch_o().0, 
-                self.backend.borrow().branch_o().1);
-        }
+        // if self.backend.borrow().branch_o().0 {
+        //     println!("branch {} - 0x{:0x}", self.backend.borrow().branch_o().0, 
+        //         self.backend.borrow().branch_o().1);
+        // }
         
         ref_cell_borrow_mut(&self.frontend).tik();
         ref_cell_borrow_mut(&self.backend).tik();
+
+        println!();
     }
     fn rst(&mut self, rst:bool){
         ref_cell_borrow_mut(&self.frontend).rst(rst);

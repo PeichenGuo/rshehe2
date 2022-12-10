@@ -27,10 +27,13 @@ impl Fetch1 {
         self.pc_mux.req_i(pc_i);
         self.pc_mux.rdy_i(self.gen_rdy_o());
         if self.pc_mux.resp_o().get(0).unwrap().0 && self.output.rdy_o(){ // hsk
-            let tmp = Arc::new(RefCell::new(Instr::new(self.pc_mux.resp_o().get(0).unwrap().1)));
-            ref_cell_borrow_mut(&tmp.clone()).predicted_direction = false;
-            ref_cell_borrow_mut(&tmp.clone()).predicted_pc = 0;
-            self.output.req_i((true, tmp.clone()));
+            let instr = Arc::new(RefCell::new(Instr::new(self.pc_mux.resp_o().get(0).unwrap().1)));
+            let mut tmp = ref_cell_borrow_mut(&instr);
+            tmp.predicted_direction = false;
+            tmp.predicted_pc = 0;
+            drop(tmp);
+            println!("fetch1 pc_mux_in: 0x{:016x}", instr.borrow().pc);
+            self.output.req_i((true, instr.clone()));
         }
         self.pc_mux.rdy_o()
     }

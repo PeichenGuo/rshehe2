@@ -91,7 +91,7 @@ impl<T> CtrlSignals for DelayFIFO<T>
             self.tail = 0;
             self.empty = true;
             self.full = false;
-            self.resp_o = Default::default();
+            self.resp_o = (false, Default::default());
             self.rdy_o = true;
         }
     }

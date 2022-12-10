@@ -66,8 +66,11 @@ pub enum InstrOpcode{
 
     FENCE,
     FENCEI,
+
     ECALL,
     EBREAK,
+    MRET,   
+    
     CSRRW,
     CSRRS,
     CSRRC,

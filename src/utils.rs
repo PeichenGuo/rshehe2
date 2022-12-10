@@ -19,20 +19,20 @@ pub fn signed_less_than(a: u64, b:u64) -> bool{
 
 pub fn sext(a:u64, sign_bit: usize) -> u64{
 
-    if(a >> sign_bit) & 0x1 == 0x1{
-        (a as u64) | 0xffff_ffff_ffff_ffff <<  sign_bit
+    if(a.wrapping_shr(sign_bit as u32)) & 0x1 == 0x1{
+        (a as u64) | 0xffff_ffff_ffff_ffff_u64.wrapping_shl(sign_bit as u32)  
     }
     else{
-        a & (0xffff_ffff_ffff_ffff >> (63 - sign_bit)) // clear top
+        a & (0xffff_ffff_ffff_ffff_u64.wrapping_shr(63 - sign_bit as u32)) // clear top
     }
 }
 
 pub fn sra64(a:u64, b:u64) -> u64 {
-    if (a >> 63) == 1{
-        (a >> b) | (0xffff_ffff_ffff_ffff << (63 - b))
+    if (a.wrapping_shr(63)) == 1{
+        (a.wrapping_shr(b as u32)) | (0xffff_ffff_ffff_ffff_u64.wrapping_shl(63 - b as u32))
     }
     else{
-        a >> b
+        a.wrapping_shr(b as u32)
     }
 }
 

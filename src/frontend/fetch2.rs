@@ -3,6 +3,7 @@ use crate::buffers::delay_fifo::{DelayFIFO};
 use crate::interface::{CtrlSignals, Interface};
 use crate::instr::Instr;
 use crate::memory::memory::Memory;
+use crate::utils::ref_cell_borrow_mut;
 use std::sync::Arc;
 pub struct Fetch2{ // get pc and visit pht/btb to get a new pc
     // pc_i: Vec<(bool, u32)>,
@@ -25,18 +26,13 @@ impl Interface for Fetch2{
     type Output = Arc<RefCell<Instr>>;
 
     fn req_i(&mut self, req:(bool, Self::Input)){
-        let req_i = (req.0, req.1.clone());
-        if req.0 && self.rdy_o(){ // hsk
-            // assert!(req.1.borrow().pc_vld);
-            let tmp:Arc<RefCell<Instr>> = req.1.clone();
-            // let mut tmp2 = (*tmp).borrow_mut();
-            // let mut tmp3 = tmp.borrow_mut();
-            // let mut tmp4 = tmp.borrow();
-            let raw = self.mem.borrow().lw(req.1.borrow().pc as u64) as u32;
-            (*tmp).borrow_mut().raw_vld = true;
-            (*tmp).borrow_mut().raw = raw;
-        }
-        self.output.req_i(req_i);
+        println!("fetch2 req in hsk: {:16x}", req.1.borrow().pc);
+        let raw = self.mem.borrow().lw(req.1.borrow().pc as u64) as u32;
+        let mut tmp = ref_cell_borrow_mut(&req.1);
+        tmp.raw_vld = true;
+        tmp.raw = raw;
+        drop(tmp);
+        self.output.req_i(req.clone());
     }
     fn rdy_o(&self) -> bool{
         self.output.rdy_o()

@@ -22,17 +22,30 @@ impl ARF{
         }
     }
     pub fn get(&self, rd: u8) -> u64{
-        self.regs.get(rd as usize).unwrap().clone()
+        if rd == 0{
+            0
+        }
+        else{
+            self.regs.get(rd as usize).unwrap().clone()
+        }
     }
 
     pub fn set(&mut self, rd:u8, data:u64){
-        self.regs[rd as usize] = data;
+        if rd != 0{
+            self.regs[rd as usize] = data;
+        }
     }
 
     pub fn get_busy(&self, rd: u8) -> bool{
-        self.busy_table.get(&(rd as usize)).unwrap().clone()
+        if rd != 0{
+            self.busy_table.get(&(rd as usize)).unwrap().clone()
+        }
+        else{
+            false
+        }
     }
     pub fn set_busy(&mut self, rd:u8, busy:bool){
+        if rd == 0{ return;}
         let tmp = self.busy_table.get_mut(&(rd as usize)).unwrap();
         *tmp = busy;
     }

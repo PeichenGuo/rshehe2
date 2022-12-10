@@ -5,7 +5,7 @@ use std::cell::RefCell;
 use crate::interface::{CtrlSignals, Interface};
 use crate::instr::Instr;
 use crate::utils::*;
-use crate::instr::intsr_type::InstrOpcode::*;
+use crate::instr::intsr_type::{InstrOpcode::{*, self}, InstrType};
 
 pub struct CSR{
     output: DelayFIFO<Arc<RefCell<Instr>>>,
@@ -36,6 +36,9 @@ impl Interface for CSR{
     type Output = Arc<RefCell<Instr>>;
 
     fn req_i(&mut self, req:(bool, Self::Input)){
+        if req.0{
+            println!("csr req in: {:08x}, csr rdy:{}", req.1.borrow().pc, self.rdy_o());
+        }
         if self.rdy_o() && req.0 && (req.1.borrow().decoded.is_csr){ //hsk
             let instr = req.1.clone();
             let old_csr_val = instr.borrow().csr_data.clone();
@@ -51,14 +54,24 @@ impl Interface for CSR{
         else if self.rdy_o() && req.0 && (req.1.borrow().decoded.is_syscall){
             // FIXME: ebreak == ecause, wrong 
             // FIXME: 徐志轩说的什么向量模式也没有实现
-            let instr = req.1.clone();
-            let mut tmp = ref_cell_borrow_mut(&instr);
-            tmp.predict_fail = true;
-            tmp.branch_pc = tmp.csr_data; // mtvec 
-            tmp.csr_wb_vld = true;
-            tmp.csr_wb_data = tmp.pc + 4; // mepc
-            tmp.exec = true;
-            self.output.req_i((true, req.1.clone()));
+            match req.1.borrow().decoded.opcode_type {
+                InstrOpcode::EBREAK | InstrOpcode::ECALL =>{
+                    let instr = req.1.clone();
+                    let mut tmp = ref_cell_borrow_mut(&instr);
+                    tmp.predict_fail = true;
+                    tmp.branch_pc = tmp.csr_data; // mtvec 
+                    tmp.csr_wb_vld = true;
+                    tmp.csr_wb_data = tmp.pc + 4; // mepc
+                    tmp.exec = true;
+                    self.output.req_i((true, req.1.clone()));
+                },
+                InstrOpcode::MRET => {
+
+                },
+                _ =>{
+                    panic!("illegal syscall opcode in csr");
+                }
+            }   
         }
     }
     fn rdy_o(&self) -> bool{

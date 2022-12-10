@@ -114,8 +114,8 @@ impl Instr {
 
 impl Display for Instr{
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result{
-        write!(f, "\n\tpc:0x{:016x}\n\tpredict direction: {} @ 0x{:016x}\n\tdecode:{:?}\n\trs1_data:0x{:016x} rs2_data:0x{:016x}\n\twb:{} wb_data:0x{:016x}\n\tcsr_vld:{} csr_data:0x{:016x} csr_wb:{}, csr_wb_data: 0x{:016x}\n\tpredict_fail:{}, branch_pc: 0x{:016x}\n\texex: {}, done:{}" , 
-            self.pc, self.predicted_direction, self.predicted_pc, self.decoded, self.rs1_data, self.rs2_data, self.wb_vld, self.wb_data,
+        write!(f, "\n\tpc:0x{:016x}\n\traw: {:08x}\n\tpredict direction: {} @ 0x{:016x}\n\tdecode:{:?}\n\trs1_data:0x{:016x} rs2_data:0x{:016x}\n\twb:{} wb_data:0x{:016x}\n\tcsr_vld:{} csr_data:0x{:016x} csr_wb:{}, csr_wb_data: 0x{:016x}\n\tpredict_fail:{}, branch_pc: 0x{:016x}\n\texex: {}, done:{}" , 
+            self.pc, self.raw, self.predicted_direction, self.predicted_pc, self.decoded, self.rs1_data, self.rs2_data, self.wb_vld, self.wb_data,
             self.csr_vld, self.csr_data, self.csr_wb_vld, self.csr_wb_data, self.predict_fail, self.branch_pc,
             self.exec, self.done
         )

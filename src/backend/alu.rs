@@ -20,18 +20,18 @@ impl ALU {
 
     fn calc(& self, instr: &Instr) -> u64{
         match instr.decoded.opcode_type{
-            ADD => instr.rs1_data + instr.rs2_data,
-            ADDI => instr.rs1_data + sext(instr.decoded.immi as u64, 11),
-            ADDW => sext(instr.rs1_data + instr.rs2_data, 31),
-            ADDIW => sext(instr.rs1_data + sext(instr.decoded.immi as u64, 11), 31),
+            ADD => instr.rs1_data.wrapping_add(instr.rs2_data),
+            ADDI => instr.rs1_data.wrapping_add(sext(instr.decoded.immi as u64, 11)),
+            ADDW => sext(instr.rs1_data.wrapping_add(instr.rs2_data), 31),
+            ADDIW => sext(instr.rs1_data.wrapping_add(sext(instr.decoded.immi as u64, 11)), 31),
             
-            SUB => instr.rs1_data - instr.rs2_data,
-            SUBW => sext(instr.rs1_data - instr.rs2_data, 31),
+            SUB => instr.rs1_data.wrapping_sub(instr.rs2_data),
+            SUBW => sext(instr.rs1_data.wrapping_sub(instr.rs2_data), 31),
             
-            SLL => instr.rs1_data << instr.rs2_data,
-            SLLI => instr.rs1_data << (instr.decoded.shamt as u64),
-            SLLW => sext((instr.rs1_data ) << (instr.rs2_data), 31),
-            SLLIW => sext((instr.rs1_data ) << (instr.decoded.shamt as u64), 31),
+            SLL => instr.rs1_data.wrapping_shl(instr.rs2_data as u32),
+            SLLI => instr.rs1_data.wrapping_shl(instr.decoded.shamt as u32),
+            SLLW => sext(instr.rs1_data.wrapping_shl(instr.rs2_data as u32), 31),
+            SLLIW => sext(instr.rs1_data.wrapping_shl(instr.decoded.shamt as u32), 31),
             
             SLT => signed_less_than(instr.rs1_data, instr.rs2_data) as u64,
             SLTI => signed_less_than(instr.rs1_data, sext(instr.decoded.immi as u64, 11)) as u64,
@@ -41,10 +41,10 @@ impl ALU {
             XOR => instr.rs1_data ^ instr.rs2_data,
             XORI => instr.rs1_data ^ sext(instr.decoded.immi as u64, 11),
             
-            SRL => instr.rs1_data >> instr.rs2_data,
-            SRLI => instr.rs1_data >> (instr.decoded.shamt as u64),
-            SRLW => sext(instr.rs1_data >> instr.rs2_data, 31),
-            SRLIW => sext(instr.rs1_data >> (instr.decoded.shamt as u64), 31),
+            SRL => instr.rs1_data.wrapping_shr(instr.rs2_data as u32),
+            SRLI => instr.rs1_data.wrapping_shr(instr.decoded.shamt as u32),
+            SRLW => sext(instr.rs1_data.wrapping_shr(instr.rs2_data as u32), 31),
+            SRLIW => sext(instr.rs1_data.wrapping_shr(instr.decoded.shamt as u32) , 31),
             
             SRA => sra64(instr.rs1_data, instr.rs2_data),
             SRAI => sra64(instr.rs1_data, instr.decoded.shamt as u64),
@@ -57,7 +57,7 @@ impl ALU {
             AND => instr.rs1_data & instr.rs2_data,
             ANDI => instr.rs1_data & sext(instr.decoded.immi as u64, 11),
             
-            AUIPC => instr.pc + sext(instr.decoded.immu as u64, 31),
+            AUIPC => instr.pc.wrapping_add(sext(instr.decoded.immu as u64, 31)),
             LUI => instr.decoded.immu as u64,
             _ => panic!("invalid opcode type for alu: {:?}", instr.decoded.opcode_type)
         }

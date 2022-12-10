@@ -67,7 +67,7 @@ impl  CtrlSignals for FakeBackend {
             let mut tmp = ref_cell_borrow_mut(&self.rcu);
             let rdy = tmp.commit(vec![bru_resp, lsu_resp, csr_resp, alu_resp]);
             drop(tmp);
-
+            // println!("{:?}", rdy);
             let mut bru_tmp = ref_cell_borrow_mut(&self.bru);
             bru_tmp.rdy_i(rdy[0]);
             drop(bru_tmp);
@@ -129,7 +129,7 @@ impl  CtrlSignals for FakeBackend {
         ref_cell_borrow_mut(&self.csr).tik();
         ref_cell_borrow_mut(&self.rcu).tik();
     }
-    
+
     fn rst(&mut self, rst:bool){
         ref_cell_borrow_mut(&self.alu).rst(rst);
         ref_cell_borrow_mut(&self.lsu).rst(rst);

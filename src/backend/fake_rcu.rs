@@ -34,6 +34,9 @@ impl FakeRCU{
     }
 
     pub fn commit(&mut self,comm: Vec<(bool, Arc<RefCell<Instr>>)>) -> Vec<bool>{
+        // if self.commit_mux.resp_o().get(0).unwrap().0{
+        //     println!("{}", self.commit_mux.resp_o().get(0).unwrap().1.borrow());
+        // }
         self.commit_mux.req_i(comm);
         self.commit_mux.rdy_i(self.gen_rdy_o());
         let instr = &self.commit_mux.resp_o()[0].1;
@@ -44,9 +47,12 @@ impl FakeRCU{
                 tmp.set_busy(instr.borrow().decoded.rd, false);
                 drop(tmp);
             }
-            if instr.borrow().csr_wb_vld{
+            if instr.borrow().decoded.is_csr{
+                // println!("csr commit set free:{:0x}", instr.borrow().decoded.csr);
                 let mut tmp = ref_cell_borrow_mut(&self.csrf);
-                tmp.set(instr.borrow().decoded.csr, instr.borrow().csr_wb_data);
+                if instr.borrow().csr_wb_vld{
+                    tmp.set(instr.borrow().decoded.csr, instr.borrow().csr_wb_data);
+                }
                 tmp.set_busy(instr.borrow().decoded.csr, false);
                 drop(tmp);
             }
@@ -65,6 +71,8 @@ impl FakeRCU{
                 !self.arf.borrow().get_busy(self.output.resp_o().1.borrow().decoded.rs2)
             },
             InstrType::I => {
+                // println!("arf {} busy:{}",self.output.resp_o().1.borrow().decoded.rs1, self.arf.borrow().get_busy(self.output.resp_o().1.borrow().decoded.rs1));
+                // println!("csr({}): {} busy:{}",self.output.resp_o().1.borrow().decoded.is_csr, self.output.resp_o().1.borrow().decoded.csr, self.csrf.borrow().get_busy(self.output.resp_o().1.borrow().decoded.csr));
                 !self.arf.borrow().get_busy(self.output.resp_o().1.borrow().decoded.rs1) &&
                 (!self.output.resp_o().1.borrow().decoded.is_csr || !self.csrf.borrow().get_busy(self.output.resp_o().1.borrow().decoded.csr))
             },
@@ -126,10 +134,11 @@ impl Interface for FakeRCU{
         
     }
     fn rdy_i(&mut self, rdy:bool){
-        if rdy && self.iss_rdy() && self.output.resp_o().0{
+        let ready = rdy && self.iss_rdy();
+        if ready && self.output.resp_o().0{
             self.set_busy();
         }
-        self.output.rdy_i(rdy && self.iss_rdy());
+        self.output.rdy_i(ready);
     }
 }
 
@@ -145,6 +154,9 @@ impl CtrlSignals for FakeRCU{
         else{
             self.flush = false;
             self.branch = (false, 0);
+        }
+        if self.commit.resp_o().0{
+            println!("req commit:{:0x}", self.commit.resp_o().1.borrow().pc);
         }
         self.commit.rdy_i(true); // dump finished req 
     }
@@ -177,16 +189,16 @@ mod test{
         
         // rcu get data
         let mut arf_m = ref_cell_borrow_mut(&arf);
-        arf_m.set(0, 0xf0);
-        arf_m.set(1, 0x0f);
+        arf_m.set(1, 0xf0);
+        arf_m.set(2, 0x0f);
         drop(arf_m);
         let mut csrf_m = ref_cell_borrow_mut(&csrf);
         csrf_m.set(0, 0xdead_beaf);
         drop(csrf_m);
 
         let mut tmp = ref_cell_borrow_mut(&instr);
-        tmp.decoded.rs1 = 0;
-        tmp.decoded.rs2 = 1;
+        tmp.decoded.rs1 = 1;
+        tmp.decoded.rs2 = 2;
         tmp.decoded.csr = 0;
         drop(tmp);
 
@@ -205,6 +217,7 @@ mod test{
         tmp.decoded.rd = 3;
         
         tmp.decoded.csr = 3;
+        tmp.decoded.is_csr = true;
         tmp.csr_wb_vld = true;
         tmp.csr_wb_data = 0x1234_4321;
 
