@@ -97,8 +97,10 @@ impl Interface for CSR{
                         let final_predict_pc:u64 = if instr.borrow().predicted_direction {instr.borrow().predicted_pc} 
                                                 else {instr.borrow().pc + 4};
                         let pc_val = self.csrf.borrow().get(CSR_MEPC_ADDRESS);
-                        // TODO: 将特权级设置成 CSRs[mstatus].MPP, CSRs[mstatus].MIE 置成 CSRs[mstatus].MPIE, 并且将 CSRs[mstatus].MPIE 为 1
-                        // ref_cell_borrow_mut(&self.csrf).set(CSR_MEPC_ADDRESS as u16, instr.borrow().pc + 4);
+                        // TODO: 将特权级设置成 CSRs[mstatus].MPP,
+                        // * CSRs[mstatus].MIE 置成 CSRs[mstatus].MPIE, 并且将 CSRs[mstatus].MPIE 为 1
+                        let mpie = (self.csrf.borrow().get(CSR_MSTATUS_ADDRESS) & MSTATUS_MPIE as u64) >> MSTATUS_MPIE_LOW;
+                        ref_cell_borrow_mut(&self.csrf).set(CSR_MSTATUS_ADDRESS as u16, ((mpie  << (MSTATUS_MPIE_LOW as u64)) | MSTATUS_MPIE as u64) as u64);
                         let mut tmp = ref_cell_borrow_mut(&instr);
                         tmp.predict_fail = final_predict_pc != pc_val;
                         tmp.branch_pc = pc_val; // mtvec 
@@ -147,6 +149,7 @@ impl CtrlSignals for CSR{
 mod test{
     use std::cell::RefCell;
     use crate::backend::csr::CSR;
+    use crate::cfg::regfile_cfg::CSR_MTVEC_ADDRESS;
     use crate::instr::Instr;
     use crate::interface::{Interface, CtrlSignals};
     use crate::instr::intsr_type::InstrOpcode::*;
@@ -162,7 +165,7 @@ mod test{
         let instr = Arc::new(RefCell::new(Instr::new(0x8000_0000)));
         let mut csr_m = ref_cell_borrow_mut(&csrf);
         csr_m.set(0, 0xf0);
-        csr_m.set(1, 0x8000_1000);
+        csr_m.set(CSR_MTVEC_ADDRESS, 0x8000_1000);
         drop(csr_m);
         // csrci
         let mut tmp = ref_cell_borrow_mut(&instr);

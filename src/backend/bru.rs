@@ -19,10 +19,10 @@ impl BRU {
     }
 
     fn calc(& self, instr: &Instr) -> (bool, u64){
-        let branch_pc = instr.pc + sext(instr.decoded.immb as u64, 12);
+        let branch_pc = instr.pc.wrapping_add(sext(instr.decoded.immb as u64, 12));
         match instr.decoded.opcode_type{
-            JALR => (true, sext(instr.decoded.immi as u64, 11) + instr.rs1_data),
-            JAL => (true, instr.pc + sext(instr.decoded.immj as u64, 20)),
+            JALR => (true, sext(instr.decoded.immi as u64, 11).wrapping_add(instr.rs1_data)),
+            JAL => (true, instr.pc.wrapping_add(sext(instr.decoded.immj as u64, 20))),
             BEQ => (instr.rs1_data == instr.rs2_data, branch_pc),
             BNE => (instr.rs1_data != instr.rs2_data, branch_pc),
             BLT => (signed_less_than(instr.rs1_data, instr.rs2_data), branch_pc),
