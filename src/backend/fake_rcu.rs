@@ -38,10 +38,10 @@ impl FakeRCU{
         // }
         self.commit_mux.req_i(comm);
         // println!("rcu commit mux req in :{:?}", self.gen_rdy_o());
-        println!("rcu commit mux rdy in:{:?}", self.gen_rdy_o());
         self.commit_mux.rdy_i(self.gen_rdy_o());
         let instr = &self.commit_mux.resp_o()[0].1;
-        if self.commit_mux.resp_o().get(0).unwrap().0 && self.commit.rdy_o(){
+        println!("rcu commit mux in:{} - {:016x}", self.commit_mux.resp_o()[0].0, instr.borrow().pc);
+        if self.commit_mux.resp_o()[0].0 && self.commit.rdy_o(){
             if !self.commit_mux.resp_o().get(0).unwrap().1.borrow().exception_vld{
                 if instr.borrow().wb_vld{
                     let mut tmp = ref_cell_borrow_mut(&self.arf);
@@ -73,7 +73,7 @@ impl FakeRCU{
         }
     }
     fn set_busy(&self, instr: Arc<RefCell<Instr>>){
-        println!("set busy {}", instr.borrow().decoded.rd);
+        // println!("set busy {}", instr.borrow().decoded.rd);
         match instr.borrow().decoded.instr_type{
             InstrType::R | InstrType::U | InstrType::I | InstrType::J => {
                 let mut tmp = ref_cell_borrow_mut(&self.arf);
@@ -85,7 +85,7 @@ impl FakeRCU{
     }
 
     fn set_free(&self, instr: Arc<RefCell<Instr>>){
-        println!("set free {}", instr.borrow().decoded.rd);
+        // println!("set free {}", instr.borrow().decoded.rd);
         match instr.borrow().decoded.instr_type{
             InstrType::R | InstrType::U | InstrType::I | InstrType::J => {
                 let mut tmp = ref_cell_borrow_mut(&self.arf);
@@ -155,7 +155,7 @@ impl CtrlSignals for FakeRCU{
         if self.commit.resp_o().0 && self.commit.resp_o().1.borrow().exception_vld{
             panic!("exception {:0x} happened. {}", self.commit.resp_o().1.borrow().ecause, self.commit.resp_o().1.borrow().exception_msg);
         }
-        if self.commit.resp_o().0 && self.commit.resp_o().1.borrow().predict_fail{
+        if self.commit.resp_o().0 && (self.commit.resp_o().1.borrow().decoded.is_branch || self.commit.resp_o().1.borrow().decoded.is_syscall){ // FIXME: no pre-exec
             self.flush = true;
             self.branch = (true, self.commit.resp_o().1.borrow().branch_pc);
         }
@@ -222,6 +222,7 @@ mod test{
         tmp.decoded.csr = 3;
         tmp.decoded.is_csr = true;
 
+        tmp.decoded.is_branch = true;
         tmp.predict_fail = true;
         tmp.branch_pc = 0x8000_1000;
         drop(tmp);

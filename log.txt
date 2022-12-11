@@ -1,19 +1,1819 @@
 
-running 14 tests
-test buffers::delay_fifo::test::basic_delay_fifo_test ... ok
-test backend::alu::test::basic_alu_test ... ok
+running 15 tests
 test backend::bru::test::basic_bru_test ... ok
-test buffers::mux::test::basic_mux_test ... ok
-test backend::csr::test::basic_csr_test ... ok
-test frontend::decode::test::basic_fetch2_test ... ok
+test backend::alu::test::basic_alu_test ... ok
+test buffers::delay_fifo::test::basic_delay_fifo_test ... ok
 test backend::fake_rcu::test::basic_fake_rcu_test ... ok
+test buffers::mux::test::basic_mux_test ... ok
+test frontend::decode::test::basic_fetch2_test ... ok
+test backend::csr::test::basic_csr_test ... FAILED
 test instr::decoded_instr::test::basic_decoded_instr_test_on_add_hex ... ok
-test frontend::fetch1::test::basic_fetch1_test ... ok
 test backend::test::basic_backend_test ... ok
-test backend::fake_lsu::test::basic_fake_lsu_test_on_add_hex ... ok
-test frontend::fetch2::test::basic_fetch2_test ... ok
-test memory::memory::test::basic_load_on_add_hex ... ok
+test frontend::fetch1::test::basic_fetch1_test ... ok
 test frontend::test::frontend_basic_test_on_add ... ok
+test backend::fake_lsu::test::basic_fake_lsu_test_on_add_hex ... ok
+test memory::memory::test::basic_load_on_add_hex ... ok
+test frontend::fetch2::test::basic_fetch2_test ... ok
+test test::add_isa_test ... FAILED
 
-test result: ok. 14 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+failures:
+
+---- backend::csr::test::basic_csr_test stdout ----
+csrf write: 0x000000000000000f @ 0
+arf write: 0x00000000000000f0 @ 1
+ecall
+thread 'backend::csr::test::basic_csr_test' panicked at 'assertion failed: `(left == right)`
+  left: `0`,
+ right: `2147487744`', src/backend/csr.rs:203:9
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
+---- test::add_isa_test stdout ----
+rcu commit mux in:false - 0000000000000000
+fetch1 pc_mux_in: 0x0000000080000000
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000000
+fetch1 pc_mux_in: 0x0000000080000004
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000004
+fetch1 pc_mux_in: 0x0000000080000008
+=========
+frontend req: pc-0000000080000000
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000008
+fetch1 pc_mux_in: 0x000000008000000c
+=========
+frontend req: pc-0000000080000000
+rcu commit mux in:false - 0000000000000000
+branch
+branch true val 8000005c
+f1_resp pc: 0x8000000c
+fetch1 pc_mux_in: 0x0000000080000010
+=========
+frontend req: pc-0000000080000000
+rcu commit mux in:true - 0000000080000000
+branch
+branch true val 8000005c
+req commit:80000000
+f1_resp pc: 0x80000010
+fetch1 pc_mux_in: 0x0000000080000014
+=========
+frontend req: pc-0000000080000000
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x000000008000005c
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000005c
+fetch1 pc_mux_in: 0x0000000080000060
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000060
+fetch1 pc_mux_in: 0x0000000080000064
+=========
+frontend req: pc-000000008000005c
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000064
+fetch1 pc_mux_in: 0x0000000080000068
+=========
+frontend req: pc-0000000080000060
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000068
+fetch1 pc_mux_in: 0x000000008000006c
+=========
+frontend req: pc-0000000080000064
+rcu commit mux in:true - 000000008000005c
+req commit:8000005c
+f1_resp pc: 0x8000006c
+fetch1 pc_mux_in: 0x0000000080000070
+=========
+frontend req: pc-0000000080000068
+rcu commit mux in:true - 0000000080000060
+req commit:80000060
+f1_resp pc: 0x80000070
+fetch1 pc_mux_in: 0x0000000080000074
+=========
+frontend req: pc-000000008000006c
+rcu commit mux in:true - 0000000080000064
+req commit:80000064
+f1_resp pc: 0x80000074
+fetch1 pc_mux_in: 0x0000000080000078
+=========
+frontend req: pc-0000000080000070
+rcu commit mux in:true - 0000000080000068
+req commit:80000068
+f1_resp pc: 0x80000078
+fetch1 pc_mux_in: 0x000000008000007c
+=========
+frontend req: pc-0000000080000074
+rcu commit mux in:true - 000000008000006c
+req commit:8000006c
+f1_resp pc: 0x8000007c
+fetch1 pc_mux_in: 0x0000000080000080
+=========
+rcu commit mux in:true - 0000000080000070
+req commit:80000070
+f1_resp pc: 0x80000080
+fetch1 pc_mux_in: 0x0000000080000084
+=========
+rcu commit mux in:true - 0000000080000074
+req commit:80000074
+f1_resp pc: 0x80000084
+fetch1 pc_mux_in: 0x0000000080000088
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000088
+fetch1 pc_mux_in: 0x000000008000008c
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000008c
+fetch1 pc_mux_in: 0x0000000080000090
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000090
+fetch1 pc_mux_in: 0x0000000080000094
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000094
+fetch1 pc_mux_in: 0x0000000080000098
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000098
+fetch1 pc_mux_in: 0x000000008000009c
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000009c
+fetch1 pc_mux_in: 0x00000000800000a0
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000a0
+fetch1 pc_mux_in: 0x00000000800000a4
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000a4
+fetch1 pc_mux_in: 0x00000000800000a8
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000a8
+fetch1 pc_mux_in: 0x00000000800000ac
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000ac
+fetch1 pc_mux_in: 0x00000000800000b0
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000b0
+fetch1 pc_mux_in: 0x00000000800000b4
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000b4
+fetch1 pc_mux_in: 0x00000000800000b8
+=========
+frontend req: pc-0000000080000078
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000b8
+fetch1 pc_mux_in: 0x00000000800000bc
+=========
+frontend req: pc-000000008000007c
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000bc
+fetch1 pc_mux_in: 0x00000000800000c0
+=========
+frontend req: pc-0000000080000080
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000c0
+fetch1 pc_mux_in: 0x00000000800000c4
+=========
+frontend req: pc-0000000080000084
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000c4
+fetch1 pc_mux_in: 0x00000000800000c8
+=========
+frontend req: pc-0000000080000088
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000c8
+fetch1 pc_mux_in: 0x00000000800000cc
+=========
+frontend req: pc-000000008000008c
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000cc
+fetch1 pc_mux_in: 0x00000000800000d0
+=========
+frontend req: pc-0000000080000090
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000d0
+fetch1 pc_mux_in: 0x00000000800000d4
+=========
+frontend req: pc-0000000080000094
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000d4
+fetch1 pc_mux_in: 0x00000000800000d8
+=========
+frontend req: pc-0000000080000098
+rcu commit mux in:true - 0000000080000078
+f1_resp pc: 0x800000d8
+fetch1 pc_mux_in: 0x00000000800000dc
+=========
+frontend req: pc-000000008000009c
+rcu commit mux in:true - 000000008000007c
+f1_resp pc: 0x800000dc
+fetch1 pc_mux_in: 0x00000000800000e0
+=========
+frontend req: pc-00000000800000a0
+rcu commit mux in:true - 0000000080000080
+f1_resp pc: 0x800000e0
+fetch1 pc_mux_in: 0x00000000800000e4
+=========
+frontend req: pc-00000000800000a4
+rcu commit mux in:true - 0000000080000084
+f1_resp pc: 0x800000e4
+fetch1 pc_mux_in: 0x00000000800000e8
+=========
+frontend req: pc-00000000800000a8
+rcu commit mux in:true - 0000000080000088
+f1_resp pc: 0x800000e8
+fetch1 pc_mux_in: 0x00000000800000ec
+=========
+frontend req: pc-00000000800000ac
+rcu commit mux in:true - 000000008000008c
+f1_resp pc: 0x800000ec
+fetch1 pc_mux_in: 0x00000000800000f0
+=========
+frontend req: pc-00000000800000b0
+rcu commit mux in:true - 0000000080000090
+f1_resp pc: 0x800000f0
+fetch1 pc_mux_in: 0x00000000800000f4
+=========
+frontend req: pc-00000000800000b4
+rcu commit mux in:true - 0000000080000094
+req commit:80000078
+f1_resp pc: 0x800000f4
+fetch1 pc_mux_in: 0x00000000800000f8
+=========
+frontend req: pc-00000000800000b8
+rcu commit mux in:true - 0000000080000098
+req commit:8000007c
+f1_resp pc: 0x800000f8
+fetch1 pc_mux_in: 0x00000000800000fc
+=========
+frontend req: pc-00000000800000bc
+rcu commit mux in:true - 000000008000009c
+req commit:80000080
+f1_resp pc: 0x800000fc
+fetch1 pc_mux_in: 0x0000000080000100
+=========
+frontend req: pc-00000000800000c0
+rcu commit mux in:true - 00000000800000a0
+req commit:80000084
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000c4
+rcu commit mux in:true - 00000000800000a4
+req commit:80000088
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000c8
+rcu commit mux in:true - 00000000800000a8
+req commit:8000008c
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000cc
+rcu commit mux in:true - 00000000800000ac
+req commit:80000090
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000d0
+rcu commit mux in:true - 00000000800000b0
+req commit:80000094
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000d4
+rcu commit mux in:true - 00000000800000b4
+req commit:80000098
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000d8
+rcu commit mux in:true - 00000000800000b8
+req commit:8000009c
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000bc
+req commit:800000a0
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000c0
+req commit:800000a4
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000c4
+req commit:800000a8
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000c8
+req commit:800000ac
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000cc
+req commit:800000b0
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000d0
+req commit:800000b4
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000d4
+arf write: 0x0000000000000000 @ 10
+req commit:800000b8
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000d8
+branch
+branch false val 800000dc
+req commit:800000bc
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000dc
+branch
+branch false val 800000dc
+req commit:800000c0
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000dc
+branch
+branch false val 800000dc
+req commit:800000c4
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000dc
+branch
+branch false val 800000dc
+req commit:800000c8
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000dc
+branch
+branch false val 800000dc
+req commit:800000cc
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000dc
+branch
+branch false val 800000dc
+req commit:800000d0
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000dc
+branch
+branch false val 800000dc
+req commit:800000d4
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000dc
+branch
+branch false val 800000dc
+req commit:800000d8
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:true - 00000000800000dc
+branch
+branch false val 800000dc
+req commit:800000dc
+f1_resp pc: 0x800000fc
+=========
+frontend req: pc-00000000800000dc
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x00000000800000e0
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000e0
+fetch1 pc_mux_in: 0x00000000800000e4
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000e4
+fetch1 pc_mux_in: 0x00000000800000e8
+=========
+frontend req: pc-00000000800000e0
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000e8
+fetch1 pc_mux_in: 0x00000000800000ec
+=========
+frontend req: pc-00000000800000e4
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800000ec
+fetch1 pc_mux_in: 0x00000000800000f0
+=========
+frontend req: pc-00000000800000e8
+rcu commit mux in:true - 00000000800000e0
+req commit:800000e0
+f1_resp pc: 0x800000f0
+fetch1 pc_mux_in: 0x00000000800000f4
+=========
+frontend req: pc-00000000800000ec
+rcu commit mux in:true - 00000000800000e4
+csrf write: 0x00000000800000f0 @ 773
+req commit:800000e4
+f1_resp pc: 0x800000f4
+fetch1 pc_mux_in: 0x00000000800000f8
+=========
+frontend req: pc-00000000800000f0
+rcu commit mux in:true - 00000000800000e8
+csrf write: 0x0000000000000000 @ 384
+req commit:800000e8
+f1_resp pc: 0x800000f8
+fetch1 pc_mux_in: 0x00000000800000fc
+=========
+frontend req: pc-00000000800000f4
+rcu commit mux in:true - 00000000800000ec
+req commit:800000ec
+f1_resp pc: 0x800000fc
+fetch1 pc_mux_in: 0x0000000080000100
+=========
+frontend req: pc-00000000800000f8
+rcu commit mux in:true - 00000000800000f0
+req commit:800000f0
+f1_resp pc: 0x80000100
+fetch1 pc_mux_in: 0x0000000080000104
+=========
+rcu commit mux in:true - 00000000800000f4
+csrf write: 0x0000000080000114 @ 773
+req commit:800000f4
+f1_resp pc: 0x80000104
+fetch1 pc_mux_in: 0x0000000080000108
+=========
+rcu commit mux in:true - 00000000800000f8
+req commit:800000f8
+f1_resp pc: 0x80000108
+fetch1 pc_mux_in: 0x000000008000010c
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000010c
+fetch1 pc_mux_in: 0x0000000080000110
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000110
+fetch1 pc_mux_in: 0x0000000080000114
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000114
+fetch1 pc_mux_in: 0x0000000080000118
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000118
+fetch1 pc_mux_in: 0x000000008000011c
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000011c
+fetch1 pc_mux_in: 0x0000000080000120
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000120
+fetch1 pc_mux_in: 0x0000000080000124
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000124
+fetch1 pc_mux_in: 0x0000000080000128
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000128
+fetch1 pc_mux_in: 0x000000008000012c
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000012c
+fetch1 pc_mux_in: 0x0000000080000130
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000130
+fetch1 pc_mux_in: 0x0000000080000134
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000134
+fetch1 pc_mux_in: 0x0000000080000138
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000138
+fetch1 pc_mux_in: 0x000000008000013c
+=========
+frontend req: pc-00000000800000fc
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000013c
+fetch1 pc_mux_in: 0x0000000080000140
+=========
+frontend req: pc-0000000080000100
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000140
+fetch1 pc_mux_in: 0x0000000080000144
+=========
+frontend req: pc-0000000080000104
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000144
+fetch1 pc_mux_in: 0x0000000080000148
+=========
+frontend req: pc-0000000080000108
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000148
+fetch1 pc_mux_in: 0x000000008000014c
+=========
+frontend req: pc-000000008000010c
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000014c
+fetch1 pc_mux_in: 0x0000000080000150
+=========
+frontend req: pc-0000000080000110
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000150
+fetch1 pc_mux_in: 0x0000000080000154
+=========
+frontend req: pc-0000000080000114
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000154
+fetch1 pc_mux_in: 0x0000000080000158
+=========
+frontend req: pc-0000000080000118
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000158
+80000158 raw:      73
+fetch1 pc_mux_in: 0x000000008000015c
+=========
+frontend req: pc-000000008000011c
+rcu commit mux in:true - 00000000800000fc
+f1_resp pc: 0x8000015c
+fetch1 pc_mux_in: 0x0000000080000160
+=========
+frontend req: pc-0000000080000120
+rcu commit mux in:true - 0000000080000100
+f1_resp pc: 0x80000160
+fetch1 pc_mux_in: 0x0000000080000164
+=========
+frontend req: pc-0000000080000124
+rcu commit mux in:true - 0000000080000104
+csrf write: 0x001fffffffffffff @ 944
+f1_resp pc: 0x80000164
+fetch1 pc_mux_in: 0x0000000080000168
+=========
+frontend req: pc-0000000080000128
+rcu commit mux in:true - 0000000080000108
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-000000008000012c
+rcu commit mux in:true - 000000008000010c
+csrf write: 0x000000000000001f @ 928
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000130
+rcu commit mux in:true - 0000000080000110
+csrf write: 0x0000000000000000 @ 772
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000134
+rcu commit mux in:true - 0000000080000114
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000138
+rcu commit mux in:true - 0000000080000118
+req commit:800000fc
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-000000008000013c
+rcu commit mux in:true - 000000008000011c
+csrf write: 0x000000008000012c @ 773
+req commit:80000100
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000140
+rcu commit mux in:true - 0000000080000120
+csrf write: 0x0000000000000000 @ 770
+req commit:80000104
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 0000000080000124
+csrf write: 0x0000000000000000 @ 771
+req commit:80000108
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 0000000080000128
+req commit:8000010c
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 000000008000012c
+req commit:80000110
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 0000000080000130
+req commit:80000114
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 0000000080000134
+csrf write: 0x0000000080000004 @ 773
+req commit:80000118
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 0000000080000138
+req commit:8000011c
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 000000008000013c
+req commit:80000120
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 0000000080000140
+branch
+branch true val 8000015c
+req commit:80000124
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 0000000080000144
+branch
+branch true val 8000015c
+req commit:80000128
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 0000000080000144
+branch
+branch true val 8000015c
+req commit:8000012c
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 0000000080000144
+branch
+branch true val 8000015c
+req commit:80000130
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 0000000080000144
+branch
+branch true val 8000015c
+req commit:80000134
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 0000000080000144
+branch
+branch true val 8000015c
+req commit:80000138
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 0000000080000144
+branch
+branch true val 8000015c
+req commit:8000013c
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 0000000080000144
+branch
+branch true val 8000015c
+req commit:80000140
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:true - 0000000080000144
+branch
+branch true val 8000015c
+req commit:80000144
+f1_resp pc: 0x80000164
+=========
+frontend req: pc-0000000080000144
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x000000008000015c
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000015c
+fetch1 pc_mux_in: 0x0000000080000160
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000160
+fetch1 pc_mux_in: 0x0000000080000164
+=========
+frontend req: pc-000000008000015c
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000164
+fetch1 pc_mux_in: 0x0000000080000168
+=========
+frontend req: pc-0000000080000160
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000168
+fetch1 pc_mux_in: 0x000000008000016c
+=========
+frontend req: pc-0000000080000164
+frontend req: pc-0000000080000164 is BEQ, is branch true
+rcu req in: pc-0000000080000164 is BEQ
+rcu commit mux in:true - 000000008000015c
+req commit:8000015c
+f1_resp pc: 0x8000016c
+fetch1 pc_mux_in: 0x0000000080000170
+=========
+frontend req: pc-0000000080000164
+frontend req: pc-0000000080000164 is BEQ, is branch true
+rcu req in: pc-0000000080000164 is BEQ
+rcu commit mux in:true - 0000000080000160
+rcu req iss: pc-0000000080000164 is BEQ
+branch
+branch true val 80000178
+req commit:80000160
+f1_resp pc: 0x80000170
+fetch1 pc_mux_in: 0x0000000080000174
+=========
+frontend req: pc-0000000080000164
+frontend req: pc-0000000080000164 is BEQ, is branch true
+rcu req in: pc-0000000080000164 is BEQ
+rcu commit mux in:true - 0000000080000164
+rcu req iss: pc-0000000080000164 is BEQ
+branch
+branch true val 80000178
+req commit:80000164
+f1_resp pc: 0x80000174
+fetch1 pc_mux_in: 0x0000000080000178
+=========
+frontend req: pc-0000000080000164
+frontend req: pc-0000000080000164 is BEQ, is branch true
+rcu req in: pc-0000000080000164 is BEQ
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x0000000080000178
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000178
+fetch1 pc_mux_in: 0x000000008000017c
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000017c
+fetch1 pc_mux_in: 0x0000000080000180
+=========
+frontend req: pc-0000000080000178
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000180
+fetch1 pc_mux_in: 0x0000000080000184
+=========
+frontend req: pc-000000008000017c
+rcu commit mux in:false - 0000000000000000
+csrf write: 0x0000000000000000 @ 768
+f1_resp pc: 0x80000184
+fetch1 pc_mux_in: 0x0000000080000188
+=========
+frontend req: pc-0000000080000180
+rcu commit mux in:true - 0000000080000178
+req commit:80000178
+f1_resp pc: 0x80000188
+fetch1 pc_mux_in: 0x000000008000018c
+=========
+frontend req: pc-0000000080000184
+rcu commit mux in:true - 000000008000017c
+req commit:8000017c
+f1_resp pc: 0x8000018c
+fetch1 pc_mux_in: 0x0000000080000190
+=========
+frontend req: pc-0000000080000188
+rcu commit mux in:true - 0000000080000180
+csrf write: 0x0000000080000190 @ 833
+req commit:80000180
+f1_resp pc: 0x80000190
+fetch1 pc_mux_in: 0x0000000080000194
+=========
+frontend req: pc-000000008000018c
+rcu commit mux in:true - 0000000080000184
+arf write: 0x0000000000000000 @ 10
+req commit:80000184
+f1_resp pc: 0x80000194
+fetch1 pc_mux_in: 0x0000000080000198
+=========
+frontend req: pc-000000008000018c
+rcu commit mux in:true - 0000000080000188
+mret
+req commit:80000188
+f1_resp pc: 0x80000198
+fetch1 pc_mux_in: 0x000000008000019c
+=========
+rcu commit mux in:true - 000000008000018c
+mret
+req commit:8000018c
+f1_resp pc: 0x8000019c
+fetch1 pc_mux_in: 0x00000000800001a0
+=========
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x0000000080000190
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000190
+fetch1 pc_mux_in: 0x0000000080000194
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000194
+fetch1 pc_mux_in: 0x0000000080000198
+=========
+frontend req: pc-0000000080000190
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000198
+fetch1 pc_mux_in: 0x000000008000019c
+=========
+frontend req: pc-0000000080000194
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000019c
+fetch1 pc_mux_in: 0x00000000800001a0
+=========
+frontend req: pc-0000000080000198
+rcu commit mux in:true - 0000000080000190
+req commit:80000190
+f1_resp pc: 0x800001a0
+fetch1 pc_mux_in: 0x00000000800001a4
+=========
+frontend req: pc-000000008000019c
+rcu commit mux in:true - 0000000080000194
+req commit:80000194
+f1_resp pc: 0x800001a4
+fetch1 pc_mux_in: 0x00000000800001a8
+=========
+frontend req: pc-00000000800001a0
+rcu commit mux in:true - 0000000080000198
+req commit:80000198
+f1_resp pc: 0x800001a8
+fetch1 pc_mux_in: 0x00000000800001ac
+=========
+frontend req: pc-00000000800001a4
+rcu commit mux in:true - 000000008000019c
+req commit:8000019c
+f1_resp pc: 0x800001ac
+fetch1 pc_mux_in: 0x00000000800001b0
+=========
+frontend req: pc-00000000800001a4
+rcu commit mux in:true - 00000000800001a0
+branch
+branch false val 80000684
+req commit:800001a0
+f1_resp pc: 0x800001b0
+fetch1 pc_mux_in: 0x00000000800001b4
+=========
+rcu commit mux in:true - 00000000800001a4
+branch
+branch false val 80000684
+req commit:800001a4
+f1_resp pc: 0x800001b4
+fetch1 pc_mux_in: 0x00000000800001b8
+=========
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x00000000800001a8
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001a8
+fetch1 pc_mux_in: 0x00000000800001ac
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001ac
+fetch1 pc_mux_in: 0x00000000800001b0
+=========
+frontend req: pc-00000000800001a8
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001b0
+fetch1 pc_mux_in: 0x00000000800001b4
+=========
+frontend req: pc-00000000800001ac
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001b4
+fetch1 pc_mux_in: 0x00000000800001b8
+=========
+frontend req: pc-00000000800001b0
+rcu commit mux in:true - 00000000800001a8
+req commit:800001a8
+f1_resp pc: 0x800001b8
+fetch1 pc_mux_in: 0x00000000800001bc
+=========
+frontend req: pc-00000000800001b4
+rcu commit mux in:true - 00000000800001ac
+req commit:800001ac
+f1_resp pc: 0x800001bc
+fetch1 pc_mux_in: 0x00000000800001c0
+=========
+frontend req: pc-00000000800001b8
+rcu commit mux in:true - 00000000800001b0
+req commit:800001b0
+f1_resp pc: 0x800001c0
+fetch1 pc_mux_in: 0x00000000800001c4
+=========
+frontend req: pc-00000000800001bc
+rcu commit mux in:true - 00000000800001b4
+req commit:800001b4
+f1_resp pc: 0x800001c4
+fetch1 pc_mux_in: 0x00000000800001c8
+=========
+frontend req: pc-00000000800001bc
+rcu commit mux in:true - 00000000800001b8
+branch
+branch false val 80000684
+req commit:800001b8
+f1_resp pc: 0x800001c8
+fetch1 pc_mux_in: 0x00000000800001cc
+=========
+rcu commit mux in:true - 00000000800001bc
+branch
+branch false val 80000684
+req commit:800001bc
+f1_resp pc: 0x800001cc
+fetch1 pc_mux_in: 0x00000000800001d0
+=========
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x00000000800001c0
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001c0
+fetch1 pc_mux_in: 0x00000000800001c4
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001c4
+fetch1 pc_mux_in: 0x00000000800001c8
+=========
+frontend req: pc-00000000800001c0
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001c8
+fetch1 pc_mux_in: 0x00000000800001cc
+=========
+frontend req: pc-00000000800001c4
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001cc
+fetch1 pc_mux_in: 0x00000000800001d0
+=========
+frontend req: pc-00000000800001c8
+rcu commit mux in:true - 00000000800001c0
+req commit:800001c0
+f1_resp pc: 0x800001d0
+fetch1 pc_mux_in: 0x00000000800001d4
+=========
+frontend req: pc-00000000800001cc
+rcu commit mux in:true - 00000000800001c4
+req commit:800001c4
+f1_resp pc: 0x800001d4
+fetch1 pc_mux_in: 0x00000000800001d8
+=========
+frontend req: pc-00000000800001d0
+rcu commit mux in:true - 00000000800001c8
+req commit:800001c8
+f1_resp pc: 0x800001d8
+fetch1 pc_mux_in: 0x00000000800001dc
+=========
+frontend req: pc-00000000800001d4
+rcu commit mux in:true - 00000000800001cc
+req commit:800001cc
+f1_resp pc: 0x800001dc
+fetch1 pc_mux_in: 0x00000000800001e0
+=========
+frontend req: pc-00000000800001d4
+rcu commit mux in:true - 00000000800001d0
+branch
+branch false val 80000684
+req commit:800001d0
+f1_resp pc: 0x800001e0
+fetch1 pc_mux_in: 0x00000000800001e4
+=========
+rcu commit mux in:true - 00000000800001d4
+branch
+branch false val 80000684
+req commit:800001d4
+f1_resp pc: 0x800001e4
+fetch1 pc_mux_in: 0x00000000800001e8
+=========
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x00000000800001d8
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001d8
+fetch1 pc_mux_in: 0x00000000800001dc
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001dc
+fetch1 pc_mux_in: 0x00000000800001e0
+=========
+frontend req: pc-00000000800001d8
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001e0
+fetch1 pc_mux_in: 0x00000000800001e4
+=========
+frontend req: pc-00000000800001dc
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001e4
+fetch1 pc_mux_in: 0x00000000800001e8
+=========
+frontend req: pc-00000000800001e0
+rcu commit mux in:true - 00000000800001d8
+req commit:800001d8
+f1_resp pc: 0x800001e8
+fetch1 pc_mux_in: 0x00000000800001ec
+=========
+frontend req: pc-00000000800001e4
+rcu commit mux in:true - 00000000800001dc
+req commit:800001dc
+f1_resp pc: 0x800001ec
+fetch1 pc_mux_in: 0x00000000800001f0
+=========
+frontend req: pc-00000000800001e8
+rcu commit mux in:true - 00000000800001e0
+req commit:800001e0
+f1_resp pc: 0x800001f0
+fetch1 pc_mux_in: 0x00000000800001f4
+=========
+frontend req: pc-00000000800001ec
+rcu commit mux in:true - 00000000800001e4
+req commit:800001e4
+f1_resp pc: 0x800001f4
+fetch1 pc_mux_in: 0x00000000800001f8
+=========
+frontend req: pc-00000000800001ec
+rcu commit mux in:true - 00000000800001e8
+branch
+branch false val 80000684
+req commit:800001e8
+f1_resp pc: 0x800001f8
+fetch1 pc_mux_in: 0x00000000800001fc
+=========
+rcu commit mux in:true - 00000000800001ec
+branch
+branch false val 80000684
+req commit:800001ec
+f1_resp pc: 0x800001fc
+fetch1 pc_mux_in: 0x0000000080000200
+=========
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x00000000800001f0
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001f0
+fetch1 pc_mux_in: 0x00000000800001f4
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001f4
+fetch1 pc_mux_in: 0x00000000800001f8
+=========
+frontend req: pc-00000000800001f0
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001f8
+fetch1 pc_mux_in: 0x00000000800001fc
+=========
+frontend req: pc-00000000800001f4
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x800001fc
+fetch1 pc_mux_in: 0x0000000080000200
+=========
+frontend req: pc-00000000800001f8
+rcu commit mux in:true - 00000000800001f0
+req commit:800001f0
+f1_resp pc: 0x80000200
+fetch1 pc_mux_in: 0x0000000080000204
+=========
+frontend req: pc-00000000800001fc
+rcu commit mux in:true - 00000000800001f4
+req commit:800001f4
+f1_resp pc: 0x80000204
+fetch1 pc_mux_in: 0x0000000080000208
+=========
+frontend req: pc-0000000080000200
+rcu commit mux in:true - 00000000800001f8
+req commit:800001f8
+f1_resp pc: 0x80000208
+fetch1 pc_mux_in: 0x000000008000020c
+=========
+frontend req: pc-0000000080000204
+rcu commit mux in:true - 00000000800001fc
+req commit:800001fc
+f1_resp pc: 0x8000020c
+fetch1 pc_mux_in: 0x0000000080000210
+=========
+frontend req: pc-0000000080000204
+rcu commit mux in:true - 0000000080000200
+branch
+branch false val 80000684
+req commit:80000200
+f1_resp pc: 0x80000210
+fetch1 pc_mux_in: 0x0000000080000214
+=========
+rcu commit mux in:true - 0000000080000204
+branch
+branch false val 80000684
+req commit:80000204
+f1_resp pc: 0x80000214
+fetch1 pc_mux_in: 0x0000000080000218
+=========
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x0000000080000208
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000208
+fetch1 pc_mux_in: 0x000000008000020c
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000020c
+fetch1 pc_mux_in: 0x0000000080000210
+=========
+frontend req: pc-0000000080000208
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000210
+fetch1 pc_mux_in: 0x0000000080000214
+=========
+frontend req: pc-000000008000020c
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000214
+fetch1 pc_mux_in: 0x0000000080000218
+=========
+frontend req: pc-0000000080000210
+rcu commit mux in:true - 0000000080000208
+req commit:80000208
+f1_resp pc: 0x80000218
+fetch1 pc_mux_in: 0x000000008000021c
+=========
+frontend req: pc-0000000080000214
+rcu commit mux in:true - 000000008000020c
+req commit:8000020c
+f1_resp pc: 0x8000021c
+fetch1 pc_mux_in: 0x0000000080000220
+=========
+frontend req: pc-0000000080000218
+rcu commit mux in:true - 0000000080000210
+req commit:80000210
+f1_resp pc: 0x80000220
+fetch1 pc_mux_in: 0x0000000080000224
+=========
+frontend req: pc-000000008000021c
+rcu commit mux in:true - 0000000080000214
+req commit:80000214
+f1_resp pc: 0x80000224
+fetch1 pc_mux_in: 0x0000000080000228
+=========
+frontend req: pc-0000000080000220
+rcu commit mux in:true - 0000000080000218
+req commit:80000218
+f1_resp pc: 0x80000228
+fetch1 pc_mux_in: 0x000000008000022c
+=========
+rcu commit mux in:true - 000000008000021c
+req commit:8000021c
+f1_resp pc: 0x8000022c
+fetch1 pc_mux_in: 0x0000000080000230
+=========
+rcu commit mux in:true - 0000000080000220
+req commit:80000220
+f1_resp pc: 0x80000230
+fetch1 pc_mux_in: 0x0000000080000234
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000234
+fetch1 pc_mux_in: 0x0000000080000238
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000238
+fetch1 pc_mux_in: 0x000000008000023c
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000023c
+fetch1 pc_mux_in: 0x0000000080000240
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000240
+fetch1 pc_mux_in: 0x0000000080000244
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000244
+fetch1 pc_mux_in: 0x0000000080000248
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000244
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000244
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000244
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000244
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000244
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000244
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:false - 0000000000000000
+branch
+branch true val 80000684
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:true - 0000000080000224
+branch
+branch true val 80000684
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:true - 0000000080000224
+branch
+branch true val 80000684
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:true - 0000000080000224
+branch
+branch true val 80000684
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:true - 0000000080000224
+branch
+branch true val 80000684
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:true - 0000000080000224
+branch
+branch true val 80000684
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:true - 0000000080000224
+branch
+branch true val 80000684
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:true - 0000000080000224
+branch
+branch true val 80000684
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:true - 0000000080000224
+branch
+branch true val 80000684
+req commit:80000224
+f1_resp pc: 0x80000244
+=========
+frontend req: pc-0000000080000224
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x0000000080000684
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000684
+fetch1 pc_mux_in: 0x0000000080000688
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000688
+fetch1 pc_mux_in: 0x000000008000068c
+=========
+frontend req: pc-0000000080000684
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000068c
+fetch1 pc_mux_in: 0x0000000080000690
+=========
+frontend req: pc-0000000080000688
+frontend req: pc-0000000080000688 is BEQ, is branch true
+rcu req in: pc-0000000080000688 is BEQ
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000690
+fetch1 pc_mux_in: 0x0000000080000694
+=========
+frontend req: pc-0000000080000688
+frontend req: pc-0000000080000688 is BEQ, is branch true
+rcu req in: pc-0000000080000688 is BEQ
+rcu commit mux in:true - 0000000080000684
+rcu req iss: pc-0000000080000688 is BEQ
+branch
+branch false val 80000688
+req commit:80000684
+f1_resp pc: 0x80000694
+fetch1 pc_mux_in: 0x0000000080000698
+=========
+frontend req: pc-0000000080000688
+frontend req: pc-0000000080000688 is BEQ, is branch true
+rcu req in: pc-0000000080000688 is BEQ
+rcu commit mux in:true - 0000000080000688
+rcu req iss: pc-0000000080000688 is BEQ
+branch
+branch false val 80000688
+req commit:80000688
+f1_resp pc: 0x80000698
+fetch1 pc_mux_in: 0x000000008000069c
+=========
+frontend req: pc-0000000080000688
+frontend req: pc-0000000080000688 is BEQ, is branch true
+rcu req in: pc-0000000080000688 is BEQ
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x000000008000068c
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000068c
+fetch1 pc_mux_in: 0x0000000080000690
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000690
+fetch1 pc_mux_in: 0x0000000080000694
+=========
+frontend req: pc-000000008000068c
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000694
+fetch1 pc_mux_in: 0x0000000080000698
+=========
+frontend req: pc-0000000080000690
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000698
+fetch1 pc_mux_in: 0x000000008000069c
+=========
+frontend req: pc-0000000080000694
+rcu commit mux in:true - 000000008000068c
+req commit:8000068c
+f1_resp pc: 0x8000069c
+fetch1 pc_mux_in: 0x00000000800006a0
+=========
+frontend req: pc-0000000080000698
+rcu commit mux in:true - 0000000080000690
+req commit:80000690
+ecall : opcode:1110011 funct3:000 funct7:0000000 immi:000000000000, rs2:00000
+ecall decoded
+f1_resp pc: 0x800006a0
+fetch1 pc_mux_in: 0x00000000800006a4
+=========
+frontend req: pc-000000008000069c
+frontend req: pc-000000008000069c is ecall
+rcu commit mux in:true - 0000000080000694
+req commit:80000694
+ecall : opcode:1110011 funct3:000 funct7:0000000 immi:000000000000, rs2:00000
+ecall decoded
+f1_resp pc: 0x800006a4
+fetch1 pc_mux_in: 0x00000000800006a8
+=========
+frontend req: pc-000000008000069c
+frontend req: pc-000000008000069c is ecall
+rcu commit mux in:true - 0000000080000698
+ecall
+req commit:80000698
+ecall : opcode:1110011 funct3:000 funct7:0000000 immi:000000000000, rs2:00000
+ecall decoded
+f1_resp pc: 0x800006a8
+fetch1 pc_mux_in: 0x00000000800006ac
+=========
+frontend req: pc-000000008000069c
+frontend req: pc-000000008000069c is ecall
+rcu commit mux in:true - 000000008000069c
+ecall
+req commit:8000069c
+f1_resp pc: 0x800006ac
+fetch1 pc_mux_in: 0x00000000800006b0
+=========
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x0000000080000004
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000004
+fetch1 pc_mux_in: 0x0000000080000008
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000008
+fetch1 pc_mux_in: 0x000000008000000c
+=========
+frontend req: pc-0000000080000004
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000000c
+fetch1 pc_mux_in: 0x0000000080000010
+=========
+frontend req: pc-0000000080000008
+rcu commit mux in:false - 0000000000000000
+arf write: 0x0000000000000000 @ 30
+f1_resp pc: 0x80000010
+fetch1 pc_mux_in: 0x0000000080000014
+=========
+frontend req: pc-000000008000000c
+frontend req: pc-000000008000000c is BEQ, is branch true
+rcu req in: pc-000000008000000c is BEQ
+rcu commit mux in:true - 0000000080000004
+req commit:80000004
+f1_resp pc: 0x80000014
+fetch1 pc_mux_in: 0x0000000080000018
+=========
+frontend req: pc-000000008000000c
+frontend req: pc-000000008000000c is BEQ, is branch true
+rcu req in: pc-000000008000000c is BEQ
+rcu commit mux in:true - 0000000080000008
+rcu req iss: pc-000000008000000c is BEQ
+branch
+branch false val 80000040
+req commit:80000008
+f1_resp pc: 0x80000018
+fetch1 pc_mux_in: 0x000000008000001c
+=========
+frontend req: pc-000000008000000c
+frontend req: pc-000000008000000c is BEQ, is branch true
+rcu req in: pc-000000008000000c is BEQ
+rcu commit mux in:true - 000000008000000c
+rcu req iss: pc-000000008000000c is BEQ
+branch
+branch false val 80000040
+req commit:8000000c
+f1_resp pc: 0x8000001c
+fetch1 pc_mux_in: 0x0000000080000020
+=========
+frontend req: pc-000000008000000c
+frontend req: pc-000000008000000c is BEQ, is branch true
+rcu req in: pc-000000008000000c is BEQ
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x0000000080000010
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000010
+fetch1 pc_mux_in: 0x0000000080000014
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000014
+fetch1 pc_mux_in: 0x0000000080000018
+=========
+frontend req: pc-0000000080000010
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000018
+fetch1 pc_mux_in: 0x000000008000001c
+=========
+frontend req: pc-0000000080000014
+frontend req: pc-0000000080000014 is BEQ, is branch true
+rcu req in: pc-0000000080000014 is BEQ
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000001c
+fetch1 pc_mux_in: 0x0000000080000020
+=========
+frontend req: pc-0000000080000014
+frontend req: pc-0000000080000014 is BEQ, is branch true
+rcu req in: pc-0000000080000014 is BEQ
+rcu commit mux in:true - 0000000080000010
+rcu req iss: pc-0000000080000014 is BEQ
+branch
+branch false val 80000040
+req commit:80000010
+f1_resp pc: 0x80000020
+fetch1 pc_mux_in: 0x0000000080000024
+=========
+frontend req: pc-0000000080000014
+frontend req: pc-0000000080000014 is BEQ, is branch true
+rcu req in: pc-0000000080000014 is BEQ
+rcu commit mux in:true - 0000000080000014
+rcu req iss: pc-0000000080000014 is BEQ
+branch
+branch false val 80000040
+req commit:80000014
+f1_resp pc: 0x80000024
+fetch1 pc_mux_in: 0x0000000080000028
+=========
+frontend req: pc-0000000080000014
+frontend req: pc-0000000080000014 is BEQ, is branch true
+rcu req in: pc-0000000080000014 is BEQ
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x0000000080000018
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000018
+fetch1 pc_mux_in: 0x000000008000001c
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000001c
+fetch1 pc_mux_in: 0x0000000080000020
+=========
+frontend req: pc-0000000080000018
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000020
+fetch1 pc_mux_in: 0x0000000080000024
+=========
+frontend req: pc-000000008000001c
+frontend req: pc-000000008000001c is BEQ, is branch true
+rcu req in: pc-000000008000001c is BEQ
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000024
+fetch1 pc_mux_in: 0x0000000080000028
+=========
+frontend req: pc-000000008000001c
+frontend req: pc-000000008000001c is BEQ, is branch true
+rcu req in: pc-000000008000001c is BEQ
+rcu commit mux in:true - 0000000080000018
+rcu req iss: pc-000000008000001c is BEQ
+branch
+branch false val 80000040
+req commit:80000018
+f1_resp pc: 0x80000028
+fetch1 pc_mux_in: 0x000000008000002c
+=========
+frontend req: pc-000000008000001c
+frontend req: pc-000000008000001c is BEQ, is branch true
+rcu req in: pc-000000008000001c is BEQ
+rcu commit mux in:true - 000000008000001c
+rcu req iss: pc-000000008000001c is BEQ
+branch
+branch false val 80000040
+req commit:8000001c
+f1_resp pc: 0x8000002c
+fetch1 pc_mux_in: 0x0000000080000030
+=========
+frontend req: pc-000000008000001c
+frontend req: pc-000000008000001c is BEQ, is branch true
+rcu req in: pc-000000008000001c is BEQ
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x0000000080000020
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000020
+fetch1 pc_mux_in: 0x0000000080000024
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000024
+fetch1 pc_mux_in: 0x0000000080000028
+=========
+frontend req: pc-0000000080000020
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000028
+fetch1 pc_mux_in: 0x000000008000002c
+=========
+frontend req: pc-0000000080000024
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000002c
+fetch1 pc_mux_in: 0x0000000080000030
+=========
+frontend req: pc-0000000080000028
+frontend req: pc-0000000080000028 is BEQ, is branch true
+rcu req in: pc-0000000080000028 is BEQ
+rcu commit mux in:true - 0000000080000020
+req commit:80000020
+f1_resp pc: 0x80000030
+fetch1 pc_mux_in: 0x0000000080000034
+=========
+frontend req: pc-0000000080000028
+frontend req: pc-0000000080000028 is BEQ, is branch true
+rcu req in: pc-0000000080000028 is BEQ
+rcu commit mux in:true - 0000000080000024
+rcu req iss: pc-0000000080000028 is BEQ
+branch
+branch true val 80000030
+req commit:80000024
+f1_resp pc: 0x80000034
+fetch1 pc_mux_in: 0x0000000080000038
+=========
+frontend req: pc-0000000080000028
+frontend req: pc-0000000080000028 is BEQ, is branch true
+rcu req in: pc-0000000080000028 is BEQ
+rcu commit mux in:true - 0000000080000028
+rcu req iss: pc-0000000080000028 is BEQ
+branch
+branch true val 80000030
+req commit:80000028
+f1_resp pc: 0x80000038
+fetch1 pc_mux_in: 0x000000008000003c
+=========
+frontend req: pc-0000000080000028
+frontend req: pc-0000000080000028 is BEQ, is branch true
+rcu req in: pc-0000000080000028 is BEQ
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x0000000080000030
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000030
+fetch1 pc_mux_in: 0x0000000080000034
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000034
+fetch1 pc_mux_in: 0x0000000080000038
+=========
+frontend req: pc-0000000080000030
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000038
+fetch1 pc_mux_in: 0x000000008000003c
+=========
+frontend req: pc-0000000080000034
+rcu commit mux in:false - 0000000000000000
+arf write: 0x0000000000000000 @ 30
+f1_resp pc: 0x8000003c
+fetch1 pc_mux_in: 0x0000000080000040
+=========
+frontend req: pc-0000000080000034
+rcu commit mux in:true - 0000000080000030
+branch
+branch true val 8000003c
+req commit:80000030
+f1_resp pc: 0x80000040
+fetch1 pc_mux_in: 0x0000000080000044
+=========
+frontend req: pc-0000000080000034
+rcu commit mux in:true - 0000000080000034
+branch
+branch true val 8000003c
+req commit:80000034
+f1_resp pc: 0x80000044
+fetch1 pc_mux_in: 0x0000000080000048
+=========
+frontend req: pc-0000000080000034
+rcu commit mux in:false - 0000000000000000
+flush!
+fetch1 pc_mux_in: 0x000000008000003c
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000003c
+fetch1 pc_mux_in: 0x0000000080000040
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000040
+fetch1 pc_mux_in: 0x0000000080000044
+=========
+frontend req: pc-000000008000003c
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000044
+fetch1 pc_mux_in: 0x0000000080000048
+=========
+frontend req: pc-0000000080000040
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000048
+fetch1 pc_mux_in: 0x000000008000004c
+=========
+frontend req: pc-0000000080000044
+rcu commit mux in:true - 000000008000003c
+req commit:8000003c
+f1_resp pc: 0x8000004c
+fetch1 pc_mux_in: 0x0000000080000050
+=========
+frontend req: pc-0000000080000048
+rcu commit mux in:true - 0000000080000040
+req commit:80000040
+f1_resp pc: 0x80000050
+fetch1 pc_mux_in: 0x0000000080000054
+=========
+frontend req: pc-000000008000004c
+rcu commit mux in:true - 0000000080000044
+req commit:80000044
+f1_resp pc: 0x80000054
+fetch1 pc_mux_in: 0x0000000080000058
+=========
+frontend req: pc-0000000080000050
+rcu commit mux in:true - 0000000080000048
+req commit:80000048
+f1_resp pc: 0x80000058
+fetch1 pc_mux_in: 0x000000008000005c
+=========
+frontend req: pc-0000000080000054
+rcu commit mux in:true - 000000008000004c
+req commit:8000004c
+f1_resp pc: 0x8000005c
+fetch1 pc_mux_in: 0x0000000080000060
+=========
+rcu commit mux in:true - 0000000080000050
+req commit:80000050
+f1_resp pc: 0x80000060
+fetch1 pc_mux_in: 0x0000000080000064
+=========
+rcu commit mux in:true - 0000000080000054
+req commit:80000054
+f1_resp pc: 0x80000064
+fetch1 pc_mux_in: 0x0000000080000068
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000068
+fetch1 pc_mux_in: 0x000000008000006c
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x8000006c
+fetch1 pc_mux_in: 0x0000000080000070
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000070
+fetch1 pc_mux_in: 0x0000000080000074
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000074
+fetch1 pc_mux_in: 0x0000000080000078
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000078
+fetch1 pc_mux_in: 0x000000008000007c
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000078
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000078
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000078
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000078
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000078
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000078
+=========
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000078
+=========
+frontend req: pc-0000000080000058
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000078
+=========
+frontend req: pc-0000000080000058
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000078
+=========
+frontend req: pc-0000000080000058
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000078
+=========
+frontend req: pc-0000000080000058
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000078
+=========
+frontend req: pc-0000000080000058
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000078
+=========
+frontend req: pc-0000000080000058
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000078
+=========
+frontend req: pc-0000000080000058
+rcu commit mux in:false - 0000000000000000
+f1_resp pc: 0x80000078
+=========
+frontend req: pc-0000000080000058
+rcu commit mux in:false - 0000000000000000
+branch
+thread 'test::add_isa_test' panicked at 'attempt to add with overflow', src/backend/bru.rs:22:25
+
+
+failures:
+    backend::csr::test::basic_csr_test
+    test::add_isa_test
+
+test result: FAILED. 13 passed; 2 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
 

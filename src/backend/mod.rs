@@ -53,77 +53,78 @@ impl FakeBackend {
 
 impl  CtrlSignals for FakeBackend {
     fn tik(&mut self){
-        if self.rcu.borrow().flush_o(){
-            self.flush(true);
+        let flush = self.rcu.borrow().flush_o();
+        self.flush(flush);
+
+        // rcu commit 
+        let bru_resp = self.bru.borrow().resp_o();
+        let lsu_resp = self.lsu.borrow().resp_o();
+        let csr_resp = self.csr.borrow().resp_o();
+        let alu_resp = self.alu.borrow().resp_o();
+        // println!("bru_resp({}, {:016x})", bru_resp.0, bru_resp.1.borrow().pc);
+        // println!("lsu_resp({}, {:016x})", lsu_resp.0, lsu_resp.1.borrow().pc);
+        // println!("csr_resp({}, {:016x})", csr_resp.0, csr_resp.1.borrow().pc);
+        // println!("alu_resp({}, {:016x})", alu_resp.0, alu_resp.1.borrow().pc);
+        let mut tmp = ref_cell_borrow_mut(&self.rcu);
+        let rdy = tmp.commit(vec![bru_resp, lsu_resp, csr_resp, alu_resp]);
+        drop(tmp);
+        
+        // println!("{:?}", rdy);
+        let mut bru_tmp = ref_cell_borrow_mut(&self.bru);
+        bru_tmp.rdy_i(rdy[0]);
+        drop(bru_tmp);
+
+        let mut lsu_tmp = ref_cell_borrow_mut(&self.lsu);
+        lsu_tmp.rdy_i(rdy[1]);
+        drop(lsu_tmp);
+
+        let mut csr_tmp = ref_cell_borrow_mut(&self.csr);
+        csr_tmp.rdy_i(rdy[2]);
+        drop(csr_tmp);
+
+        let mut alu_tmp = ref_cell_borrow_mut(&self.alu);
+        alu_tmp.rdy_i(rdy[3]);
+        drop(alu_tmp);
+
+        // fu req
+        let mut rcu_tmp = ref_cell_borrow_mut(&self.rcu);
+        let rcu_req = rcu_tmp.resp_o();
+        // println!("rcu_req({}, {:016x})", rcu_req.0, rcu_req.1.borrow().pc);
+
+        if rcu_req.1.borrow().decoded.is_alu{
+            let mut alu_tmp = ref_cell_borrow_mut(&self.alu);
+            alu_tmp.req_i(rcu_req);
+            rcu_tmp.rdy_i(alu_tmp.rdy_o());
+            drop(alu_tmp);
+        }
+        else if rcu_req.1.borrow().decoded.is_csr || rcu_req.1.borrow().decoded.is_syscall{
+            let mut csr_tmp = ref_cell_borrow_mut(&self.csr);
+            csr_tmp.req_i(rcu_req);
+            rcu_tmp.rdy_i(csr_tmp.rdy_o());
+            drop(csr_tmp);
+        }
+        else if rcu_req.1.borrow().decoded.is_ld || rcu_req.1.borrow().decoded.is_st || rcu_req.1.borrow().decoded.is_fence{
+            let mut lsu_tmp = ref_cell_borrow_mut(&self.lsu);
+            lsu_tmp.req_i(rcu_req);
+            rcu_tmp.rdy_i(lsu_tmp.rdy_o());
+            drop(lsu_tmp);
+        }
+        else if rcu_req.1.borrow().decoded.is_branch{
+            // println!("branch issued {:?} @ {:016x}", rcu_req.1.borrow().decoded.opcode_type, rcu_req.1.borrow().pc);
+            let mut bru_tmp = ref_cell_borrow_mut(&self.bru);
+            bru_tmp.req_i(rcu_req);
+            rcu_tmp.rdy_i(bru_tmp.rdy_o());
+            drop(bru_tmp);
         }
         else{
-            // rcu commit 
-            let bru_resp = self.bru.borrow().resp_o();
-            let lsu_resp = self.lsu.borrow().resp_o();
-            let csr_resp = self.csr.borrow().resp_o();
-            let alu_resp = self.alu.borrow().resp_o();
-            // println!("alu_resp({}, {})", alu_resp.0, alu_resp.1.borrow());
-            let mut tmp = ref_cell_borrow_mut(&self.rcu);
-            let rdy = tmp.commit(vec![bru_resp, lsu_resp, csr_resp, alu_resp]);
-            drop(tmp);
-            
-            println!("{:?}", rdy);
-            let mut bru_tmp = ref_cell_borrow_mut(&self.bru);
-            bru_tmp.rdy_i(rdy[0]);
-            drop(bru_tmp);
-
-            let mut lsu_tmp = ref_cell_borrow_mut(&self.lsu);
-            lsu_tmp.rdy_i(rdy[1]);
-            drop(lsu_tmp);
-
-            let mut csr_tmp = ref_cell_borrow_mut(&self.csr);
-            csr_tmp.rdy_i(rdy[2]);
-            drop(csr_tmp);
-
-            let mut alu_tmp = ref_cell_borrow_mut(&self.alu);
-            alu_tmp.rdy_i(rdy[3]);
-            drop(alu_tmp);
-
-            // fu req
-            let mut rcu_tmp = ref_cell_borrow_mut(&self.rcu);
-            let rcu_req = rcu_tmp.resp_o();
-            // println!("rcu_req({}, {})", rcu_req.0, rcu_req.1.borrow());
-
-            if rcu_req.1.borrow().decoded.is_alu{
-                let mut alu_tmp = ref_cell_borrow_mut(&self.alu);
-                alu_tmp.req_i(rcu_req);
-                rcu_tmp.rdy_i(alu_tmp.rdy_o());
-                drop(alu_tmp);
-            }
-            else if rcu_req.1.borrow().decoded.is_csr || rcu_req.1.borrow().decoded.is_syscall{
-                let mut csr_tmp = ref_cell_borrow_mut(&self.csr);
-                csr_tmp.req_i(rcu_req);
-                rcu_tmp.rdy_i(csr_tmp.rdy_o());
-                drop(csr_tmp);
-            }
-            else if rcu_req.1.borrow().decoded.is_ld || rcu_req.1.borrow().decoded.is_st || rcu_req.1.borrow().decoded.is_fence{
-                let mut lsu_tmp = ref_cell_borrow_mut(&self.lsu);
-                lsu_tmp.req_i(rcu_req);
-                rcu_tmp.rdy_i(lsu_tmp.rdy_o());
-                drop(lsu_tmp);
-            }
-            else if rcu_req.1.borrow().decoded.is_branch{
-                // println!("branch issued {:?} @ {:016x}", rcu_req.1.borrow().decoded.opcode_type, rcu_req.1.borrow().pc);
-                let mut bru_tmp = ref_cell_borrow_mut(&self.bru);
-                bru_tmp.req_i(rcu_req);
-                rcu_tmp.rdy_i(bru_tmp.rdy_o());
-                drop(bru_tmp);
-            }
-            else{
-                // panic!("should not happen, panic anyway");
-            }
-
-            // rcu req in
-            drop(rcu_tmp);
-            // println!();
-            // println!();
-            // println!();
+            // panic!("should not happen, panic anyway");
         }
+
+        // rcu req in
+        drop(rcu_tmp);
+        // println!();
+        // println!();
+        // println!();
         ref_cell_borrow_mut(&self.alu).tik();
         ref_cell_borrow_mut(&self.lsu).tik();
         ref_cell_borrow_mut(&self.bru).tik();

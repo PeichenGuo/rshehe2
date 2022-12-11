@@ -53,6 +53,7 @@ impl Interface for FakeLSU{
     fn req_i(&mut self, req:(bool, Self::Input)){
         if req.1.borrow().exception_vld{
             self.output.req_i((true, req.1.clone()));
+            return;
         }
         if self.rdy_o() && req.0 && (req.1.borrow().decoded.is_st || req.1.borrow().decoded.is_ld || req.1.borrow().decoded.is_fence) { //hsk
             let instr = req.1.clone();

@@ -68,8 +68,9 @@ impl Interface for BRU{
                 }
                 if !predict_succ{
                     tmp.predict_fail = true;
-                    tmp.branch_pc = final_bru_pc;
                 }
+                tmp.branch_pc = final_bru_pc;
+                drop(tmp)
             }
             self.output.req_i((true, req.1.clone()));
         }

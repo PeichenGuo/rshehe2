@@ -89,10 +89,10 @@ impl CtrlSignals for HeHeCore{
         //         self.backend.borrow().branch_o().1);
         // }
         
-        ref_cell_borrow_mut(&self.frontend).tik();
         ref_cell_borrow_mut(&self.backend).tik();
+        ref_cell_borrow_mut(&self.frontend).tik();
 
-        println!();
+        println!("=========");
     }
     fn rst(&mut self, rst:bool){
         ref_cell_borrow_mut(&self.frontend).rst(rst);
@@ -108,7 +108,7 @@ mod test{
     use std::thread::panicking;
 
     use crate::{HeHeCore, interface::CtrlSignals};
-    // #[test]
+    #[test]
     fn add_isa_test(){
         let mut core = HeHeCore::new();
         core.load_elf("./isa_tests/add.hex");

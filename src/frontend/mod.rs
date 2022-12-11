@@ -52,6 +52,7 @@ impl CtrlSignals for Frontend{
         // * 所有的前传都不进行握手！合理的
         
         if self.branch_vld {
+            println!("flush!");
             ref_cell_borrow_mut(&self.fetch2).flush(true);
             ref_cell_borrow_mut(&self.fetch1).flush(true);
             ref_cell_borrow_mut(&self.decode).flush(true);
@@ -140,6 +141,13 @@ mod test{
 
         frontend.branch_i((false, 0));
         frontend.tik();
+        assert_eq!(frontend.resp_o().0, false);
+
+        frontend.branch_i((true, 0x8000_0004));
+        frontend.tik();
+        frontend.branch_i((false, 0));
+        frontend.tik();
+        frontend.tik();
         assert_eq!(frontend.resp_o().0, true);
         assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
         assert_eq!(frontend.resp_o().1.borrow().decoded.is_csr, true);
@@ -155,120 +163,120 @@ mod test{
         frontend.rdy_i(true);
 
 
-        frontend.branch_i((false, 0));
-        frontend.tik();
-        assert_eq!(frontend.resp_o().0, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::BEQ);
-        frontend.rdy_i(true);
+        // frontend.branch_i((false, 0));
+        // frontend.tik();
+        // assert_eq!(frontend.resp_o().0, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::BEQ);
+        // frontend.rdy_i(true);
 
-        frontend.branch_i((false, 0));
-        frontend.tik();
-        assert_eq!(frontend.resp_o().0, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.is_alu, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::ADDI);
-        frontend.rdy_i(true);
-
-        frontend.branch_i((false, 0));
-        frontend.tik();
-        assert_eq!(frontend.resp_o().0, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::BEQ);
-        frontend.rdy_i(true);
-
-        frontend.branch_i((false, 0));
-        frontend.tik();
-        assert_eq!(frontend.resp_o().0, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.is_alu, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::ADDI);
-        frontend.rdy_i(true);
-
-        frontend.branch_i((false, 0));
-        frontend.tik();
-        assert_eq!(frontend.resp_o().0, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::BEQ);
-        frontend.rdy_i(true);
-
-        frontend.branch_i((false, 0));
-        frontend.tik();
-        assert_eq!(frontend.resp_o().0, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
+        // frontend.branch_i((t, 0));
+        // frontend.tik();
+        // assert_eq!(frontend.resp_o().0, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
         // assert_eq!(frontend.resp_o().1.borrow().decoded.is_alu, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::AUIPC);
-        frontend.rdy_i(true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::ADDI);
+        // frontend.rdy_i(true);
 
-        frontend.branch_i((false, 0));
-        frontend.tik();
-        assert_eq!(frontend.resp_o().0, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.is_alu, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::ADDI);
-        frontend.rdy_i(true);
+        // frontend.branch_i((false, 0));
+        // frontend.tik();
+        // assert_eq!(frontend.resp_o().0, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::BEQ);
+        // frontend.rdy_i(true);
 
-        frontend.branch_i((false, 0));
-        frontend.tik();
-        assert_eq!(frontend.resp_o().0, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::BEQ);
-        frontend.rdy_i(true);
+        // frontend.branch_i((false, 0));
+        // frontend.tik();
+        // assert_eq!(frontend.resp_o().0, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.is_alu, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::ADDI);
+        // frontend.rdy_i(true);
 
-        frontend.branch_i((false, 0));
-        frontend.tik();
-        assert_eq!(frontend.resp_o().0, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::JALR);
-        frontend.rdy_i(true);
+        // frontend.branch_i((false, 0));
+        // frontend.tik();
+        // assert_eq!(frontend.resp_o().0, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::BEQ);
+        // frontend.rdy_i(true);
 
-        frontend.branch_i((false, 0));
-        frontend.tik();
-        assert_eq!(frontend.resp_o().0, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.is_csr, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::CSRRS);
-        frontend.rdy_i(true);
+        // frontend.branch_i((false, 0));
+        // frontend.tik();
+        // assert_eq!(frontend.resp_o().0, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
+        // // assert_eq!(frontend.resp_o().1.borrow().decoded.is_alu, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::AUIPC);
+        // frontend.rdy_i(true);
 
-        frontend.branch_i((false, 0));
-        frontend.tik();
-        assert_eq!(frontend.resp_o().0, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::BGE);
-        frontend.rdy_i(true);
+        // frontend.branch_i((false, 0));
+        // frontend.tik();
+        // assert_eq!(frontend.resp_o().0, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.is_alu, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::ADDI);
+        // frontend.rdy_i(true);
 
-        frontend.branch_i((false, 0));
-        frontend.tik();
-        assert_eq!(frontend.resp_o().0, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::JAL);
-        frontend.rdy_i(true);
+        // frontend.branch_i((false, 0));
+        // frontend.tik();
+        // assert_eq!(frontend.resp_o().0, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::BEQ);
+        // frontend.rdy_i(true);
+
+        // frontend.branch_i((false, 0));
+        // frontend.tik();
+        // assert_eq!(frontend.resp_o().0, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::JALR);
+        // frontend.rdy_i(true);
+
+        // frontend.branch_i((false, 0));
+        // frontend.tik();
+        // assert_eq!(frontend.resp_o().0, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.is_csr, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::CSRRS);
+        // frontend.rdy_i(true);
+
+        // frontend.branch_i((false, 0));
+        // frontend.tik();
+        // assert_eq!(frontend.resp_o().0, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::BGE);
+        // frontend.rdy_i(true);
+
+        // frontend.branch_i((false, 0));
+        // frontend.tik();
+        // assert_eq!(frontend.resp_o().0, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::JAL);
+        // frontend.rdy_i(true);
 
 
-        // branch flush
-        frontend.branch_i((true, 0x8000_0000));
-        frontend.tik();
-        assert_eq!(frontend.resp_o().0, false);
-        frontend.rdy_i(true);
+        // // branch flush
+        // frontend.branch_i((true, 0x8000_0000));
+        // frontend.tik();
+        // assert_eq!(frontend.resp_o().0, false);
+        // frontend.rdy_i(true);
 
-        frontend.branch_i((false, 0));
-        frontend.tik();
-        assert_eq!(frontend.resp_o().0, false);
-        frontend.rdy_i(true);
+        // frontend.branch_i((false, 0));
+        // frontend.tik();
+        // assert_eq!(frontend.resp_o().0, false);
+        // frontend.rdy_i(true);
 
-        frontend.branch_i((false, 0));
-        frontend.tik();
-        assert_eq!(frontend.resp_o().0, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
-        assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::JAL);
-        frontend.rdy_i(true);
+        // frontend.branch_i((false, 0));
+        // frontend.tik();
+        // assert_eq!(frontend.resp_o().0, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.is_branch, true);
+        // assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::JAL);
+        // frontend.rdy_i(true);
     }
 }

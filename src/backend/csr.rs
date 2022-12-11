@@ -42,69 +42,88 @@ impl Interface for CSR{
 
     fn req_i(&mut self, req:(bool, Self::Input)){
         // if req.0{
-        //     println!("csr req in: {:08x}, csr rdy:{}", req.1.borrow().pc, self.rdy_o());
+        //     println!("csr req in: {:016x}, exception vld:{}", req.1.borrow().pc, req.1.borrow().exception_vld);
         // }
-        if req.0 && req.1.borrow().decoded.opcode_type == InstrOpcode::ECALL{
-            println!("ecall in: {:08x}, exception_vld:{}", req.1.borrow().pc, req.1.borrow().exception_vld);
-        }
         if req.1.borrow().exception_vld{
             self.output.req_i((true, req.1.clone()));
+            return;
         }
-        if self.output.rdy_o() && req.0 && (req.1.borrow().decoded.is_csr){ // csr
-            let instr = req.1.clone();
-            let (wb_vld, csr_wb_vld): (bool, bool) = match instr.borrow().decoded.opcode_type{
-                CSRRW | CSRRWI => (instr.borrow().decoded.rd != 0, true),
-                CSRRC | CSRRCI | CSRRS | CSRRSI => (true, instr.borrow().decoded.rs1 != 0),
-                _ => {
-                    panic!("illegal opcode type {:?} for csr instr in csr", instr.borrow().decoded.opcode_type);
+        if self.output.rdy_o() && req.0 {
+            if req.1.borrow().decoded.is_csr{ // csr
+                let instr = req.1.clone();
+                let (wb_vld, csr_wb_vld): (bool, bool) = match instr.borrow().decoded.opcode_type{
+                    CSRRW | CSRRWI => (instr.borrow().decoded.rd != 0, true),
+                    CSRRC | CSRRCI | CSRRS | CSRRSI => (true, instr.borrow().decoded.rs1 != 0),
+                    _ => {
+                        panic!("illegal opcode type {:?} for csr instr in csr", instr.borrow().decoded.opcode_type);
+                    }
+                };
+                let old_csr_val = if wb_vld {self.csrf.borrow().get(req.1.borrow().decoded.csr)}else{0};
+                let csr_data = self.csr_val(&instr.borrow(), old_csr_val);
+                if csr_wb_vld {
+                    println!("csrf write: 0x{:016x} @ {}", csr_data, instr.borrow().decoded.csr);
+                    ref_cell_borrow_mut(&self.csrf).set(instr.borrow().decoded.csr as u16, csr_data);
                 }
-            };
-            let old_csr_val = if wb_vld {self.csrf.borrow().get(req.1.borrow().decoded.csr)}else{0};
-            let csr_data = self.csr_val(&instr.borrow(), old_csr_val);
-            if csr_wb_vld {
-                println!("csrf write: 0x{:016x} @ {}", csr_data, instr.borrow().decoded.csr);
-                ref_cell_borrow_mut(&self.csrf).set(instr.borrow().decoded.csr as u16, csr_data);
-            }
-            if wb_vld{
-                println!("arf write: 0x{:016x} @ {}", old_csr_val, instr.borrow().decoded.rd);
-            }
-            let mut tmp = ref_cell_borrow_mut(&instr);
-            tmp.wb_vld = wb_vld;
-            tmp.wb_data = old_csr_val;
-            tmp.exec = true;
-            drop(tmp);
-        }
-        else if self.output.rdy_o() && req.0 && (req.1.borrow().decoded.is_syscall){
-            // FIXME: ebreak == ecause, wrong 
-            // FIXME: 徐志轩说的什么向量模式也没有实现
-            let opcode = req.1.borrow().decoded.opcode_type.clone();
-            match opcode {
-                InstrOpcode::EBREAK | InstrOpcode::ECALL =>{
-                    println!("ecall");
-                    let instr = req.1.clone();
-                    let csr_val = self.csrf.borrow().get(req.1.borrow().decoded.csr);
-                    ref_cell_borrow_mut(&self.csrf).set(CSR_MEPC_ADDRESS as u16, instr.borrow().pc + 4);
-                    let mut tmp = ref_cell_borrow_mut(&instr);
-                    tmp.predict_fail = true;
-                    tmp.branch_pc = csr_val; // mtvec 
-                    tmp.exec = true;
-                    drop(tmp);
-                },
-                InstrOpcode::MRET => {
-
-                },
-                _ =>{
-                    panic!("illegal syscall opcode in csr");
+                if wb_vld{
+                    println!("arf write: 0x{:016x} @ {}", old_csr_val, instr.borrow().decoded.rd);
                 }
-            }   
+                let mut tmp = ref_cell_borrow_mut(&instr);
+                tmp.wb_vld = wb_vld;
+                tmp.wb_data = old_csr_val;
+                tmp.exec = true;
+                drop(tmp);
+            }
+            else if self.output.rdy_o() && req.0 && (req.1.borrow().decoded.is_syscall){
+                // FIXME: ebreak == ecause, wrong 
+                // FIXME: 徐志轩说的什么向量模式也没有实现
+                let opcode = req.1.borrow().decoded.opcode_type.clone();
+                match opcode {
+                    InstrOpcode::EBREAK | InstrOpcode::ECALL =>{
+                        println!("ecall");
+                        let instr = req.1.clone();
+                        let final_predict_pc:u64 = if instr.borrow().predicted_direction {instr.borrow().predicted_pc} 
+                                                else {instr.borrow().pc + 4};
+                        let csr_val = self.csrf.borrow().get(CSR_MTVEC_ADDRESS as u16);
+                        ref_cell_borrow_mut(&self.csrf).set(CSR_MEPC_ADDRESS as u16, instr.borrow().pc + 4);
+                        let mut tmp = ref_cell_borrow_mut(&instr);
+                        tmp.predict_fail = final_predict_pc != csr_val;
+                        tmp.branch_pc = csr_val; // mtvec 
+                        tmp.exec = true;
+                        drop(tmp);
+                    },
+                    InstrOpcode::MRET => {
+                        println!("mret");
+                        let instr = req.1.clone();
+                        let final_predict_pc:u64 = if instr.borrow().predicted_direction {instr.borrow().predicted_pc} 
+                                                else {instr.borrow().pc + 4};
+                        let pc_val = self.csrf.borrow().get(CSR_MEPC_ADDRESS);
+                        // TODO: 将特权级设置成 CSRs[mstatus].MPP, CSRs[mstatus].MIE 置成 CSRs[mstatus].MPIE, 并且将 CSRs[mstatus].MPIE 为 1
+                        // ref_cell_borrow_mut(&self.csrf).set(CSR_MEPC_ADDRESS as u16, instr.borrow().pc + 4);
+                        let mut tmp = ref_cell_borrow_mut(&instr);
+                        tmp.predict_fail = final_predict_pc != pc_val;
+                        tmp.branch_pc = pc_val; // mtvec 
+                        tmp.exec = true;
+                        drop(tmp);
+                    },
+                    _ =>{
+                        panic!("illegal syscall opcode in csr");
+                    }
+                }   
+            }
+            // println!("csr req in {:016x}", req.1.borrow().pc);
+            self.output.req_i((true, req.1.clone()));
         }
-        self.output.req_i((true, req.1.clone()));
     }
     fn rdy_o(&self) -> bool{
         self.output.rdy_o()
     }
 
     fn resp_o(&self) -> (bool, Self::Output){
+        // self.output.display();
+        // if self.output.resp_o().0{
+        //     println!("csr resp out : {:016x}", self.output.resp_o().1.borrow().pc);
+        // }   
+        
         self.output.resp_o().clone()
     }
     fn rdy_i(&mut self, rdy:bool){

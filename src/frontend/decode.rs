@@ -13,12 +13,14 @@ use crate::utils::*;
 pub struct Decode{ // get pc and visit pht/btb to get a new pc
     // pc_i: Vec<(bool, u32)>,
     // input: Mux<u32>, 
+    branch_onflight: bool, 
     output: DelayFIFO<Arc<RefCell<Instr>>>,
 }
 
 impl Decode{
     pub fn new() -> Self{
         Decode { 
+            branch_onflight: false,
             output: DelayFIFO::new(8, vec![1]),
         }
     }
@@ -32,8 +34,14 @@ impl Interface for Decode{
         if req.1.borrow().pc == 0x80000158{
             println!("80000158 raw:{:8x}. rdy {}", req.1.borrow().raw, self.rdy_o());
         }
+        if self.branch_onflight{
+            return;
+        }
         if req.0 && self.rdy_o(){ // hsk
             let docoded_instr: DecodedInstr = DecodedInstr::new(req.1.borrow().raw);
+            if docoded_instr.is_branch || docoded_instr.is_syscall{
+                self.branch_onflight = true;
+            }
             let mut tmp = ref_cell_borrow_mut(&req.1);
             if docoded_instr.illegale_instr{
                 println!("exception!");
@@ -48,7 +56,7 @@ impl Interface for Decode{
         self.output.req_i(req_i);
     }
     fn rdy_o(&self) -> bool{
-        self.output.rdy_o()
+        self.output.rdy_o() && !self.branch_onflight
     }
 
     fn resp_o(&self) -> (bool, Self::Output){
@@ -64,10 +72,12 @@ impl CtrlSignals for Decode {
         self.output.tik();
     }
     fn rst(&mut self, rst:bool){
+        self.branch_onflight = false;
         self.output.rst(rst);
     }
     fn flush(&mut self, rst:bool){
-        self.output.flush(rst)
+        self.branch_onflight = false;
+        self.output.flush(rst);
     }
 }
 
