@@ -7,6 +7,7 @@ use crate::buffers::mux::Mux;
 use crate::utils::*;
 use std::sync::Arc;
 use crate::cfg::backend_cfg::*;
+use crate::instr::intsr_type::InstrOpcode;
 pub struct FakeRCU{ // get pc and visit pht/btb to get a new pc
     // pc_i: Vec<(bool, u32)>,
     // input: Mux<u32>, 
@@ -36,6 +37,8 @@ impl FakeRCU{
         //     println!("{}", self.commit_mux.resp_o().get(0).unwrap().1.borrow());
         // }
         self.commit_mux.req_i(comm);
+        // println!("rcu commit mux req in :{:?}", self.gen_rdy_o());
+        println!("rcu commit mux rdy in:{:?}", self.gen_rdy_o());
         self.commit_mux.rdy_i(self.gen_rdy_o());
         let instr = &self.commit_mux.resp_o()[0].1;
         if self.commit_mux.resp_o().get(0).unwrap().0 && self.commit.rdy_o(){
@@ -43,9 +46,9 @@ impl FakeRCU{
                 if instr.borrow().wb_vld{
                     let mut tmp = ref_cell_borrow_mut(&self.arf);
                     tmp.set(instr.borrow().decoded.rd, instr.borrow().wb_data);
-                    tmp.set_busy(instr.borrow().decoded.rd, false);
                     drop(tmp);
                 }
+                self.set_free(instr.clone());
             }
             ref_cell_borrow_mut(&instr).done = true;
             self.commit.req_i((true, instr.clone()));
@@ -69,12 +72,24 @@ impl FakeRCU{
             _ => true,
         }
     }
-    fn set_busy(&self){
-        // println!("set busy");
-        match self.output.resp_o().1.borrow().decoded.instr_type{
+    fn set_busy(&self, instr: Arc<RefCell<Instr>>){
+        println!("set busy {}", instr.borrow().decoded.rd);
+        match instr.borrow().decoded.instr_type{
             InstrType::R | InstrType::U | InstrType::I | InstrType::J => {
                 let mut tmp = ref_cell_borrow_mut(&self.arf);
-                tmp.set_busy(self.output.resp_o().1.borrow().decoded.rd, true);
+                tmp.set_busy(instr.borrow().decoded.rd, true);
+                drop(tmp);
+            },
+            _ => {},
+        }
+    }
+
+    fn set_free(&self, instr: Arc<RefCell<Instr>>){
+        println!("set free {}", instr.borrow().decoded.rd);
+        match instr.borrow().decoded.instr_type{
+            InstrType::R | InstrType::U | InstrType::I | InstrType::J => {
+                let mut tmp = ref_cell_borrow_mut(&self.arf);
+                tmp.set_busy(instr.borrow().decoded.rd, false);
                 drop(tmp);
             },
             _ => {},
@@ -93,7 +108,9 @@ impl Interface for FakeRCU{
     type Output = Arc<RefCell<Instr>>;
 
     fn req_i(&mut self, req:(bool, Self::Input)){
-            // assert!(req.1.borrow().pc_vld);
+        if req.1.borrow().decoded.opcode_type == InstrOpcode::BEQ{
+            println!("rcu req in: pc-{:016x} is BEQ", req.1.borrow().pc)
+        }
         self.output.req_i(req.clone());
     }
     fn rdy_o(&self) -> bool{
@@ -103,6 +120,9 @@ impl Interface for FakeRCU{
     fn resp_o(&self) -> (bool, Self::Output){
         let instr:Arc<RefCell<Instr>> = self.output.resp_o().1;
         // println!("self.iss_rdy():{}", self.iss_rdy());
+        if self.output.resp_o().1.borrow().decoded.opcode_type == InstrOpcode::BEQ{
+            println!("rcu req iss: pc-{:016x} is BEQ", self.output.resp_o().1.borrow().pc);
+        }
         if self.iss_rdy(){
             let rs1_data = self.arf.borrow().get(instr.borrow().decoded.rs1);
             let rs2_data = self.arf.borrow().get(instr.borrow().decoded.rs2);
@@ -121,7 +141,7 @@ impl Interface for FakeRCU{
     fn rdy_i(&mut self, rdy:bool){
         let ready = rdy && self.iss_rdy();
         if ready && self.output.resp_o().0{
-            self.set_busy();
+            self.set_busy(self.output.resp_o().1.clone());
         }
         self.output.rdy_i(ready);
     }

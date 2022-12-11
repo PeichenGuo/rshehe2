@@ -63,11 +63,11 @@ impl  CtrlSignals for FakeBackend {
             let csr_resp = self.csr.borrow().resp_o();
             let alu_resp = self.alu.borrow().resp_o();
             // println!("alu_resp({}, {})", alu_resp.0, alu_resp.1.borrow());
-            
             let mut tmp = ref_cell_borrow_mut(&self.rcu);
             let rdy = tmp.commit(vec![bru_resp, lsu_resp, csr_resp, alu_resp]);
             drop(tmp);
-            // println!("{:?}", rdy);
+            
+            println!("{:?}", rdy);
             let mut bru_tmp = ref_cell_borrow_mut(&self.bru);
             bru_tmp.rdy_i(rdy[0]);
             drop(bru_tmp);
@@ -108,6 +108,7 @@ impl  CtrlSignals for FakeBackend {
                 drop(lsu_tmp);
             }
             else if rcu_req.1.borrow().decoded.is_branch{
+                // println!("branch issued {:?} @ {:016x}", rcu_req.1.borrow().decoded.opcode_type, rcu_req.1.borrow().pc);
                 let mut bru_tmp = ref_cell_borrow_mut(&self.bru);
                 bru_tmp.req_i(rcu_req);
                 rcu_tmp.rdy_i(bru_tmp.rdy_o());

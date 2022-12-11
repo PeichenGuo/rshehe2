@@ -65,10 +65,13 @@ impl HeHeCore{
 impl CtrlSignals for HeHeCore{
     fn tik(&mut self){
         let frontend_req = self.frontend.borrow().resp_o();
-        if self.frontend.borrow().resp_o().0{
+        if self.frontend.borrow().resp_o().0 && self.backend.borrow().rdy_o(){
             println!("frontend req: pc-{:016x}", self.frontend.borrow().resp_o().1.borrow().pc);
             if self.frontend.borrow().resp_o().1.borrow().decoded.opcode_type == InstrOpcode::ECALL{
                 println!("frontend req: pc-{:016x} is ecall", self.frontend.borrow().resp_o().1.borrow().pc)
+            }
+            if self.frontend.borrow().resp_o().1.borrow().decoded.opcode_type == InstrOpcode::BEQ{
+                println!("frontend req: pc-{:016x} is BEQ, is branch {}", self.frontend.borrow().resp_o().1.borrow().pc, self.frontend.borrow().resp_o().1.borrow().decoded.is_branch);
             }
         }
         ref_cell_borrow_mut(&self.backend).req_i(self.frontend.borrow().resp_o());
