@@ -44,11 +44,13 @@ impl Interface for CSR{
         // if req.0{
         //     println!("csr req in: {:08x}, csr rdy:{}", req.1.borrow().pc, self.rdy_o());
         // }
+        if req.0 && req.1.borrow().decoded.opcode_type == InstrOpcode::ECALL{
+            println!("ecall in: {:08x}, exception_vld:{}", req.1.borrow().pc, req.1.borrow().exception_vld);
+        }
         if req.1.borrow().exception_vld{
             self.output.req_i((true, req.1.clone()));
         }
         if self.output.rdy_o() && req.0 && (req.1.borrow().decoded.is_csr){ // csr
-            println!("11111");
             let instr = req.1.clone();
             let (wb_vld, csr_wb_vld): (bool, bool) = match instr.borrow().decoded.opcode_type{
                 CSRRW | CSRRWI => (instr.borrow().decoded.rd != 0, true),
@@ -78,6 +80,7 @@ impl Interface for CSR{
             let opcode = req.1.borrow().decoded.opcode_type.clone();
             match opcode {
                 InstrOpcode::EBREAK | InstrOpcode::ECALL =>{
+                    println!("ecall");
                     let instr = req.1.clone();
                     let csr_val = self.csrf.borrow().get(req.1.borrow().decoded.csr);
                     ref_cell_borrow_mut(&self.csrf).set(CSR_MEPC_ADDRESS as u16, instr.borrow().pc + 4);
@@ -159,7 +162,7 @@ mod test{
         csr.rdy_i(true);
 
         // ecall
-        println!("1");
+        // println!("1");
         let mut tmp = ref_cell_borrow_mut(&instr);
         tmp.decoded.is_csr = false;
         tmp.decoded.csr = 1;
@@ -170,9 +173,9 @@ mod test{
         tmp.decoded.zimm = 0x0f;
         drop(tmp);
 
-        println!("1");
+        // println!("1");
         csr.req_i((true, instr.clone()));
-        println!("2");
+        // println!("2");
         csr.tik();
         assert_eq!(csr.resp_o().0, true);
         assert_eq!(csr.resp_o().1.borrow().wb_vld, false);

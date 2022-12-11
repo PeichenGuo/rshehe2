@@ -11,6 +11,8 @@ use std::{sync::Arc};
 use std::cell::RefCell;
 use cfg::memory_cfg::*;
 
+use crate::instr::intsr_type::InstrOpcode;
+
 pub mod memory;
 pub mod cfg;
 pub mod instr;
@@ -63,11 +65,15 @@ impl HeHeCore{
 impl CtrlSignals for HeHeCore{
     fn tik(&mut self){
         let frontend_req = self.frontend.borrow().resp_o();
+        if self.frontend.borrow().resp_o().0{
+            println!("frontend req: pc-{:016x}", self.frontend.borrow().resp_o().1.borrow().pc);
+            if self.frontend.borrow().resp_o().1.borrow().decoded.opcode_type == InstrOpcode::ECALL{
+                println!("frontend req: pc-{:016x} is ecall", self.frontend.borrow().resp_o().1.borrow().pc)
+            }
+        }
         ref_cell_borrow_mut(&self.backend).req_i(self.frontend.borrow().resp_o());
         ref_cell_borrow_mut(&self.frontend).rdy_i(self.backend.borrow().rdy_o());
-        if self.frontend.borrow().resp_o().0{
-            println!("frontend req: pc-{:016x}", self.frontend.borrow().resp_o().1.borrow().pc)
-        }
+        
         // println!("frontend_req({}, {})", frontend_req.0, frontend_req.1.borrow());
 
         ref_cell_borrow_mut(&self.frontend).flush(self.backend.borrow().flush_o());

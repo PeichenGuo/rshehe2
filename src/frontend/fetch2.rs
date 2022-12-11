@@ -26,8 +26,10 @@ impl Interface for Fetch2{
     type Output = Arc<RefCell<Instr>>;
 
     fn req_i(&mut self, req:(bool, Self::Input)){
-        println!("fetch2 req in hsk: {:16x}", req.1.borrow().pc);
         let raw = self.mem.borrow().lw(req.1.borrow().pc as u64) as u32;
+        if req.1.borrow().pc == 0x80000158{
+            println!("80000158 raw:{:8x}", raw);
+        }
         let mut tmp = ref_cell_borrow_mut(&req.1);
         tmp.raw_vld = true;
         tmp.raw = raw;

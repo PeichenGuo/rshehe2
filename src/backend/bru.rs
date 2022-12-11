@@ -47,11 +47,12 @@ impl Interface for BRU{
 
     fn req_i(&mut self, req:(bool, Self::Input)){
         if self.rdy_o() && req.0 && req.1.borrow().decoded.is_branch{ //hsk
+            println!("branch");
             if !req.1.borrow().exception_vld{
                 let instr = req.1.clone();
                 let (branch, val) = self.calc(&instr.borrow());
                 let final_bru_pc:u64 = if branch {val} else {instr.borrow().pc + 4};
-                // println!("branch {} val {:08x}", branch, val);
+                println!("branch {} val {:08x}", branch, val);
                 let final_predict_pc:u64 = if instr.borrow().predicted_direction {instr.borrow().predicted_pc} 
                                             else {instr.borrow().pc + 4};
                 // println!("predicted_direction {} predicted_pc {:08x}", instr.borrow().predicted_direction, instr.borrow().predicted_pc);
@@ -99,7 +100,7 @@ impl CtrlSignals for BRU{
 #[cfg(test)]
 mod test{
     use std::cell::RefCell;
-    use crate::backend::branch_unit::BRU;
+    use crate::backend::bru::BRU;
     use crate::instr::Instr;
     use crate::interface::{Interface, CtrlSignals};
     use crate::instr::intsr_type::InstrOpcode::*;

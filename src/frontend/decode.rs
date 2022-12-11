@@ -1,6 +1,8 @@
 use std::cell::{RefCell};
 
 use crate::buffers::delay_fifo::{DelayFIFO};
+use crate::instr::decoded_instr;
+use crate::instr::intsr_type::InstrOpcode;
 use crate::interface::{CtrlSignals, Interface};
 use crate::instr::{Instr, decoded_instr::DecodedInstr};
 use std::sync::Arc;
@@ -27,6 +29,9 @@ impl Interface for Decode{
     type Output = Arc<RefCell<Instr>>;
 
     fn req_i(&mut self, req:(bool, Self::Input)){
+        if req.1.borrow().pc == 0x80000158{
+            println!("80000158 raw:{:8x}. rdy {}", req.1.borrow().raw, self.rdy_o());
+        }
         if req.0 && self.rdy_o(){ // hsk
             let docoded_instr: DecodedInstr = DecodedInstr::new(req.1.borrow().raw);
             let mut tmp = ref_cell_borrow_mut(&req.1);

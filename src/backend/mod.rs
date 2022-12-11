@@ -1,13 +1,13 @@
 
 pub mod alu;
 pub mod fake_lsu;
-pub mod branch_unit;
+pub mod bru;
 pub mod csr;
 pub mod fake_rcu;
 
 use std::{sync::Arc, cell::RefCell};
 
-use crate::{backend::{alu::ALU, fake_lsu::FakeLSU, branch_unit::BRU, csr::CSR, fake_rcu::FakeRCU}, memory::{memory::Memory, regfiles::{ARF, CSRF}}, utils::ref_cell_borrow_mut};
+use crate::{backend::{alu::ALU, fake_lsu::FakeLSU, bru::BRU, csr::CSR, fake_rcu::FakeRCU}, memory::{memory::Memory, regfiles::{ARF, CSRF}}, utils::ref_cell_borrow_mut};
 use crate::instr::Instr;
 use crate::interface::{CtrlSignals, Interface};
 pub struct FakeBackend{

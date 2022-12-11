@@ -57,7 +57,10 @@ impl CtrlSignals for Frontend{
             ref_cell_borrow_mut(&self.decode).flush(true);
         }
         let f2_resp = self.fetch2.borrow().resp_o();
-        // println!("f2_resp({}, {})", f2_resp.0, f2_resp.1.borrow());
+        // println!("{} {}", f2_resp.0, &f2_resp.1.borrow());
+        if f2_resp.1.borrow().pc == 0x80000158{
+            println!("80000158 raw:{:8x}. rdy {}", f2_resp.1.borrow().raw, self.decode.borrow().rdy_o());
+        }
 
 
         ref_cell_borrow_mut(&self.decode).req_i(self.fetch2.borrow().resp_o());

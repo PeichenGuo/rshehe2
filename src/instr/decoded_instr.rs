@@ -56,6 +56,9 @@ impl DecodedInstr{
         let zimm: u8 = ((raw >> 15) & 0x1f) as u8;
         let mut illegle_instr: bool = false;
         let mut msg: String = String::from("");
+        if raw == 0x73{
+            println!("ecall : opcode:{:07b} funct3:{:03b} funct7:{:07b} immi:{:012b}, rs2:{:05b}", opcode, funct3, funct7, immi, rs2);
+        }
         let instr_type = match opcode{
             // rv32i
             0b0110111 | 0b0010111=> InstrType::U,
@@ -169,11 +172,14 @@ impl DecodedInstr{
                 },
                 0b1110011 => match funct3{ // s
                     0b000 => match  immi{ // system call
-                        0b000000000000 => InstrOpcode::ECALL,
+                        0b000000000000 => {
+                            println!("ecall decoded");
+                            InstrOpcode::ECALL
+                        },
                         0b000000000001 => InstrOpcode::EBREAK,
                         0b001100000010 => InstrOpcode::MRET,
                         _=> {
-                            // panic!("illegale immi {:012b} while opcode is InstrI-1110011 (s) and funct3 is 000 (sys call)", immi)
+                            // panic!("illegale immi {:012b} while opcode is InstrI-1110011 (s) and funct3 is 000 (sys call)", immi);
                             illegle_instr = true;
                             msg = String::from(format!("illegale immi {:012b} while opcode is InstrI-1110011 (s) and funct3 is 000 (sys call)", immi));
                             Default::default()
@@ -337,7 +343,8 @@ impl DecodedInstr{
         let is_syscall = 
             (opcode_type == InstrOpcode::ECALL) || (opcode_type == InstrOpcode::EBREAK) || 
             (opcode_type == InstrOpcode::MRET);
-            DecodedInstr { 
+
+        DecodedInstr { 
             opcode: opcode, 
             rd: rd, 
             funct3: funct3, 

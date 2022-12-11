@@ -70,7 +70,9 @@ impl Interface for FakeLSU{
                 self.store(&instr.borrow());
             }
             else if instr.borrow().decoded.is_fence{
-                // pass
+                let mut tmp = ref_cell_borrow_mut(&instr);
+                tmp.exec = true;
+                drop(tmp);
             }
             self.output.req_i((true, req.1.clone()));
         }
