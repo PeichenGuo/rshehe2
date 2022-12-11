@@ -16,9 +16,9 @@ pub struct CSR{
 }
 
 impl CSR {
-    pub fn new(csrf: Arc<RefCell<CSRF>>) -> Self{
+    pub fn new(csrf: Arc<RefCell<CSRF>>, delay: u16) -> Self{
         CSR { 
-            output: DelayFIFO::new(1, vec![1]),
+            output: DelayFIFO::new(1, vec![delay]),
             csrf:csrf.clone()
         }
     }
@@ -139,7 +139,7 @@ mod test{
     #[test]
     fn basic_csr_test(){
         let csrf = Arc::new(RefCell::new(CSRF::new()));
-        let mut csr = CSR::new(csrf.clone());
+        let mut csr = CSR::new(csrf.clone(), 1);
         let instr = Arc::new(RefCell::new(Instr::new(0x8000_0000)));
         let mut csr_m = ref_cell_borrow_mut(&csrf);
         csr_m.set(0, 0xf0);

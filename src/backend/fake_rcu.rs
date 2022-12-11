@@ -21,10 +21,10 @@ pub struct FakeRCU{ // get pc and visit pht/btb to get a new pc
 }
 
 impl FakeRCU{
-    pub fn new(arf: Arc<RefCell<ARF>>) -> Self{
+    pub fn new(arf: Arc<RefCell<ARF>>, iss_delay: u16, comm_delay: u16) -> Self{
         FakeRCU{
-            output: DelayFIFO::new(RCU_ROB_SIZE as u16, vec![1]),
-            commit: DelayFIFO::new(RCU_RETIRE_BUFFER_SIZE as u16, vec![1]), // 8 slot防止堵塞。 rcu只能在最后tik，因此在收到commit的时候实际上应该出队的指令还在队中
+            output: DelayFIFO::new(RCU_ROB_SIZE as u16, vec![iss_delay]),
+            commit: DelayFIFO::new(RCU_RETIRE_BUFFER_SIZE as u16, vec![comm_delay]), // 8 slot防止堵塞。 rcu只能在最后tik，因此在收到commit的时候实际上应该出队的指令还在队中
             commit_mux: Mux::new(FU_NUM as u8, FU_COMMIT_NUM as u8), // alu bru csr lsu -> rcu
             arf:arf,
             branch: (false, 0),
@@ -192,7 +192,7 @@ mod test{
     fn basic_fake_rcu_test(){
         let arf = Arc::new(RefCell::new(ARF::new()));
         let instr = Arc::new(RefCell::new(Instr::new(0x8000_0000)));
-        let mut fake_rcu = FakeRCU::new(arf.clone());
+        let mut fake_rcu = FakeRCU::new(arf.clone(), 1, 1);
         
         // rcu get data
         let mut arf_m = ref_cell_borrow_mut(&arf);

@@ -25,11 +25,11 @@ pub struct FakeBackend{
 impl FakeBackend {
     pub fn new(mem: Arc<RefCell<Memory>>, arf:Arc<RefCell<ARF>>, csrf:Arc<RefCell<CSRF>>) -> Self{
         FakeBackend { 
-            alu: Arc::new(RefCell::new(ALU::new())), 
-            lsu: Arc::new(RefCell::new(FakeLSU::new(mem.clone()))), 
-            bru: Arc::new(RefCell::new(BRU::new())), 
-            csr: Arc::new(RefCell::new(CSR::new(csrf.clone()))), 
-            rcu: Arc::new(RefCell::new(FakeRCU::new(arf.clone()))), 
+            alu: Arc::new(RefCell::new(ALU::new(1))), 
+            lsu: Arc::new(RefCell::new(FakeLSU::new(mem.clone(), vec![1]))), 
+            bru: Arc::new(RefCell::new(BRU::new(1))), 
+            csr: Arc::new(RefCell::new(CSR::new(csrf.clone(), 1))), 
+            rcu: Arc::new(RefCell::new(FakeRCU::new(arf.clone(), 1, 1))), 
             // mem: (mem.clone()), 
             // arf: (arf.clone()), 
             // csrf: (csrf.clone()) 
@@ -167,14 +167,14 @@ mod test{
         // test plan
         // ============== req in ================  ====== req iss =====    ====check=====
         // addi 0xf -> arf[1]
-        // addi 0x1 -> arf[2]                       addi -> arf[1]
-        // sll arf[1] << arf[2]  -> arf[3]          addi -> arf[2]          check arf[1]
-        // sb  arf[3] -> mem[4]                                             check arf[2]
-        // lb  arf[4] <- mem[4]                     sll -> arf[3]
-        // nop                                      
-        // nop                                      sb  arf[3] -> mem[4]    check arf[3]
-        // nop                                      ld arf[4] <- mem[4] 
-        // nop                                                              check arf[4]
+        // addi 0x1 -> arf[2]                       addi -> arf[1]          check arf[1]
+        // sll arf[1] << arf[2]  -> arf[3]          addi -> arf[2]          check arf[2]
+        // sb  arf[3] -> mem[4]                     sll -> arf[3]           check arf[3]
+        // lb  arf[4] <- mem[4]                     sb  arf[3] -> mem[4]    
+        // nop                                      ld arf[4] <- mem[4]     check arf[4]
+        // nop                                          
+        // nop                                       
+        // nop                                                              
         // bne arf[1] arf[2] (predict fail)
         // nop                                      bne arf[1] arf[2]       
         // nop                                                              flush_vld 

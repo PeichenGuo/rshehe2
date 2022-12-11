@@ -12,9 +12,9 @@ pub struct ALU{
 }
 
 impl ALU {
-    pub fn new() -> Self{
+    pub fn new(delay: u16) -> Self{
         ALU { 
-            output: DelayFIFO::new(1, vec![1])
+            output: DelayFIFO::new(1, vec![delay])
         }
     }
 
@@ -118,7 +118,7 @@ mod test{
 
     #[test]
     fn basic_alu_test(){
-        let mut alu = ALU::new();
+        let mut alu = ALU::new(1);
         let instr = Arc::new(RefCell::new(Instr::new(0x0)));
         
         // add

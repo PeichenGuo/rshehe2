@@ -108,7 +108,7 @@ mod test{
     use std::thread::panicking;
 
     use crate::{HeHeCore, interface::CtrlSignals};
-    #[test]
+    // #[test]
     fn add_isa_test(){
         let mut core = HeHeCore::new();
         core.load_elf("./isa_tests/add.hex");

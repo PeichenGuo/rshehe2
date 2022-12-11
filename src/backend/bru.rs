@@ -12,9 +12,9 @@ pub struct BRU{
 }
 
 impl BRU {
-    pub fn new() -> Self{
+    pub fn new(delay: u16) -> Self{
         BRU { 
-            output: DelayFIFO::new(1, vec![1]),
+            output: DelayFIFO::new(1, vec![delay]),
         }
     }
 
@@ -110,7 +110,7 @@ mod test{
 
     #[test]
     fn basic_bru_test(){
-        let mut bru = BRU::new();
+        let mut bru = BRU::new(1);
         let instr = Arc::new(RefCell::new(Instr::new(0x8000_0000)));
         
         // beq succ predict succ
