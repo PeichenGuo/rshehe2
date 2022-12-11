@@ -115,8 +115,8 @@ mod test{
         for _i in 0..3000{
             core.tik();
             if core.read_from_host() == 1{
-                println!("test succ!");
-                break;
+                println!("======\ntest succ!\n======");
+                return;
             }
             else if core.read_from_host() != 0{
                 panic!("test fail @ {:x}", core.read_from_host());

@@ -184,6 +184,7 @@ impl CtrlSignals for FakeRCU{
             drop(tmp);
             // ecasue -> csr[mcause]
             ref_cell_borrow_mut(&self.csrf).set(CSR_MEPC_ADDRESS as u16, nxt_pc);
+            ref_cell_borrow_mut(&self.csrf).set(CSR_MCAUSE_ADDRESS as u16, instr.borrow().ecause);
         }
 
         if self.commit.resp_o().0 && self.commit.resp_o().1.borrow().decoded.opcode_type == InstrOpcode::MRET{ // mret
