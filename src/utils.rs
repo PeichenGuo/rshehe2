@@ -18,7 +18,6 @@ pub fn signed_less_than(a: u64, b:u64) -> bool{
 }
 
 pub fn sext(a:u64, sign_bit: usize) -> u64{
-
     if(a.wrapping_shr(sign_bit as u32)) & 0x1 == 0x1{
         (a as u64) | 0xffff_ffff_ffff_ffff_u64.wrapping_shl(sign_bit as u32)  
     }

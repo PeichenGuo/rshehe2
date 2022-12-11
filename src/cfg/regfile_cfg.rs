@@ -4,7 +4,7 @@ pub const APF_SIZE:usize = 32 + 1;
 pub const CSRF_SIZE: usize = 4096;
 
 lazy_static! {
-    static  ref APF_MAPPING: Vec<String> = Vec::from([
+    pub static  ref APF_MAPPING: Vec<String> = Vec::from([
         String::from("zero"),
         String::from("ra"),
         String::from("sp"),
@@ -127,3 +127,5 @@ pub const MIP_MSIP: u64 = 0x008;
 pub const MIP_SEIP: u64 = 0x200;
 pub const _MIP_STIP: u64 = 0x020;
 pub const _MIP_SSIP: u64 = 0x002;
+
+

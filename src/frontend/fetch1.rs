@@ -32,7 +32,7 @@ impl Fetch1 {
             tmp.predicted_direction = false;
             tmp.predicted_pc = 0;
             drop(tmp);
-            println!("fetch1 pc_mux_in: 0x{:016x}", instr.borrow().pc);
+            // println!("fetch1 pc_mux_in: 0x{:016x}", instr.borrow().pc);
             self.output.req_i((true, instr.clone()));
         }
         self.pc_mux.rdy_o()

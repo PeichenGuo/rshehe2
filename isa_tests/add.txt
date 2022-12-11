@@ -24,7 +24,7 @@ Disassembly of section .text.init:
     80000038:	0040006f          	j	8000003c <handle_exception>
 
 000000008000003c <handle_exception>:
-    8000003c:	5391e193          	ori	gp,gp,1337
+    8000003c:	5391e193          	ori	gp,gp,1337 // 0x539
 
 0000000080000040 <write_tohost>:
     80000040:	00001f17          	auipc	t5,0x1

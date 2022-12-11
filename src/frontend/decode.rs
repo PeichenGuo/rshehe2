@@ -6,6 +6,7 @@ use crate::instr::intsr_type::InstrOpcode;
 use crate::interface::{CtrlSignals, Interface};
 use crate::instr::{Instr, decoded_instr::DecodedInstr};
 use std::sync::Arc;
+use crate::instr::intsr_type::InstrOpcode::*;
 
 use crate::cfg::core_cfg::*;
 
@@ -43,10 +44,13 @@ impl Interface for Decode{
                 self.branch_onflight = true;
             }
             let mut tmp = ref_cell_borrow_mut(&req.1);
-            if docoded_instr.illegale_instr{
-                println!("exception!");
+            if docoded_instr.illegale_instr {
                 tmp.exception_vld = true;
-                tmp.ecause = MCAUSE_UNIMPL_INSTR;
+                tmp.ecause = EXCEPTION_UNIMPL_INSTR;
+            }
+            else if docoded_instr.opcode_type == ECALL || docoded_instr.opcode_type == EBREAK{
+                tmp.exception_vld = true;
+                tmp.ecause = EXCEPTION_ENV_CALL_M; // FIXME: m mode only
             }
             tmp.decoded_vld = true;
             tmp.decoded = docoded_instr;

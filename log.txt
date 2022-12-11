@@ -1,1711 +1,4335 @@
 
 running 15 tests
 test backend::bru::test::basic_bru_test ... ok
-test buffers::delay_fifo::test::basic_delay_fifo_test ... ok
 test backend::csr::test::basic_csr_test ... ok
-test buffers::mux::test::basic_mux_test ... ok
+test backend::alu::test::basic_alu_test ... ok
+test buffers::delay_fifo::test::basic_delay_fifo_test ... ok
 test frontend::decode::test::basic_fetch2_test ... ok
-test backend::test::basic_backend_test ... ok
+test buffers::mux::test::basic_mux_test ... ok
 test instr::decoded_instr::test::basic_decoded_instr_test_on_add_hex ... ok
 test frontend::fetch1::test::basic_fetch1_test ... ok
-test backend::fake_rcu::test::basic_fake_rcu_test ... ok
-test backend::alu::test::basic_alu_test ... ok
+test backend::test::basic_backend_test ... ok
 test frontend::fetch2::test::basic_fetch2_test ... ok
-test backend::fake_lsu::test::basic_fake_lsu_test_on_add_hex ... ok
+test backend::fake_rcu::test::basic_fake_rcu_test ... ok
 test frontend::test::frontend_basic_test_on_add ... ok
+test backend::fake_lsu::test::basic_fake_lsu_test_on_add_hex ... ok
 test memory::memory::test::basic_load_on_add_hex ... ok
 test test::add_isa_test ... FAILED
 
 failures:
 
 ---- test::add_isa_test stdout ----
-rcu commit mux in:false - 0000000000000000
-fetch1 pc_mux_in: 0x0000000080000000
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000000
-fetch1 pc_mux_in: 0x0000000080000004
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000004
-fetch1 pc_mux_in: 0x0000000080000008
 =========
 frontend req: pc-0000000080000000
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000008
-fetch1 pc_mux_in: 0x000000008000000c
 =========
 frontend req: pc-0000000080000000
-rcu commit mux in:false - 0000000000000000
-branch
 branch true val 8000005c
-f1_resp pc: 0x8000000c
-fetch1 pc_mux_in: 0x0000000080000010
 =========
 frontend req: pc-0000000080000000
-rcu commit mux in:true - 0000000080000000
-branch
 branch true val 8000005c
 req commit:80000000
-f1_resp pc: 0x80000010
-fetch1 pc_mux_in: 0x0000000080000014
 =========
 frontend req: pc-0000000080000000
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x000000008000005c
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000005c
-fetch1 pc_mux_in: 0x0000000080000060
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000060
-fetch1 pc_mux_in: 0x0000000080000064
 =========
 frontend req: pc-000000008000005c
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000064
-fetch1 pc_mux_in: 0x0000000080000068
 =========
 frontend req: pc-0000000080000060
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000068
-fetch1 pc_mux_in: 0x000000008000006c
 =========
 frontend req: pc-0000000080000064
-rcu commit mux in:true - 000000008000005c
+alu resp 000000008000005c: 0x0000000000000000 -> "ra"
 req commit:8000005c
-f1_resp pc: 0x8000006c
-fetch1 pc_mux_in: 0x0000000080000070
 =========
 frontend req: pc-0000000080000068
-rcu commit mux in:true - 0000000080000060
+alu resp 0000000080000060: 0x0000000000000000 -> "sp"
 req commit:80000060
-f1_resp pc: 0x80000070
-fetch1 pc_mux_in: 0x0000000080000074
 =========
 frontend req: pc-000000008000006c
-rcu commit mux in:true - 0000000080000064
+alu resp 0000000080000064: 0x0000000000000000 -> "gp"
 req commit:80000064
-f1_resp pc: 0x80000074
-fetch1 pc_mux_in: 0x0000000080000078
 =========
 frontend req: pc-0000000080000070
-rcu commit mux in:true - 0000000080000068
+alu resp 0000000080000068: 0x0000000000000000 -> "tp"
 req commit:80000068
-f1_resp pc: 0x80000078
-fetch1 pc_mux_in: 0x000000008000007c
 =========
 frontend req: pc-0000000080000074
-rcu commit mux in:true - 000000008000006c
+alu resp 000000008000006c: 0x0000000000000000 -> "t0"
 req commit:8000006c
-f1_resp pc: 0x8000007c
-fetch1 pc_mux_in: 0x0000000080000080
 =========
-rcu commit mux in:true - 0000000080000070
+alu resp 0000000080000070: 0x0000000000000000 -> "t1"
 req commit:80000070
-f1_resp pc: 0x80000080
-fetch1 pc_mux_in: 0x0000000080000084
 =========
-rcu commit mux in:true - 0000000080000074
+alu resp 0000000080000074: 0x0000000000000000 -> "t2"
 req commit:80000074
-f1_resp pc: 0x80000084
-fetch1 pc_mux_in: 0x0000000080000088
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000088
-fetch1 pc_mux_in: 0x000000008000008c
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000008c
-fetch1 pc_mux_in: 0x0000000080000090
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000090
-fetch1 pc_mux_in: 0x0000000080000094
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000094
-fetch1 pc_mux_in: 0x0000000080000098
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000098
-fetch1 pc_mux_in: 0x000000008000009c
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000009c
-fetch1 pc_mux_in: 0x00000000800000a0
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000a0
-fetch1 pc_mux_in: 0x00000000800000a4
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000a4
-fetch1 pc_mux_in: 0x00000000800000a8
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000a8
-fetch1 pc_mux_in: 0x00000000800000ac
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000ac
-fetch1 pc_mux_in: 0x00000000800000b0
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000b0
-fetch1 pc_mux_in: 0x00000000800000b4
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000b4
-fetch1 pc_mux_in: 0x00000000800000b8
 =========
 frontend req: pc-0000000080000078
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000b8
-fetch1 pc_mux_in: 0x00000000800000bc
 =========
 frontend req: pc-000000008000007c
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000bc
-fetch1 pc_mux_in: 0x00000000800000c0
 =========
 frontend req: pc-0000000080000080
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000c0
-fetch1 pc_mux_in: 0x00000000800000c4
 =========
 frontend req: pc-0000000080000084
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000c4
-fetch1 pc_mux_in: 0x00000000800000c8
 =========
 frontend req: pc-0000000080000088
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000c8
-fetch1 pc_mux_in: 0x00000000800000cc
 =========
 frontend req: pc-000000008000008c
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000cc
-fetch1 pc_mux_in: 0x00000000800000d0
 =========
 frontend req: pc-0000000080000090
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000d0
-fetch1 pc_mux_in: 0x00000000800000d4
 =========
 frontend req: pc-0000000080000094
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000d4
-fetch1 pc_mux_in: 0x00000000800000d8
 =========
 frontend req: pc-0000000080000098
-rcu commit mux in:true - 0000000080000078
-f1_resp pc: 0x800000d8
-fetch1 pc_mux_in: 0x00000000800000dc
+alu resp 0000000080000078: 0x0000000000000000 -> "fp/s0"
 =========
 frontend req: pc-000000008000009c
-rcu commit mux in:true - 000000008000007c
-f1_resp pc: 0x800000dc
-fetch1 pc_mux_in: 0x00000000800000e0
+alu resp 000000008000007c: 0x0000000000000000 -> "s1"
 =========
 frontend req: pc-00000000800000a0
-rcu commit mux in:true - 0000000080000080
-f1_resp pc: 0x800000e0
-fetch1 pc_mux_in: 0x00000000800000e4
+alu resp 0000000080000080: 0x0000000000000000 -> "a0"
 =========
 frontend req: pc-00000000800000a4
-rcu commit mux in:true - 0000000080000084
-f1_resp pc: 0x800000e4
-fetch1 pc_mux_in: 0x00000000800000e8
+alu resp 0000000080000084: 0x0000000000000000 -> "a1"
 =========
 frontend req: pc-00000000800000a8
-rcu commit mux in:true - 0000000080000088
-f1_resp pc: 0x800000e8
-fetch1 pc_mux_in: 0x00000000800000ec
+alu resp 0000000080000088: 0x0000000000000000 -> "a2"
 =========
 frontend req: pc-00000000800000ac
-rcu commit mux in:true - 000000008000008c
-f1_resp pc: 0x800000ec
-fetch1 pc_mux_in: 0x00000000800000f0
+alu resp 000000008000008c: 0x0000000000000000 -> "a3"
 =========
 frontend req: pc-00000000800000b0
-rcu commit mux in:true - 0000000080000090
-f1_resp pc: 0x800000f0
-fetch1 pc_mux_in: 0x00000000800000f4
+alu resp 0000000080000090: 0x0000000000000000 -> "a4"
 =========
 frontend req: pc-00000000800000b4
-rcu commit mux in:true - 0000000080000094
+alu resp 0000000080000094: 0x0000000000000000 -> "a5"
 req commit:80000078
-f1_resp pc: 0x800000f4
-fetch1 pc_mux_in: 0x00000000800000f8
 =========
 frontend req: pc-00000000800000b8
-rcu commit mux in:true - 0000000080000098
+alu resp 0000000080000098: 0x0000000000000000 -> "a6"
 req commit:8000007c
-f1_resp pc: 0x800000f8
-fetch1 pc_mux_in: 0x00000000800000fc
 =========
 frontend req: pc-00000000800000bc
-rcu commit mux in:true - 000000008000009c
+alu resp 000000008000009c: 0x0000000000000000 -> "a7"
 req commit:80000080
-f1_resp pc: 0x800000fc
-fetch1 pc_mux_in: 0x0000000080000100
 =========
 frontend req: pc-00000000800000c0
-rcu commit mux in:true - 00000000800000a0
+alu resp 00000000800000a0: 0x0000000000000000 -> "s2"
 req commit:80000084
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000c4
-rcu commit mux in:true - 00000000800000a4
+alu resp 00000000800000a4: 0x0000000000000000 -> "s3"
 req commit:80000088
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000c8
-rcu commit mux in:true - 00000000800000a8
+alu resp 00000000800000a8: 0x0000000000000000 -> "s4"
 req commit:8000008c
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000cc
-rcu commit mux in:true - 00000000800000ac
+alu resp 00000000800000ac: 0x0000000000000000 -> "s5"
 req commit:80000090
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000d0
-rcu commit mux in:true - 00000000800000b0
+alu resp 00000000800000b0: 0x0000000000000000 -> "s6"
 req commit:80000094
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000d4
-rcu commit mux in:true - 00000000800000b4
+alu resp 00000000800000b4: 0x0000000000000000 -> "s7"
 req commit:80000098
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000d8
-rcu commit mux in:true - 00000000800000b8
+alu resp 00000000800000b8: 0x0000000000000000 -> "s8"
 req commit:8000009c
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000bc
+alu resp 00000000800000bc: 0x0000000000000000 -> "s9"
 req commit:800000a0
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000c0
+alu resp 00000000800000c0: 0x0000000000000000 -> "s10"
 req commit:800000a4
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000c4
+alu resp 00000000800000c4: 0x0000000000000000 -> "s11"
 req commit:800000a8
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000c8
+alu resp 00000000800000c8: 0x0000000000000000 -> "t3"
 req commit:800000ac
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000cc
+alu resp 00000000800000cc: 0x0000000000000000 -> "t4"
 req commit:800000b0
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000d0
+alu resp 00000000800000d0: 0x0000000000000000 -> "t5"
 req commit:800000b4
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000d4
-arf write: 0x0000000000000000 @ 10
+alu resp 00000000800000d4: 0x0000000000000000 -> "t6"
 req commit:800000b8
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000d8
-branch
 branch false val 800000dc
 req commit:800000bc
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000dc
-branch
 branch false val 800000dc
 req commit:800000c0
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000dc
-branch
 branch false val 800000dc
 req commit:800000c4
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000dc
-branch
 branch false val 800000dc
 req commit:800000c8
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000dc
-branch
 branch false val 800000dc
 req commit:800000cc
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000dc
-branch
 branch false val 800000dc
 req commit:800000d0
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000dc
-branch
 branch false val 800000dc
 req commit:800000d4
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000dc
-branch
 branch false val 800000dc
 req commit:800000d8
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:true - 00000000800000dc
-branch
 branch false val 800000dc
 req commit:800000dc
-f1_resp pc: 0x800000fc
 =========
 frontend req: pc-00000000800000dc
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x00000000800000e0
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000e0
-fetch1 pc_mux_in: 0x00000000800000e4
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000e4
-fetch1 pc_mux_in: 0x00000000800000e8
 =========
 frontend req: pc-00000000800000e0
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000e8
-fetch1 pc_mux_in: 0x00000000800000ec
 =========
 frontend req: pc-00000000800000e4
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800000ec
-fetch1 pc_mux_in: 0x00000000800000f0
 =========
 frontend req: pc-00000000800000e8
-rcu commit mux in:true - 00000000800000e0
+alu resp 00000000800000e0: 0x00000000800000e0 -> "t0"
 req commit:800000e0
-f1_resp pc: 0x800000f0
-fetch1 pc_mux_in: 0x00000000800000f4
 =========
 frontend req: pc-00000000800000ec
-rcu commit mux in:true - 00000000800000e4
-csrf write: 0x00000000800000f0 @ 773
+alu resp 00000000800000e4: 0x00000000800000f0 -> "t0"
 req commit:800000e4
-f1_resp pc: 0x800000f4
-fetch1 pc_mux_in: 0x00000000800000f8
 =========
 frontend req: pc-00000000800000f0
-rcu commit mux in:true - 00000000800000e8
-csrf write: 0x0000000000000000 @ 384
 req commit:800000e8
-f1_resp pc: 0x800000f8
-fetch1 pc_mux_in: 0x00000000800000fc
 =========
 frontend req: pc-00000000800000f4
-rcu commit mux in:true - 00000000800000ec
 req commit:800000ec
-f1_resp pc: 0x800000fc
-fetch1 pc_mux_in: 0x0000000080000100
 =========
 frontend req: pc-00000000800000f8
-rcu commit mux in:true - 00000000800000f0
+alu resp 00000000800000f0: 0x00000000800000f0 -> "t0"
 req commit:800000f0
-f1_resp pc: 0x80000100
-fetch1 pc_mux_in: 0x0000000080000104
 =========
-rcu commit mux in:true - 00000000800000f4
-csrf write: 0x0000000080000114 @ 773
+alu resp 00000000800000f4: 0x0000000080000114 -> "t0"
 req commit:800000f4
-f1_resp pc: 0x80000104
-fetch1 pc_mux_in: 0x0000000080000108
 =========
-rcu commit mux in:true - 00000000800000f8
 req commit:800000f8
-f1_resp pc: 0x80000108
-fetch1 pc_mux_in: 0x000000008000010c
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000010c
-fetch1 pc_mux_in: 0x0000000080000110
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000110
-fetch1 pc_mux_in: 0x0000000080000114
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000114
-fetch1 pc_mux_in: 0x0000000080000118
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000118
-fetch1 pc_mux_in: 0x000000008000011c
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000011c
-fetch1 pc_mux_in: 0x0000000080000120
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000120
-fetch1 pc_mux_in: 0x0000000080000124
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000124
-fetch1 pc_mux_in: 0x0000000080000128
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000128
-fetch1 pc_mux_in: 0x000000008000012c
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000012c
-fetch1 pc_mux_in: 0x0000000080000130
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000130
-fetch1 pc_mux_in: 0x0000000080000134
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000134
-fetch1 pc_mux_in: 0x0000000080000138
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000138
-fetch1 pc_mux_in: 0x000000008000013c
 =========
 frontend req: pc-00000000800000fc
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000013c
-fetch1 pc_mux_in: 0x0000000080000140
 =========
 frontend req: pc-0000000080000100
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000140
-fetch1 pc_mux_in: 0x0000000080000144
 =========
 frontend req: pc-0000000080000104
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000144
-fetch1 pc_mux_in: 0x0000000080000148
 =========
 frontend req: pc-0000000080000108
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000148
-fetch1 pc_mux_in: 0x000000008000014c
 =========
 frontend req: pc-000000008000010c
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000014c
-fetch1 pc_mux_in: 0x0000000080000150
 =========
 frontend req: pc-0000000080000110
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000150
-fetch1 pc_mux_in: 0x0000000080000154
 =========
 frontend req: pc-0000000080000114
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000154
-fetch1 pc_mux_in: 0x0000000080000158
 =========
 frontend req: pc-0000000080000118
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000158
 80000158 raw:      73
-fetch1 pc_mux_in: 0x000000008000015c
 =========
 frontend req: pc-000000008000011c
-rcu commit mux in:true - 00000000800000fc
-f1_resp pc: 0x8000015c
-fetch1 pc_mux_in: 0x0000000080000160
+alu resp 00000000800000fc: 0x0000000000000001 -> "t0"
 =========
 frontend req: pc-0000000080000120
-rcu commit mux in:true - 0000000080000100
-f1_resp pc: 0x80000160
-fetch1 pc_mux_in: 0x0000000080000164
+alu resp 0000000080000100: 0x0020000000000000 -> "t0"
 =========
 frontend req: pc-0000000080000124
-rcu commit mux in:true - 0000000080000104
-csrf write: 0x001fffffffffffff @ 944
-f1_resp pc: 0x80000164
-fetch1 pc_mux_in: 0x0000000080000168
+alu resp 0000000080000104: 0x001fffffffffffff -> "t0"
 =========
 frontend req: pc-0000000080000128
-rcu commit mux in:true - 0000000080000108
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-000000008000012c
-rcu commit mux in:true - 000000008000010c
-csrf write: 0x000000000000001f @ 928
-f1_resp pc: 0x80000164
+alu resp 000000008000010c: 0x000000000000001f -> "t0"
 =========
 frontend req: pc-0000000080000130
-rcu commit mux in:true - 0000000080000110
-csrf write: 0x0000000000000000 @ 772
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000134
-rcu commit mux in:true - 0000000080000114
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000138
-rcu commit mux in:true - 0000000080000118
+alu resp 0000000080000118: 0x0000000080000118 -> "t0"
 req commit:800000fc
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-000000008000013c
-rcu commit mux in:true - 000000008000011c
-csrf write: 0x000000008000012c @ 773
+alu resp 000000008000011c: 0x000000008000012c -> "t0"
 req commit:80000100
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000140
-rcu commit mux in:true - 0000000080000120
-csrf write: 0x0000000000000000 @ 770
 req commit:80000104
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 0000000080000124
-csrf write: 0x0000000000000000 @ 771
 req commit:80000108
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 0000000080000128
 req commit:8000010c
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 000000008000012c
+alu resp 000000008000012c: 0x0000000000000000 -> "gp"
 req commit:80000110
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 0000000080000130
+alu resp 0000000080000130: 0x0000000080000130 -> "t0"
 req commit:80000114
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 0000000080000134
-csrf write: 0x0000000080000004 @ 773
+alu resp 0000000080000134: 0x0000000080000004 -> "t0"
 req commit:80000118
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 0000000080000138
 req commit:8000011c
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 000000008000013c
+alu resp 000000008000013c: 0x0000000000000001 -> "a0"
 req commit:80000120
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 0000000080000140
-branch
+alu resp 0000000080000140: 0x0000000080000000 -> "a0"
 branch true val 8000015c
 req commit:80000124
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 0000000080000144
-branch
 branch true val 8000015c
 req commit:80000128
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 0000000080000144
-branch
 branch true val 8000015c
 req commit:8000012c
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 0000000080000144
-branch
 branch true val 8000015c
 req commit:80000130
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 0000000080000144
-branch
 branch true val 8000015c
 req commit:80000134
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 0000000080000144
-branch
 branch true val 8000015c
 req commit:80000138
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 0000000080000144
-branch
 branch true val 8000015c
 req commit:8000013c
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 0000000080000144
-branch
 branch true val 8000015c
 req commit:80000140
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:true - 0000000080000144
-branch
 branch true val 8000015c
 req commit:80000144
-f1_resp pc: 0x80000164
 =========
 frontend req: pc-0000000080000144
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x000000008000015c
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000015c
-fetch1 pc_mux_in: 0x0000000080000160
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000160
-fetch1 pc_mux_in: 0x0000000080000164
 =========
 frontend req: pc-000000008000015c
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000164
-fetch1 pc_mux_in: 0x0000000080000168
 =========
 frontend req: pc-0000000080000160
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000168
-fetch1 pc_mux_in: 0x000000008000016c
 =========
 frontend req: pc-0000000080000164
-frontend req: pc-0000000080000164 is BEQ, is branch true
-rcu req in: pc-0000000080000164 is BEQ
-rcu commit mux in:true - 000000008000015c
+alu resp 000000008000015c: 0x000000000000015c -> "t0"
 req commit:8000015c
-f1_resp pc: 0x8000016c
-fetch1 pc_mux_in: 0x0000000080000170
 =========
 frontend req: pc-0000000080000164
-frontend req: pc-0000000080000164 is BEQ, is branch true
-rcu req in: pc-0000000080000164 is BEQ
-rcu commit mux in:true - 0000000080000160
-rcu req iss: pc-0000000080000164 is BEQ
-branch
+alu resp 0000000080000160: 0x0000000000000000 -> "t0"
 branch true val 80000178
 req commit:80000160
-f1_resp pc: 0x80000170
-fetch1 pc_mux_in: 0x0000000080000174
 =========
 frontend req: pc-0000000080000164
-frontend req: pc-0000000080000164 is BEQ, is branch true
-rcu req in: pc-0000000080000164 is BEQ
-rcu commit mux in:true - 0000000080000164
-rcu req iss: pc-0000000080000164 is BEQ
-branch
 branch true val 80000178
 req commit:80000164
-f1_resp pc: 0x80000174
-fetch1 pc_mux_in: 0x0000000080000178
 =========
 frontend req: pc-0000000080000164
-frontend req: pc-0000000080000164 is BEQ, is branch true
-rcu req in: pc-0000000080000164 is BEQ
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x0000000080000178
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000178
-fetch1 pc_mux_in: 0x000000008000017c
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000017c
-fetch1 pc_mux_in: 0x0000000080000180
 =========
 frontend req: pc-0000000080000178
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000180
-fetch1 pc_mux_in: 0x0000000080000184
 =========
 frontend req: pc-000000008000017c
-rcu commit mux in:false - 0000000000000000
-csrf write: 0x0000000000000000 @ 768
-f1_resp pc: 0x80000184
-fetch1 pc_mux_in: 0x0000000080000188
 =========
 frontend req: pc-0000000080000180
-rcu commit mux in:true - 0000000080000178
 req commit:80000178
-f1_resp pc: 0x80000188
-fetch1 pc_mux_in: 0x000000008000018c
 =========
 frontend req: pc-0000000080000184
-rcu commit mux in:true - 000000008000017c
+alu resp 000000008000017c: 0x000000008000017c -> "t0"
 req commit:8000017c
-f1_resp pc: 0x8000018c
-fetch1 pc_mux_in: 0x0000000080000190
 =========
 frontend req: pc-0000000080000188
-rcu commit mux in:true - 0000000080000180
-csrf write: 0x0000000080000190 @ 833
+alu resp 0000000080000180: 0x0000000080000190 -> "t0"
 req commit:80000180
-f1_resp pc: 0x80000190
-fetch1 pc_mux_in: 0x0000000080000194
 =========
 frontend req: pc-000000008000018c
-rcu commit mux in:true - 0000000080000184
-arf write: 0x0000000000000000 @ 10
 req commit:80000184
-f1_resp pc: 0x80000194
-fetch1 pc_mux_in: 0x0000000080000198
 =========
 frontend req: pc-000000008000018c
-rcu commit mux in:true - 0000000080000188
-mret
 req commit:80000188
-f1_resp pc: 0x80000198
-fetch1 pc_mux_in: 0x000000008000019c
 =========
-rcu commit mux in:true - 000000008000018c
-mret
 req commit:8000018c
-f1_resp pc: 0x8000019c
-fetch1 pc_mux_in: 0x00000000800001a0
 =========
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x0000000080000190
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000190
-fetch1 pc_mux_in: 0x0000000080000194
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000194
-fetch1 pc_mux_in: 0x0000000080000198
 =========
 frontend req: pc-0000000080000190
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000198
-fetch1 pc_mux_in: 0x000000008000019c
 =========
 frontend req: pc-0000000080000194
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000019c
-fetch1 pc_mux_in: 0x00000000800001a0
 =========
 frontend req: pc-0000000080000198
-rcu commit mux in:true - 0000000080000190
+alu resp 0000000080000190: 0x0000000000000002 -> "gp"
 req commit:80000190
-f1_resp pc: 0x800001a0
-fetch1 pc_mux_in: 0x00000000800001a4
 =========
 frontend req: pc-000000008000019c
-rcu commit mux in:true - 0000000080000194
+alu resp 0000000080000194: 0x0000000000000000 -> "ra"
 req commit:80000194
-f1_resp pc: 0x800001a4
-fetch1 pc_mux_in: 0x00000000800001a8
 =========
 frontend req: pc-00000000800001a0
-rcu commit mux in:true - 0000000080000198
+alu resp 0000000080000198: 0x0000000000000000 -> "sp"
 req commit:80000198
-f1_resp pc: 0x800001a8
-fetch1 pc_mux_in: 0x00000000800001ac
 =========
 frontend req: pc-00000000800001a4
-rcu commit mux in:true - 000000008000019c
+alu resp 000000008000019c: 0x0000000000000000 -> "a4"
 req commit:8000019c
-f1_resp pc: 0x800001ac
-fetch1 pc_mux_in: 0x00000000800001b0
 =========
 frontend req: pc-00000000800001a4
-rcu commit mux in:true - 00000000800001a0
-branch
+alu resp 00000000800001a0: 0x0000000000000000 -> "t2"
 branch false val 80000684
 req commit:800001a0
-f1_resp pc: 0x800001b0
-fetch1 pc_mux_in: 0x00000000800001b4
 =========
-rcu commit mux in:true - 00000000800001a4
-branch
 branch false val 80000684
 req commit:800001a4
-f1_resp pc: 0x800001b4
-fetch1 pc_mux_in: 0x00000000800001b8
 =========
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x00000000800001a8
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001a8
-fetch1 pc_mux_in: 0x00000000800001ac
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001ac
-fetch1 pc_mux_in: 0x00000000800001b0
 =========
 frontend req: pc-00000000800001a8
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001b0
-fetch1 pc_mux_in: 0x00000000800001b4
 =========
 frontend req: pc-00000000800001ac
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001b4
-fetch1 pc_mux_in: 0x00000000800001b8
 =========
 frontend req: pc-00000000800001b0
-rcu commit mux in:true - 00000000800001a8
+alu resp 00000000800001a8: 0x0000000000000003 -> "gp"
 req commit:800001a8
-f1_resp pc: 0x800001b8
-fetch1 pc_mux_in: 0x00000000800001bc
 =========
 frontend req: pc-00000000800001b4
-rcu commit mux in:true - 00000000800001ac
+alu resp 00000000800001ac: 0x0000000000000001 -> "ra"
 req commit:800001ac
-f1_resp pc: 0x800001bc
-fetch1 pc_mux_in: 0x00000000800001c0
 =========
 frontend req: pc-00000000800001b8
-rcu commit mux in:true - 00000000800001b0
+alu resp 00000000800001b0: 0x0000000000000001 -> "sp"
 req commit:800001b0
-f1_resp pc: 0x800001c0
-fetch1 pc_mux_in: 0x00000000800001c4
 =========
 frontend req: pc-00000000800001bc
-rcu commit mux in:true - 00000000800001b4
+alu resp 00000000800001b4: 0x0000000000000002 -> "a4"
 req commit:800001b4
-f1_resp pc: 0x800001c4
-fetch1 pc_mux_in: 0x00000000800001c8
 =========
 frontend req: pc-00000000800001bc
-rcu commit mux in:true - 00000000800001b8
-branch
+alu resp 00000000800001b8: 0x0000000000000002 -> "t2"
 branch false val 80000684
 req commit:800001b8
-f1_resp pc: 0x800001c8
-fetch1 pc_mux_in: 0x00000000800001cc
 =========
-rcu commit mux in:true - 00000000800001bc
-branch
 branch false val 80000684
 req commit:800001bc
-f1_resp pc: 0x800001cc
-fetch1 pc_mux_in: 0x00000000800001d0
 =========
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x00000000800001c0
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001c0
-fetch1 pc_mux_in: 0x00000000800001c4
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001c4
-fetch1 pc_mux_in: 0x00000000800001c8
 =========
 frontend req: pc-00000000800001c0
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001c8
-fetch1 pc_mux_in: 0x00000000800001cc
 =========
 frontend req: pc-00000000800001c4
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001cc
-fetch1 pc_mux_in: 0x00000000800001d0
 =========
 frontend req: pc-00000000800001c8
-rcu commit mux in:true - 00000000800001c0
+alu resp 00000000800001c0: 0x0000000000000004 -> "gp"
 req commit:800001c0
-f1_resp pc: 0x800001d0
-fetch1 pc_mux_in: 0x00000000800001d4
 =========
 frontend req: pc-00000000800001cc
-rcu commit mux in:true - 00000000800001c4
+alu resp 00000000800001c4: 0x0000000000000003 -> "ra"
 req commit:800001c4
-f1_resp pc: 0x800001d4
-fetch1 pc_mux_in: 0x00000000800001d8
 =========
 frontend req: pc-00000000800001d0
-rcu commit mux in:true - 00000000800001c8
+alu resp 00000000800001c8: 0x0000000000000007 -> "sp"
 req commit:800001c8
-f1_resp pc: 0x800001d8
-fetch1 pc_mux_in: 0x00000000800001dc
 =========
 frontend req: pc-00000000800001d4
-rcu commit mux in:true - 00000000800001cc
+alu resp 00000000800001cc: 0x000000000000000a -> "a4"
 req commit:800001cc
-f1_resp pc: 0x800001dc
-fetch1 pc_mux_in: 0x00000000800001e0
 =========
 frontend req: pc-00000000800001d4
-rcu commit mux in:true - 00000000800001d0
-branch
+alu resp 00000000800001d0: 0x000000000000000a -> "t2"
 branch false val 80000684
 req commit:800001d0
-f1_resp pc: 0x800001e0
-fetch1 pc_mux_in: 0x00000000800001e4
 =========
-rcu commit mux in:true - 00000000800001d4
-branch
 branch false val 80000684
 req commit:800001d4
-f1_resp pc: 0x800001e4
-fetch1 pc_mux_in: 0x00000000800001e8
 =========
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x00000000800001d8
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001d8
-fetch1 pc_mux_in: 0x00000000800001dc
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001dc
-fetch1 pc_mux_in: 0x00000000800001e0
 =========
 frontend req: pc-00000000800001d8
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001e0
-fetch1 pc_mux_in: 0x00000000800001e4
 =========
 frontend req: pc-00000000800001dc
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001e4
-fetch1 pc_mux_in: 0x00000000800001e8
 =========
 frontend req: pc-00000000800001e0
-rcu commit mux in:true - 00000000800001d8
+alu resp 00000000800001d8: 0x0000000000000005 -> "gp"
 req commit:800001d8
-f1_resp pc: 0x800001e8
-fetch1 pc_mux_in: 0x00000000800001ec
 =========
 frontend req: pc-00000000800001e4
-rcu commit mux in:true - 00000000800001dc
+alu resp 00000000800001dc: 0x0000000000000000 -> "ra"
 req commit:800001dc
-f1_resp pc: 0x800001ec
-fetch1 pc_mux_in: 0x00000000800001f0
 =========
 frontend req: pc-00000000800001e8
-rcu commit mux in:true - 00000000800001e0
+alu resp 00000000800001e0: 0xffffffffffff8000 -> "sp"
 req commit:800001e0
-f1_resp pc: 0x800001f0
-fetch1 pc_mux_in: 0x00000000800001f4
 =========
 frontend req: pc-00000000800001ec
-rcu commit mux in:true - 00000000800001e4
+alu resp 00000000800001e4: 0xffffffffffff8000 -> "a4"
 req commit:800001e4
-f1_resp pc: 0x800001f4
-fetch1 pc_mux_in: 0x00000000800001f8
 =========
 frontend req: pc-00000000800001ec
-rcu commit mux in:true - 00000000800001e8
-branch
+alu resp 00000000800001e8: 0xffffffffffff8000 -> "t2"
 branch false val 80000684
 req commit:800001e8
-f1_resp pc: 0x800001f8
-fetch1 pc_mux_in: 0x00000000800001fc
 =========
-rcu commit mux in:true - 00000000800001ec
-branch
 branch false val 80000684
 req commit:800001ec
-f1_resp pc: 0x800001fc
-fetch1 pc_mux_in: 0x0000000080000200
 =========
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x00000000800001f0
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001f0
-fetch1 pc_mux_in: 0x00000000800001f4
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001f4
-fetch1 pc_mux_in: 0x00000000800001f8
 =========
 frontend req: pc-00000000800001f0
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001f8
-fetch1 pc_mux_in: 0x00000000800001fc
 =========
 frontend req: pc-00000000800001f4
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x800001fc
-fetch1 pc_mux_in: 0x0000000080000200
 =========
 frontend req: pc-00000000800001f8
-rcu commit mux in:true - 00000000800001f0
+alu resp 00000000800001f0: 0x0000000000000006 -> "gp"
 req commit:800001f0
-f1_resp pc: 0x80000200
-fetch1 pc_mux_in: 0x0000000080000204
 =========
 frontend req: pc-00000000800001fc
-rcu commit mux in:true - 00000000800001f4
+alu resp 00000000800001f4: 0xffffffff80000000 -> "ra"
 req commit:800001f4
-f1_resp pc: 0x80000204
-fetch1 pc_mux_in: 0x0000000080000208
 =========
 frontend req: pc-0000000080000200
-rcu commit mux in:true - 00000000800001f8
+alu resp 00000000800001f8: 0x0000000000000000 -> "sp"
 req commit:800001f8
-f1_resp pc: 0x80000208
-fetch1 pc_mux_in: 0x000000008000020c
 =========
 frontend req: pc-0000000080000204
-rcu commit mux in:true - 00000000800001fc
+alu resp 00000000800001fc: 0xffffffff80000000 -> "a4"
 req commit:800001fc
-f1_resp pc: 0x8000020c
-fetch1 pc_mux_in: 0x0000000080000210
 =========
 frontend req: pc-0000000080000204
-rcu commit mux in:true - 0000000080000200
-branch
+alu resp 0000000080000200: 0xffffffff80000000 -> "t2"
 branch false val 80000684
 req commit:80000200
-f1_resp pc: 0x80000210
-fetch1 pc_mux_in: 0x0000000080000214
 =========
-rcu commit mux in:true - 0000000080000204
-branch
 branch false val 80000684
 req commit:80000204
-f1_resp pc: 0x80000214
-fetch1 pc_mux_in: 0x0000000080000218
 =========
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x0000000080000208
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000208
-fetch1 pc_mux_in: 0x000000008000020c
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000020c
-fetch1 pc_mux_in: 0x0000000080000210
 =========
 frontend req: pc-0000000080000208
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000210
-fetch1 pc_mux_in: 0x0000000080000214
 =========
 frontend req: pc-000000008000020c
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000214
-fetch1 pc_mux_in: 0x0000000080000218
 =========
 frontend req: pc-0000000080000210
-rcu commit mux in:true - 0000000080000208
+alu resp 0000000080000208: 0x0000000000000007 -> "gp"
 req commit:80000208
-f1_resp pc: 0x80000218
-fetch1 pc_mux_in: 0x000000008000021c
 =========
 frontend req: pc-0000000080000214
-rcu commit mux in:true - 000000008000020c
+alu resp 000000008000020c: 0xffffffff80000000 -> "ra"
 req commit:8000020c
-f1_resp pc: 0x8000021c
-fetch1 pc_mux_in: 0x0000000080000220
 =========
 frontend req: pc-0000000080000218
-rcu commit mux in:true - 0000000080000210
+alu resp 0000000080000210: 0xffffffffffff8000 -> "sp"
 req commit:80000210
-f1_resp pc: 0x80000220
-fetch1 pc_mux_in: 0x0000000080000224
 =========
 frontend req: pc-000000008000021c
-rcu commit mux in:true - 0000000080000214
+alu resp 0000000080000214: 0xffffffff7fff8000 -> "a4"
 req commit:80000214
-f1_resp pc: 0x80000224
-fetch1 pc_mux_in: 0x0000000080000228
 =========
 frontend req: pc-0000000080000220
-rcu commit mux in:true - 0000000080000218
+alu resp 0000000080000218: 0xffffffffffff0000 -> "t2"
 req commit:80000218
-f1_resp pc: 0x80000228
-fetch1 pc_mux_in: 0x000000008000022c
 =========
-rcu commit mux in:true - 000000008000021c
+alu resp 000000008000021c: 0xfffffffffffeffff -> "t2"
 req commit:8000021c
-f1_resp pc: 0x8000022c
-fetch1 pc_mux_in: 0x0000000080000230
 =========
-rcu commit mux in:true - 0000000080000220
+alu resp 0000000080000220: 0xffffffff7fff8000 -> "t2"
 req commit:80000220
-f1_resp pc: 0x80000230
-fetch1 pc_mux_in: 0x0000000080000234
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000234
-fetch1 pc_mux_in: 0x0000000080000238
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000238
-fetch1 pc_mux_in: 0x000000008000023c
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000023c
-fetch1 pc_mux_in: 0x0000000080000240
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000240
-fetch1 pc_mux_in: 0x0000000080000244
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000244
-fetch1 pc_mux_in: 0x0000000080000248
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000244
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000244
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000244
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000244
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000244
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000244
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000244
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000244
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000244
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000244
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000244
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000244
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000244
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000244
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:false - 0000000000000000
-branch
-branch true val 80000684
-f1_resp pc: 0x80000244
+branch false val 80000684
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:true - 0000000080000224
-branch
-branch true val 80000684
-f1_resp pc: 0x80000244
+branch false val 80000684
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:true - 0000000080000224
-branch
-branch true val 80000684
-f1_resp pc: 0x80000244
+branch false val 80000684
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:true - 0000000080000224
-branch
-branch true val 80000684
-f1_resp pc: 0x80000244
+branch false val 80000684
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:true - 0000000080000224
-branch
-branch true val 80000684
-f1_resp pc: 0x80000244
+branch false val 80000684
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:true - 0000000080000224
-branch
-branch true val 80000684
-f1_resp pc: 0x80000244
+branch false val 80000684
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:true - 0000000080000224
-branch
-branch true val 80000684
-f1_resp pc: 0x80000244
+branch false val 80000684
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:true - 0000000080000224
-branch
-branch true val 80000684
-f1_resp pc: 0x80000244
+branch false val 80000684
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:true - 0000000080000224
-branch
-branch true val 80000684
+branch false val 80000684
 req commit:80000224
-f1_resp pc: 0x80000244
 =========
 frontend req: pc-0000000080000224
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x0000000080000684
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000684
-fetch1 pc_mux_in: 0x0000000080000688
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000688
-fetch1 pc_mux_in: 0x000000008000068c
 =========
-frontend req: pc-0000000080000684
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000068c
-fetch1 pc_mux_in: 0x0000000080000690
+frontend req: pc-0000000080000228
 =========
-frontend req: pc-0000000080000688
-frontend req: pc-0000000080000688 is BEQ, is branch true
-rcu req in: pc-0000000080000688 is BEQ
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000690
-fetch1 pc_mux_in: 0x0000000080000694
+frontend req: pc-000000008000022c
 =========
-frontend req: pc-0000000080000688
-frontend req: pc-0000000080000688 is BEQ, is branch true
-rcu req in: pc-0000000080000688 is BEQ
-rcu commit mux in:true - 0000000080000684
-rcu req iss: pc-0000000080000688 is BEQ
-branch
-branch false val 80000688
-req commit:80000684
-f1_resp pc: 0x80000694
-fetch1 pc_mux_in: 0x0000000080000698
+frontend req: pc-0000000080000230
+alu resp 0000000080000228: 0x0000000000000008 -> "gp"
+req commit:80000228
 =========
-frontend req: pc-0000000080000688
-frontend req: pc-0000000080000688 is BEQ, is branch true
-rcu req in: pc-0000000080000688 is BEQ
-rcu commit mux in:true - 0000000080000688
-rcu req iss: pc-0000000080000688 is BEQ
-branch
-branch false val 80000688
-req commit:80000688
-f1_resp pc: 0x80000698
-fetch1 pc_mux_in: 0x000000008000069c
+frontend req: pc-0000000080000234
+alu resp 000000008000022c: 0x0000000000000000 -> "ra"
+req commit:8000022c
 =========
-frontend req: pc-0000000080000688
-frontend req: pc-0000000080000688 is BEQ, is branch true
-rcu req in: pc-0000000080000688 is BEQ
-rcu commit mux in:false - 0000000000000000
+frontend req: pc-0000000080000238
+alu resp 0000000080000230: 0x0000000000008000 -> "sp"
+req commit:80000230
+=========
+frontend req: pc-000000008000023c
+alu resp 0000000080000234: 0x0000000000007fff -> "sp"
+req commit:80000234
+=========
+frontend req: pc-0000000080000240
+alu resp 0000000080000238: 0x0000000000007fff -> "a4"
+req commit:80000238
+=========
+alu resp 000000008000023c: 0x0000000000008000 -> "t2"
+req commit:8000023c
+=========
+alu resp 0000000080000240: 0x0000000000007fff -> "t2"
+req commit:80000240
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-0000000080000244
+=========
+frontend req: pc-0000000080000244
+=========
+frontend req: pc-0000000080000244
+=========
+frontend req: pc-0000000080000244
+=========
+frontend req: pc-0000000080000244
+=========
+frontend req: pc-0000000080000244
+=========
+frontend req: pc-0000000080000244
+=========
+frontend req: pc-0000000080000244
+branch false val 80000684
+=========
+frontend req: pc-0000000080000244
+branch false val 80000684
+=========
+frontend req: pc-0000000080000244
+branch false val 80000684
+=========
+frontend req: pc-0000000080000244
+branch false val 80000684
+=========
+frontend req: pc-0000000080000244
+branch false val 80000684
+=========
+frontend req: pc-0000000080000244
+branch false val 80000684
+=========
+frontend req: pc-0000000080000244
+branch false val 80000684
+=========
+frontend req: pc-0000000080000244
+branch false val 80000684
+=========
+frontend req: pc-0000000080000244
+branch false val 80000684
+req commit:80000244
+=========
+frontend req: pc-0000000080000244
 flush!
-fetch1 pc_mux_in: 0x000000008000068c
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000068c
-fetch1 pc_mux_in: 0x0000000080000690
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000690
-fetch1 pc_mux_in: 0x0000000080000694
 =========
-frontend req: pc-000000008000068c
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000694
-fetch1 pc_mux_in: 0x0000000080000698
+frontend req: pc-0000000080000248
 =========
-frontend req: pc-0000000080000690
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000698
-fetch1 pc_mux_in: 0x000000008000069c
+frontend req: pc-000000008000024c
 =========
-frontend req: pc-0000000080000694
-rcu commit mux in:true - 000000008000068c
-req commit:8000068c
-f1_resp pc: 0x8000069c
-fetch1 pc_mux_in: 0x00000000800006a0
+frontend req: pc-0000000080000250
+alu resp 0000000080000248: 0x0000000000000009 -> "gp"
+req commit:80000248
 =========
-frontend req: pc-0000000080000698
-rcu commit mux in:true - 0000000080000690
-req commit:80000690
+frontend req: pc-0000000080000254
+alu resp 000000008000024c: 0xffffffff80000000 -> "ra"
+req commit:8000024c
+=========
+frontend req: pc-0000000080000258
+alu resp 0000000080000250: 0x000000007fffffff -> "ra"
+req commit:80000250
+=========
+frontend req: pc-000000008000025c
+alu resp 0000000080000254: 0x0000000000000000 -> "sp"
+req commit:80000254
+=========
+frontend req: pc-0000000080000260
+alu resp 0000000080000258: 0x000000007fffffff -> "a4"
+req commit:80000258
+=========
+alu resp 000000008000025c: 0xffffffff80000000 -> "t2"
+req commit:8000025c
+=========
+alu resp 0000000080000260: 0x000000007fffffff -> "t2"
+req commit:80000260
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-0000000080000264
+=========
+frontend req: pc-0000000080000264
+=========
+frontend req: pc-0000000080000264
+=========
+frontend req: pc-0000000080000264
+=========
+frontend req: pc-0000000080000264
+=========
+frontend req: pc-0000000080000264
+=========
+frontend req: pc-0000000080000264
+=========
+frontend req: pc-0000000080000264
+branch false val 80000684
+=========
+frontend req: pc-0000000080000264
+branch false val 80000684
+=========
+frontend req: pc-0000000080000264
+branch false val 80000684
+=========
+frontend req: pc-0000000080000264
+branch false val 80000684
+=========
+frontend req: pc-0000000080000264
+branch false val 80000684
+=========
+frontend req: pc-0000000080000264
+branch false val 80000684
+=========
+frontend req: pc-0000000080000264
+branch false val 80000684
+=========
+frontend req: pc-0000000080000264
+branch false val 80000684
+=========
+frontend req: pc-0000000080000264
+branch false val 80000684
+req commit:80000264
+=========
+frontend req: pc-0000000080000264
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000268
+=========
+frontend req: pc-000000008000026c
+=========
+frontend req: pc-0000000080000270
+alu resp 0000000080000268: 0x000000000000000a -> "gp"
+req commit:80000268
+=========
+frontend req: pc-0000000080000274
+alu resp 000000008000026c: 0xffffffff80000000 -> "ra"
+req commit:8000026c
+=========
+frontend req: pc-0000000080000278
+alu resp 0000000080000270: 0x000000007fffffff -> "ra"
+req commit:80000270
+=========
+frontend req: pc-000000008000027c
+alu resp 0000000080000274: 0x0000000000008000 -> "sp"
+req commit:80000274
+=========
+frontend req: pc-0000000080000280
+alu resp 0000000080000278: 0x0000000000007fff -> "sp"
+req commit:80000278
+=========
+alu resp 000000008000027c: 0x0000000080007ffe -> "a4"
+req commit:8000027c
+=========
+alu resp 0000000080000280: 0x0000000000010000 -> "t2"
+req commit:80000280
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-0000000080000284
+=========
+frontend req: pc-0000000080000288
+=========
+frontend req: pc-000000008000028c
+=========
+frontend req: pc-0000000080000290
+=========
+frontend req: pc-0000000080000290
+=========
+frontend req: pc-0000000080000290
+=========
+frontend req: pc-0000000080000290
+=========
+frontend req: pc-0000000080000290
+=========
+frontend req: pc-0000000080000290
+alu resp 0000000080000284: 0x0000000000010001 -> "t2"
+=========
+frontend req: pc-0000000080000290
+alu resp 0000000080000288: 0x0000000080008000 -> "t2"
+=========
+frontend req: pc-0000000080000290
+alu resp 000000008000028c: 0x0000000080007ffe -> "t2"
+branch false val 80000684
+=========
+frontend req: pc-0000000080000290
+branch false val 80000684
+=========
+frontend req: pc-0000000080000290
+branch false val 80000684
+=========
+frontend req: pc-0000000080000290
+branch false val 80000684
+=========
+frontend req: pc-0000000080000290
+branch false val 80000684
+=========
+frontend req: pc-0000000080000290
+branch false val 80000684
+req commit:80000284
+=========
+frontend req: pc-0000000080000290
+branch false val 80000684
+req commit:80000288
+=========
+frontend req: pc-0000000080000290
+branch false val 80000684
+req commit:8000028c
+=========
+frontend req: pc-0000000080000290
+branch false val 80000684
+req commit:80000290
+=========
+frontend req: pc-0000000080000290
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000294
+=========
+frontend req: pc-0000000080000298
+=========
+frontend req: pc-000000008000029c
+alu resp 0000000080000294: 0x000000000000000b -> "gp"
+req commit:80000294
+=========
+frontend req: pc-00000000800002a0
+alu resp 0000000080000298: 0xffffffff80000000 -> "ra"
+req commit:80000298
+=========
+frontend req: pc-00000000800002a4
+alu resp 000000008000029c: 0x0000000000008000 -> "sp"
+req commit:8000029c
+=========
+frontend req: pc-00000000800002a8
+alu resp 00000000800002a0: 0x0000000000007fff -> "sp"
+req commit:800002a0
+=========
+frontend req: pc-00000000800002ac
+alu resp 00000000800002a4: 0xffffffff80007fff -> "a4"
+req commit:800002a4
+=========
+alu resp 00000000800002a8: 0xffffffff80008000 -> "t2"
+req commit:800002a8
+=========
+alu resp 00000000800002ac: 0xffffffff80007fff -> "t2"
+req commit:800002ac
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-00000000800002b0
+=========
+frontend req: pc-00000000800002b0
+=========
+frontend req: pc-00000000800002b0
+=========
+frontend req: pc-00000000800002b0
+=========
+frontend req: pc-00000000800002b0
+=========
+frontend req: pc-00000000800002b0
+=========
+frontend req: pc-00000000800002b0
+=========
+frontend req: pc-00000000800002b0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002b0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002b0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002b0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002b0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002b0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002b0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002b0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002b0
+branch false val 80000684
+req commit:800002b0
+=========
+frontend req: pc-00000000800002b0
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800002b4
+=========
+frontend req: pc-00000000800002b8
+=========
+frontend req: pc-00000000800002bc
+alu resp 00000000800002b4: 0x000000000000000c -> "gp"
+req commit:800002b4
+=========
+frontend req: pc-00000000800002c0
+alu resp 00000000800002b8: 0xffffffff80000000 -> "ra"
+req commit:800002b8
+=========
+frontend req: pc-00000000800002c4
+alu resp 00000000800002bc: 0x000000007fffffff -> "ra"
+req commit:800002bc
+=========
+frontend req: pc-00000000800002c8
+alu resp 00000000800002c0: 0xffffffffffff8000 -> "sp"
+req commit:800002c0
+=========
+frontend req: pc-00000000800002cc
+alu resp 00000000800002c4: 0x000000007fff7fff -> "a4"
+req commit:800002c4
+=========
+alu resp 00000000800002c8: 0x000000007fff8000 -> "t2"
+req commit:800002c8
+=========
+alu resp 00000000800002cc: 0x000000007fff7fff -> "t2"
+req commit:800002cc
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-00000000800002d0
+=========
+frontend req: pc-00000000800002d0
+=========
+frontend req: pc-00000000800002d0
+=========
+frontend req: pc-00000000800002d0
+=========
+frontend req: pc-00000000800002d0
+=========
+frontend req: pc-00000000800002d0
+=========
+frontend req: pc-00000000800002d0
+=========
+frontend req: pc-00000000800002d0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002d0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002d0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002d0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002d0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002d0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002d0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002d0
+branch false val 80000684
+=========
+frontend req: pc-00000000800002d0
+branch false val 80000684
+req commit:800002d0
+=========
+frontend req: pc-00000000800002d0
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800002d4
+=========
+frontend req: pc-00000000800002d8
+=========
+frontend req: pc-00000000800002dc
+alu resp 00000000800002d4: 0x000000000000000d -> "gp"
+req commit:800002d4
+=========
+frontend req: pc-00000000800002e0
+alu resp 00000000800002d8: 0x0000000000000000 -> "ra"
+req commit:800002d8
+=========
+frontend req: pc-00000000800002e4
+alu resp 00000000800002dc: 0xffffffffffffffff -> "sp"
+req commit:800002dc
+=========
+frontend req: pc-00000000800002e8
+alu resp 00000000800002e0: 0xffffffffffffffff -> "a4"
+req commit:800002e0
+=========
+frontend req: pc-00000000800002e8
+alu resp 00000000800002e4: 0xffffffffffffffff -> "t2"
+branch false val 80000684
+req commit:800002e4
+=========
+branch false val 80000684
+req commit:800002e8
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800002ec
+=========
+frontend req: pc-00000000800002f0
+=========
+frontend req: pc-00000000800002f4
+alu resp 00000000800002ec: 0x000000000000000e -> "gp"
+req commit:800002ec
+=========
+frontend req: pc-00000000800002f8
+alu resp 00000000800002f0: 0xffffffffffffffff -> "ra"
+req commit:800002f0
+=========
+frontend req: pc-00000000800002fc
+alu resp 00000000800002f4: 0x0000000000000001 -> "sp"
+req commit:800002f4
+=========
+frontend req: pc-0000000080000300
+alu resp 00000000800002f8: 0x0000000000000000 -> "a4"
+req commit:800002f8
+=========
+frontend req: pc-0000000080000300
+alu resp 00000000800002fc: 0x0000000000000000 -> "t2"
+branch false val 80000684
+req commit:800002fc
+=========
+branch false val 80000684
+req commit:80000300
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000304
+=========
+frontend req: pc-0000000080000308
+=========
+frontend req: pc-000000008000030c
+alu resp 0000000080000304: 0x000000000000000f -> "gp"
+req commit:80000304
+=========
+frontend req: pc-0000000080000310
+alu resp 0000000080000308: 0xffffffffffffffff -> "ra"
+req commit:80000308
+=========
+frontend req: pc-0000000080000314
+alu resp 000000008000030c: 0xffffffffffffffff -> "sp"
+req commit:8000030c
+=========
+frontend req: pc-0000000080000318
+alu resp 0000000080000310: 0xfffffffffffffffe -> "a4"
+req commit:80000310
+=========
+frontend req: pc-0000000080000318
+alu resp 0000000080000314: 0xfffffffffffffffe -> "t2"
+branch false val 80000684
+req commit:80000314
+=========
+branch false val 80000684
+req commit:80000318
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-000000008000031c
+=========
+frontend req: pc-0000000080000320
+=========
+frontend req: pc-0000000080000324
+alu resp 000000008000031c: 0x0000000000000010 -> "gp"
+req commit:8000031c
+=========
+frontend req: pc-0000000080000328
+alu resp 0000000080000320: 0x0000000000000001 -> "ra"
+req commit:80000320
+=========
+frontend req: pc-000000008000032c
+alu resp 0000000080000324: 0xffffffff80000000 -> "sp"
+req commit:80000324
+=========
+frontend req: pc-0000000080000330
+alu resp 0000000080000328: 0x000000007fffffff -> "sp"
+req commit:80000328
+=========
+frontend req: pc-0000000080000334
+alu resp 000000008000032c: 0x0000000080000000 -> "a4"
+req commit:8000032c
+=========
+alu resp 0000000080000330: 0x0000000000000001 -> "t2"
+req commit:80000330
+=========
+alu resp 0000000080000334: 0x0000000080000000 -> "t2"
+req commit:80000334
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-0000000080000338
+=========
+frontend req: pc-0000000080000338
+=========
+frontend req: pc-0000000080000338
+=========
+frontend req: pc-0000000080000338
+=========
+frontend req: pc-0000000080000338
+=========
+frontend req: pc-0000000080000338
+=========
+frontend req: pc-0000000080000338
+=========
+frontend req: pc-0000000080000338
+branch false val 80000684
+=========
+frontend req: pc-0000000080000338
+branch false val 80000684
+=========
+frontend req: pc-0000000080000338
+branch false val 80000684
+=========
+frontend req: pc-0000000080000338
+branch false val 80000684
+=========
+frontend req: pc-0000000080000338
+branch false val 80000684
+=========
+frontend req: pc-0000000080000338
+branch false val 80000684
+=========
+frontend req: pc-0000000080000338
+branch false val 80000684
+=========
+frontend req: pc-0000000080000338
+branch false val 80000684
+=========
+frontend req: pc-0000000080000338
+branch false val 80000684
+req commit:80000338
+=========
+frontend req: pc-0000000080000338
+flush!
+=========
+=========
+=========
+frontend req: pc-000000008000033c
+=========
+frontend req: pc-0000000080000340
+=========
+frontend req: pc-0000000080000344
+alu resp 000000008000033c: 0x0000000000000011 -> "gp"
+req commit:8000033c
+=========
+frontend req: pc-0000000080000348
+alu resp 0000000080000340: 0x000000000000000d -> "ra"
+req commit:80000340
+=========
+frontend req: pc-000000008000034c
+alu resp 0000000080000344: 0x000000000000000b -> "sp"
+req commit:80000344
+=========
+frontend req: pc-0000000080000350
+alu resp 0000000080000348: 0x0000000000000018 -> "ra"
+req commit:80000348
+=========
+frontend req: pc-0000000080000350
+alu resp 000000008000034c: 0x0000000000000018 -> "t2"
+branch false val 80000684
+req commit:8000034c
+=========
+branch false val 80000684
+req commit:80000350
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000354
+=========
+frontend req: pc-0000000080000358
+=========
+frontend req: pc-000000008000035c
+alu resp 0000000080000354: 0x0000000000000012 -> "gp"
+req commit:80000354
+=========
+frontend req: pc-0000000080000360
+alu resp 0000000080000358: 0x000000000000000e -> "ra"
+req commit:80000358
+=========
+frontend req: pc-0000000080000364
+alu resp 000000008000035c: 0x000000000000000b -> "sp"
+req commit:8000035c
+=========
+frontend req: pc-0000000080000368
+alu resp 0000000080000360: 0x0000000000000019 -> "sp"
+req commit:80000360
+=========
+frontend req: pc-0000000080000368
+alu resp 0000000080000364: 0x0000000000000019 -> "t2"
+branch false val 80000684
+req commit:80000364
+=========
+branch false val 80000684
+req commit:80000368
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-000000008000036c
+=========
+frontend req: pc-0000000080000370
+=========
+frontend req: pc-0000000080000374
+alu resp 000000008000036c: 0x0000000000000013 -> "gp"
+req commit:8000036c
+=========
+frontend req: pc-0000000080000378
+alu resp 0000000080000370: 0x000000000000000d -> "ra"
+req commit:80000370
+=========
+frontend req: pc-000000008000037c
+alu resp 0000000080000374: 0x000000000000001a -> "ra"
+req commit:80000374
+=========
+frontend req: pc-000000008000037c
+alu resp 0000000080000378: 0x000000000000001a -> "t2"
+branch false val 80000684
+req commit:80000378
+=========
+frontend req: pc-000000008000037c
+branch false val 80000684
+req commit:8000037c
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000380
+=========
+frontend req: pc-0000000080000384
+=========
+frontend req: pc-0000000080000388
+alu resp 0000000080000380: 0x0000000000000014 -> "gp"
+req commit:80000380
+=========
+frontend req: pc-000000008000038c
+alu resp 0000000080000384: 0x0000000000000000 -> "tp"
+req commit:80000384
+=========
+frontend req: pc-0000000080000390
+alu resp 0000000080000388: 0x000000000000000d -> "ra"
+req commit:80000388
+=========
+frontend req: pc-0000000080000394
+alu resp 000000008000038c: 0x000000000000000b -> "sp"
+req commit:8000038c
+=========
+frontend req: pc-0000000080000398
+alu resp 0000000080000390: 0x0000000000000018 -> "a4"
+req commit:80000390
+=========
+alu resp 0000000080000394: 0x0000000000000018 -> "t1"
+req commit:80000394
+=========
+alu resp 0000000080000398: 0x0000000000000001 -> "tp"
+req commit:80000398
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-000000008000039c
+=========
+frontend req: pc-00000000800003a0
+=========
+frontend req: pc-00000000800003a0
+=========
+frontend req: pc-00000000800003a0
+=========
+frontend req: pc-00000000800003a0
+=========
+frontend req: pc-00000000800003a0
+=========
+frontend req: pc-00000000800003a0
+=========
+frontend req: pc-00000000800003a0
+=========
+frontend req: pc-00000000800003a0
+alu resp 000000008000039c: 0x0000000000000002 -> "t0"
+branch true val 80000388
+=========
+frontend req: pc-00000000800003a0
+branch true val 80000388
+=========
+frontend req: pc-00000000800003a0
+branch true val 80000388
+=========
+frontend req: pc-00000000800003a0
+branch true val 80000388
+=========
+frontend req: pc-00000000800003a0
+branch true val 80000388
+=========
+frontend req: pc-00000000800003a0
+branch true val 80000388
+=========
+frontend req: pc-00000000800003a0
+branch true val 80000388
+=========
+frontend req: pc-00000000800003a0
+branch true val 80000388
+req commit:8000039c
+=========
+frontend req: pc-00000000800003a0
+branch true val 80000388
+req commit:800003a0
+=========
+frontend req: pc-00000000800003a0
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000388
+=========
+frontend req: pc-000000008000038c
+=========
+frontend req: pc-0000000080000390
+alu resp 0000000080000388: 0x000000000000000d -> "ra"
+req commit:80000388
+=========
+frontend req: pc-0000000080000394
+alu resp 000000008000038c: 0x000000000000000b -> "sp"
+req commit:8000038c
+=========
+frontend req: pc-0000000080000398
+alu resp 0000000080000390: 0x0000000000000018 -> "a4"
+req commit:80000390
+=========
+frontend req: pc-000000008000039c
+alu resp 0000000080000394: 0x0000000000000018 -> "t1"
+req commit:80000394
+=========
+frontend req: pc-00000000800003a0
+alu resp 0000000080000398: 0x0000000000000002 -> "tp"
+req commit:80000398
+=========
+alu resp 000000008000039c: 0x0000000000000002 -> "t0"
+branch false val 80000388
+req commit:8000039c
+=========
+req commit:800003a0
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800003a4
+=========
+frontend req: pc-00000000800003a8
+=========
+frontend req: pc-00000000800003a8
+alu resp 00000000800003a4: 0x0000000000000018 -> "t2"
+branch false val 80000684
+req commit:800003a4
+=========
+frontend req: pc-00000000800003a8
+branch false val 80000684
+req commit:800003a8
+=========
+frontend req: pc-00000000800003a8
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800003ac
+=========
+frontend req: pc-00000000800003b0
+=========
+frontend req: pc-00000000800003b4
+alu resp 00000000800003ac: 0x0000000000000015 -> "gp"
+req commit:800003ac
+=========
+frontend req: pc-00000000800003b8
+alu resp 00000000800003b0: 0x0000000000000000 -> "tp"
+req commit:800003b0
+=========
+frontend req: pc-00000000800003bc
+alu resp 00000000800003b4: 0x000000000000000e -> "ra"
+req commit:800003b4
+=========
+frontend req: pc-00000000800003c0
+alu resp 00000000800003b8: 0x000000000000000b -> "sp"
+req commit:800003b8
+=========
+frontend req: pc-00000000800003c4
+alu resp 00000000800003bc: 0x0000000000000019 -> "a4"
+req commit:800003bc
+=========
+alu resp 00000000800003c0: 0x0000000000000000 -> "zero"
+req commit:800003c0
+=========
+alu resp 00000000800003c4: 0x0000000000000019 -> "t1"
+req commit:800003c4
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-00000000800003c8
+=========
+frontend req: pc-00000000800003cc
+=========
+frontend req: pc-00000000800003d0
+=========
+frontend req: pc-00000000800003d0
+=========
+frontend req: pc-00000000800003d0
+=========
+frontend req: pc-00000000800003d0
+=========
+frontend req: pc-00000000800003d0
+=========
+frontend req: pc-00000000800003d0
+=========
+frontend req: pc-00000000800003d0
+alu resp 00000000800003c8: 0x0000000000000001 -> "tp"
+=========
+frontend req: pc-00000000800003d0
+alu resp 00000000800003cc: 0x0000000000000002 -> "t0"
+branch true val 800003b4
+=========
+frontend req: pc-00000000800003d0
+branch true val 800003b4
+=========
+frontend req: pc-00000000800003d0
+branch true val 800003b4
+=========
+frontend req: pc-00000000800003d0
+branch true val 800003b4
+=========
+frontend req: pc-00000000800003d0
+branch true val 800003b4
+=========
+frontend req: pc-00000000800003d0
+branch true val 800003b4
+=========
+frontend req: pc-00000000800003d0
+branch true val 800003b4
+req commit:800003c8
+=========
+frontend req: pc-00000000800003d0
+branch true val 800003b4
+req commit:800003cc
+=========
+frontend req: pc-00000000800003d0
+branch true val 800003b4
+req commit:800003d0
+=========
+frontend req: pc-00000000800003d0
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800003b4
+=========
+frontend req: pc-00000000800003b8
+=========
+frontend req: pc-00000000800003bc
+alu resp 00000000800003b4: 0x000000000000000e -> "ra"
+req commit:800003b4
+=========
+frontend req: pc-00000000800003c0
+alu resp 00000000800003b8: 0x000000000000000b -> "sp"
+req commit:800003b8
+=========
+frontend req: pc-00000000800003c4
+alu resp 00000000800003bc: 0x0000000000000019 -> "a4"
+req commit:800003bc
+=========
+frontend req: pc-00000000800003c8
+alu resp 00000000800003c0: 0x0000000000000000 -> "zero"
+req commit:800003c0
+=========
+frontend req: pc-00000000800003cc
+alu resp 00000000800003c4: 0x0000000000000019 -> "t1"
+req commit:800003c4
+=========
+alu resp 00000000800003c8: 0x0000000000000002 -> "tp"
+req commit:800003c8
+=========
+alu resp 00000000800003cc: 0x0000000000000002 -> "t0"
+req commit:800003cc
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-00000000800003d0
+=========
+frontend req: pc-00000000800003d0
+=========
+frontend req: pc-00000000800003d0
+=========
+frontend req: pc-00000000800003d0
+=========
+frontend req: pc-00000000800003d0
+=========
+frontend req: pc-00000000800003d0
+=========
+frontend req: pc-00000000800003d0
+=========
+frontend req: pc-00000000800003d0
+branch false val 800003b4
+=========
+frontend req: pc-00000000800003d0
+branch false val 800003b4
+=========
+frontend req: pc-00000000800003d0
+branch false val 800003b4
+=========
+frontend req: pc-00000000800003d0
+branch false val 800003b4
+=========
+frontend req: pc-00000000800003d0
+branch false val 800003b4
+=========
+frontend req: pc-00000000800003d0
+branch false val 800003b4
+=========
+frontend req: pc-00000000800003d0
+branch false val 800003b4
+=========
+frontend req: pc-00000000800003d0
+branch false val 800003b4
+=========
+frontend req: pc-00000000800003d0
+branch false val 800003b4
+req commit:800003d0
+=========
+frontend req: pc-00000000800003d0
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800003d4
+=========
+frontend req: pc-00000000800003d8
+=========
+frontend req: pc-00000000800003d8
+alu resp 00000000800003d4: 0x0000000000000019 -> "t2"
+branch false val 80000684
+req commit:800003d4
+=========
+frontend req: pc-00000000800003d8
+branch false val 80000684
+req commit:800003d8
+=========
+frontend req: pc-00000000800003d8
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800003dc
+=========
+frontend req: pc-00000000800003e0
+=========
+frontend req: pc-00000000800003e4
+alu resp 00000000800003dc: 0x0000000000000016 -> "gp"
+req commit:800003dc
+=========
+frontend req: pc-00000000800003e8
+alu resp 00000000800003e0: 0x0000000000000000 -> "tp"
+req commit:800003e0
+=========
+frontend req: pc-00000000800003ec
+alu resp 00000000800003e4: 0x000000000000000f -> "ra"
+req commit:800003e4
+=========
+frontend req: pc-00000000800003f0
+alu resp 00000000800003e8: 0x000000000000000b -> "sp"
+req commit:800003e8
+=========
+frontend req: pc-00000000800003f4
+alu resp 00000000800003ec: 0x000000000000001a -> "a4"
+req commit:800003ec
+=========
+alu resp 00000000800003f0: 0x0000000000000000 -> "zero"
+req commit:800003f0
+=========
+alu resp 00000000800003f4: 0x0000000000000000 -> "zero"
+req commit:800003f4
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-00000000800003f8
+=========
+frontend req: pc-00000000800003fc
+=========
+frontend req: pc-0000000080000400
+=========
+frontend req: pc-0000000080000404
+=========
+frontend req: pc-0000000080000404
+=========
+frontend req: pc-0000000080000404
+=========
+frontend req: pc-0000000080000404
+=========
+frontend req: pc-0000000080000404
+=========
+frontend req: pc-0000000080000404
+alu resp 00000000800003f8: 0x000000000000001a -> "t1"
+=========
+frontend req: pc-0000000080000404
+alu resp 00000000800003fc: 0x0000000000000001 -> "tp"
+=========
+frontend req: pc-0000000080000404
+alu resp 0000000080000400: 0x0000000000000002 -> "t0"
+branch true val 800003e4
+=========
+frontend req: pc-0000000080000404
+branch true val 800003e4
+=========
+frontend req: pc-0000000080000404
+branch true val 800003e4
+=========
+frontend req: pc-0000000080000404
+branch true val 800003e4
+=========
+frontend req: pc-0000000080000404
+branch true val 800003e4
+=========
+frontend req: pc-0000000080000404
+branch true val 800003e4
+req commit:800003f8
+=========
+frontend req: pc-0000000080000404
+branch true val 800003e4
+req commit:800003fc
+=========
+frontend req: pc-0000000080000404
+branch true val 800003e4
+req commit:80000400
+=========
+frontend req: pc-0000000080000404
+branch true val 800003e4
+req commit:80000404
+=========
+frontend req: pc-0000000080000404
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800003e4
+=========
+frontend req: pc-00000000800003e8
+=========
+frontend req: pc-00000000800003ec
+alu resp 00000000800003e4: 0x000000000000000f -> "ra"
+req commit:800003e4
+=========
+frontend req: pc-00000000800003f0
+alu resp 00000000800003e8: 0x000000000000000b -> "sp"
+req commit:800003e8
+=========
+frontend req: pc-00000000800003f4
+alu resp 00000000800003ec: 0x000000000000001a -> "a4"
+req commit:800003ec
+=========
+frontend req: pc-00000000800003f8
+alu resp 00000000800003f0: 0x0000000000000000 -> "zero"
+req commit:800003f0
+=========
+frontend req: pc-00000000800003fc
+alu resp 00000000800003f4: 0x0000000000000000 -> "zero"
+req commit:800003f4
+=========
+alu resp 00000000800003f8: 0x000000000000001a -> "t1"
+req commit:800003f8
+=========
+alu resp 00000000800003fc: 0x0000000000000002 -> "tp"
+req commit:800003fc
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-0000000080000400
+=========
+frontend req: pc-0000000080000404
+=========
+frontend req: pc-0000000080000404
+=========
+frontend req: pc-0000000080000404
+=========
+frontend req: pc-0000000080000404
+=========
+frontend req: pc-0000000080000404
+=========
+frontend req: pc-0000000080000404
+=========
+frontend req: pc-0000000080000404
+=========
+frontend req: pc-0000000080000404
+alu resp 0000000080000400: 0x0000000000000002 -> "t0"
+branch false val 800003e4
+=========
+frontend req: pc-0000000080000404
+branch false val 800003e4
+=========
+frontend req: pc-0000000080000404
+branch false val 800003e4
+=========
+frontend req: pc-0000000080000404
+branch false val 800003e4
+=========
+frontend req: pc-0000000080000404
+branch false val 800003e4
+=========
+frontend req: pc-0000000080000404
+branch false val 800003e4
+=========
+frontend req: pc-0000000080000404
+branch false val 800003e4
+=========
+frontend req: pc-0000000080000404
+branch false val 800003e4
+req commit:80000400
+=========
+frontend req: pc-0000000080000404
+branch false val 800003e4
+req commit:80000404
+=========
+frontend req: pc-0000000080000404
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000408
+=========
+frontend req: pc-000000008000040c
+=========
+frontend req: pc-000000008000040c
+alu resp 0000000080000408: 0x000000000000001a -> "t2"
+branch false val 80000684
+req commit:80000408
+=========
+frontend req: pc-000000008000040c
+branch false val 80000684
+req commit:8000040c
+=========
+frontend req: pc-000000008000040c
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000410
+=========
+frontend req: pc-0000000080000414
+=========
+frontend req: pc-0000000080000418
+alu resp 0000000080000410: 0x0000000000000017 -> "gp"
+req commit:80000410
+=========
+frontend req: pc-000000008000041c
+alu resp 0000000080000414: 0x0000000000000000 -> "tp"
+req commit:80000414
+=========
+frontend req: pc-0000000080000420
+alu resp 0000000080000418: 0x000000000000000d -> "ra"
+req commit:80000418
+=========
+frontend req: pc-0000000080000424
+alu resp 000000008000041c: 0x000000000000000b -> "sp"
+req commit:8000041c
+=========
+frontend req: pc-0000000080000428
+alu resp 0000000080000420: 0x0000000000000018 -> "a4"
+req commit:80000420
+=========
+alu resp 0000000080000424: 0x0000000000000001 -> "tp"
+req commit:80000424
+=========
+alu resp 0000000080000428: 0x0000000000000002 -> "t0"
+req commit:80000428
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-000000008000042c
+=========
+frontend req: pc-000000008000042c
+=========
+frontend req: pc-000000008000042c
+=========
+frontend req: pc-000000008000042c
+=========
+frontend req: pc-000000008000042c
+=========
+frontend req: pc-000000008000042c
+=========
+frontend req: pc-000000008000042c
+=========
+frontend req: pc-000000008000042c
+branch true val 80000418
+=========
+frontend req: pc-000000008000042c
+branch true val 80000418
+=========
+frontend req: pc-000000008000042c
+branch true val 80000418
+=========
+frontend req: pc-000000008000042c
+branch true val 80000418
+=========
+frontend req: pc-000000008000042c
+branch true val 80000418
+=========
+frontend req: pc-000000008000042c
+branch true val 80000418
+=========
+frontend req: pc-000000008000042c
+branch true val 80000418
+=========
+frontend req: pc-000000008000042c
+branch true val 80000418
+=========
+frontend req: pc-000000008000042c
+branch true val 80000418
+req commit:8000042c
+=========
+frontend req: pc-000000008000042c
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000418
+=========
+frontend req: pc-000000008000041c
+=========
+frontend req: pc-0000000080000420
+alu resp 0000000080000418: 0x000000000000000d -> "ra"
+req commit:80000418
+=========
+frontend req: pc-0000000080000424
+alu resp 000000008000041c: 0x000000000000000b -> "sp"
+req commit:8000041c
+=========
+frontend req: pc-0000000080000428
+alu resp 0000000080000420: 0x0000000000000018 -> "a4"
+req commit:80000420
+=========
+frontend req: pc-000000008000042c
+alu resp 0000000080000424: 0x0000000000000002 -> "tp"
+req commit:80000424
+=========
+frontend req: pc-000000008000042c
+alu resp 0000000080000428: 0x0000000000000002 -> "t0"
+branch false val 80000418
+req commit:80000428
+=========
+branch false val 80000418
+req commit:8000042c
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000430
+=========
+frontend req: pc-0000000080000434
+=========
+frontend req: pc-0000000080000434
+alu resp 0000000080000430: 0x0000000000000018 -> "t2"
+branch false val 80000684
+req commit:80000430
+=========
+frontend req: pc-0000000080000434
+branch false val 80000684
+req commit:80000434
+=========
+frontend req: pc-0000000080000434
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000438
+=========
+frontend req: pc-000000008000043c
+=========
+frontend req: pc-0000000080000440
+alu resp 0000000080000438: 0x0000000000000018 -> "gp"
+req commit:80000438
+=========
+frontend req: pc-0000000080000444
+alu resp 000000008000043c: 0x0000000000000000 -> "tp"
+req commit:8000043c
+=========
+frontend req: pc-0000000080000448
+alu resp 0000000080000440: 0x000000000000000e -> "ra"
+req commit:80000440
+=========
+frontend req: pc-000000008000044c
+alu resp 0000000080000444: 0x000000000000000b -> "sp"
+req commit:80000444
+=========
+frontend req: pc-0000000080000450
+alu resp 0000000080000448: 0x0000000000000000 -> "zero"
+req commit:80000448
+=========
+alu resp 000000008000044c: 0x0000000000000019 -> "a4"
+req commit:8000044c
+=========
+alu resp 0000000080000450: 0x0000000000000001 -> "tp"
+req commit:80000450
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-0000000080000454
+=========
+frontend req: pc-0000000080000458
+=========
+frontend req: pc-0000000080000458
+=========
+frontend req: pc-0000000080000458
+=========
+frontend req: pc-0000000080000458
+=========
+frontend req: pc-0000000080000458
+=========
+frontend req: pc-0000000080000458
+=========
+frontend req: pc-0000000080000458
+=========
+frontend req: pc-0000000080000458
+alu resp 0000000080000454: 0x0000000000000002 -> "t0"
+branch true val 80000440
+=========
+frontend req: pc-0000000080000458
+branch true val 80000440
+=========
+frontend req: pc-0000000080000458
+branch true val 80000440
+=========
+frontend req: pc-0000000080000458
+branch true val 80000440
+=========
+frontend req: pc-0000000080000458
+branch true val 80000440
+=========
+frontend req: pc-0000000080000458
+branch true val 80000440
+=========
+frontend req: pc-0000000080000458
+branch true val 80000440
+=========
+frontend req: pc-0000000080000458
+branch true val 80000440
+req commit:80000454
+=========
+frontend req: pc-0000000080000458
+branch true val 80000440
+req commit:80000458
+=========
+frontend req: pc-0000000080000458
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000440
+=========
+frontend req: pc-0000000080000444
+=========
+frontend req: pc-0000000080000448
+alu resp 0000000080000440: 0x000000000000000e -> "ra"
+req commit:80000440
+=========
+frontend req: pc-000000008000044c
+alu resp 0000000080000444: 0x000000000000000b -> "sp"
+req commit:80000444
+=========
+frontend req: pc-0000000080000450
+alu resp 0000000080000448: 0x0000000000000000 -> "zero"
+req commit:80000448
+=========
+frontend req: pc-0000000080000454
+alu resp 000000008000044c: 0x0000000000000019 -> "a4"
+req commit:8000044c
+=========
+frontend req: pc-0000000080000458
+alu resp 0000000080000450: 0x0000000000000002 -> "tp"
+req commit:80000450
+=========
+alu resp 0000000080000454: 0x0000000000000002 -> "t0"
+branch false val 80000440
+req commit:80000454
+=========
+req commit:80000458
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-000000008000045c
+=========
+frontend req: pc-0000000080000460
+=========
+frontend req: pc-0000000080000460
+alu resp 000000008000045c: 0x0000000000000019 -> "t2"
+branch false val 80000684
+req commit:8000045c
+=========
+frontend req: pc-0000000080000460
+branch false val 80000684
+req commit:80000460
+=========
+frontend req: pc-0000000080000460
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000464
+=========
+frontend req: pc-0000000080000468
+=========
+frontend req: pc-000000008000046c
+alu resp 0000000080000464: 0x0000000000000019 -> "gp"
+req commit:80000464
+=========
+frontend req: pc-0000000080000470
+alu resp 0000000080000468: 0x0000000000000000 -> "tp"
+req commit:80000468
+=========
+frontend req: pc-0000000080000474
+alu resp 000000008000046c: 0x000000000000000f -> "ra"
+req commit:8000046c
+=========
+frontend req: pc-0000000080000478
+alu resp 0000000080000470: 0x000000000000000b -> "sp"
+req commit:80000470
+=========
+frontend req: pc-000000008000047c
+alu resp 0000000080000474: 0x0000000000000000 -> "zero"
+req commit:80000474
+=========
+alu resp 0000000080000478: 0x0000000000000000 -> "zero"
+req commit:80000478
+=========
+alu resp 000000008000047c: 0x000000000000001a -> "a4"
+req commit:8000047c
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-0000000080000480
+=========
+frontend req: pc-0000000080000484
+=========
+frontend req: pc-0000000080000488
+=========
+frontend req: pc-0000000080000488
+=========
+frontend req: pc-0000000080000488
+=========
+frontend req: pc-0000000080000488
+=========
+frontend req: pc-0000000080000488
+=========
+frontend req: pc-0000000080000488
+=========
+frontend req: pc-0000000080000488
+alu resp 0000000080000480: 0x0000000000000001 -> "tp"
+=========
+frontend req: pc-0000000080000488
+alu resp 0000000080000484: 0x0000000000000002 -> "t0"
+branch true val 8000046c
+=========
+frontend req: pc-0000000080000488
+branch true val 8000046c
+=========
+frontend req: pc-0000000080000488
+branch true val 8000046c
+=========
+frontend req: pc-0000000080000488
+branch true val 8000046c
+=========
+frontend req: pc-0000000080000488
+branch true val 8000046c
+=========
+frontend req: pc-0000000080000488
+branch true val 8000046c
+=========
+frontend req: pc-0000000080000488
+branch true val 8000046c
+req commit:80000480
+=========
+frontend req: pc-0000000080000488
+branch true val 8000046c
+req commit:80000484
+=========
+frontend req: pc-0000000080000488
+branch true val 8000046c
+req commit:80000488
+=========
+frontend req: pc-0000000080000488
+flush!
+=========
+=========
+=========
+frontend req: pc-000000008000046c
+=========
+frontend req: pc-0000000080000470
+=========
+frontend req: pc-0000000080000474
+alu resp 000000008000046c: 0x000000000000000f -> "ra"
+req commit:8000046c
+=========
+frontend req: pc-0000000080000478
+alu resp 0000000080000470: 0x000000000000000b -> "sp"
+req commit:80000470
+=========
+frontend req: pc-000000008000047c
+alu resp 0000000080000474: 0x0000000000000000 -> "zero"
+req commit:80000474
+=========
+frontend req: pc-0000000080000480
+alu resp 0000000080000478: 0x0000000000000000 -> "zero"
+req commit:80000478
+=========
+frontend req: pc-0000000080000484
+alu resp 000000008000047c: 0x000000000000001a -> "a4"
+req commit:8000047c
+=========
+alu resp 0000000080000480: 0x0000000000000002 -> "tp"
+req commit:80000480
+=========
+alu resp 0000000080000484: 0x0000000000000002 -> "t0"
+req commit:80000484
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-0000000080000488
+=========
+frontend req: pc-0000000080000488
+=========
+frontend req: pc-0000000080000488
+=========
+frontend req: pc-0000000080000488
+=========
+frontend req: pc-0000000080000488
+=========
+frontend req: pc-0000000080000488
+=========
+frontend req: pc-0000000080000488
+=========
+frontend req: pc-0000000080000488
+branch false val 8000046c
+=========
+frontend req: pc-0000000080000488
+branch false val 8000046c
+=========
+frontend req: pc-0000000080000488
+branch false val 8000046c
+=========
+frontend req: pc-0000000080000488
+branch false val 8000046c
+=========
+frontend req: pc-0000000080000488
+branch false val 8000046c
+=========
+frontend req: pc-0000000080000488
+branch false val 8000046c
+=========
+frontend req: pc-0000000080000488
+branch false val 8000046c
+=========
+frontend req: pc-0000000080000488
+branch false val 8000046c
+=========
+frontend req: pc-0000000080000488
+branch false val 8000046c
+req commit:80000488
+=========
+frontend req: pc-0000000080000488
+flush!
+=========
+=========
+=========
+frontend req: pc-000000008000048c
+=========
+frontend req: pc-0000000080000490
+=========
+frontend req: pc-0000000080000490
+alu resp 000000008000048c: 0x000000000000001a -> "t2"
+branch false val 80000684
+req commit:8000048c
+=========
+frontend req: pc-0000000080000490
+branch false val 80000684
+req commit:80000490
+=========
+frontend req: pc-0000000080000490
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000494
+=========
+frontend req: pc-0000000080000498
+=========
+frontend req: pc-000000008000049c
+alu resp 0000000080000494: 0x000000000000001a -> "gp"
+req commit:80000494
+=========
+frontend req: pc-00000000800004a0
+alu resp 0000000080000498: 0x0000000000000000 -> "tp"
+req commit:80000498
+=========
+frontend req: pc-00000000800004a4
+alu resp 000000008000049c: 0x000000000000000d -> "ra"
+req commit:8000049c
+=========
+frontend req: pc-00000000800004a8
+alu resp 00000000800004a0: 0x0000000000000000 -> "zero"
+req commit:800004a0
+=========
+frontend req: pc-00000000800004ac
+alu resp 00000000800004a4: 0x000000000000000b -> "sp"
+req commit:800004a4
+=========
+alu resp 00000000800004a8: 0x0000000000000018 -> "a4"
+req commit:800004a8
+=========
+alu resp 00000000800004ac: 0x0000000000000001 -> "tp"
+req commit:800004ac
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-00000000800004b0
+=========
+frontend req: pc-00000000800004b4
+=========
+frontend req: pc-00000000800004b4
+=========
+frontend req: pc-00000000800004b4
+=========
+frontend req: pc-00000000800004b4
+=========
+frontend req: pc-00000000800004b4
+=========
+frontend req: pc-00000000800004b4
+=========
+frontend req: pc-00000000800004b4
+=========
+frontend req: pc-00000000800004b4
+alu resp 00000000800004b0: 0x0000000000000002 -> "t0"
+branch true val 8000049c
+=========
+frontend req: pc-00000000800004b4
+branch true val 8000049c
+=========
+frontend req: pc-00000000800004b4
+branch true val 8000049c
+=========
+frontend req: pc-00000000800004b4
+branch true val 8000049c
+=========
+frontend req: pc-00000000800004b4
+branch true val 8000049c
+=========
+frontend req: pc-00000000800004b4
+branch true val 8000049c
+=========
+frontend req: pc-00000000800004b4
+branch true val 8000049c
+=========
+frontend req: pc-00000000800004b4
+branch true val 8000049c
+req commit:800004b0
+=========
+frontend req: pc-00000000800004b4
+branch true val 8000049c
+req commit:800004b4
+=========
+frontend req: pc-00000000800004b4
+flush!
+=========
+=========
+=========
+frontend req: pc-000000008000049c
+=========
+frontend req: pc-00000000800004a0
+=========
+frontend req: pc-00000000800004a4
+alu resp 000000008000049c: 0x000000000000000d -> "ra"
+req commit:8000049c
+=========
+frontend req: pc-00000000800004a8
+alu resp 00000000800004a0: 0x0000000000000000 -> "zero"
+req commit:800004a0
+=========
+frontend req: pc-00000000800004ac
+alu resp 00000000800004a4: 0x000000000000000b -> "sp"
+req commit:800004a4
+=========
+frontend req: pc-00000000800004b0
+alu resp 00000000800004a8: 0x0000000000000018 -> "a4"
+req commit:800004a8
+=========
+frontend req: pc-00000000800004b4
+alu resp 00000000800004ac: 0x0000000000000002 -> "tp"
+req commit:800004ac
+=========
+alu resp 00000000800004b0: 0x0000000000000002 -> "t0"
+branch false val 8000049c
+req commit:800004b0
+=========
+req commit:800004b4
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800004b8
+=========
+frontend req: pc-00000000800004bc
+=========
+frontend req: pc-00000000800004bc
+alu resp 00000000800004b8: 0x0000000000000018 -> "t2"
+branch false val 80000684
+req commit:800004b8
+=========
+frontend req: pc-00000000800004bc
+branch false val 80000684
+req commit:800004bc
+=========
+frontend req: pc-00000000800004bc
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800004c0
+=========
+frontend req: pc-00000000800004c4
+=========
+frontend req: pc-00000000800004c8
+alu resp 00000000800004c0: 0x000000000000001b -> "gp"
+req commit:800004c0
+=========
+frontend req: pc-00000000800004cc
+alu resp 00000000800004c4: 0x0000000000000000 -> "tp"
+req commit:800004c4
+=========
+frontend req: pc-00000000800004d0
+alu resp 00000000800004c8: 0x000000000000000e -> "ra"
+req commit:800004c8
+=========
+frontend req: pc-00000000800004d4
+alu resp 00000000800004cc: 0x0000000000000000 -> "zero"
+req commit:800004cc
+=========
+frontend req: pc-00000000800004d8
+alu resp 00000000800004d0: 0x000000000000000b -> "sp"
+req commit:800004d0
+=========
+alu resp 00000000800004d4: 0x0000000000000000 -> "zero"
+req commit:800004d4
+=========
+alu resp 00000000800004d8: 0x0000000000000019 -> "a4"
+req commit:800004d8
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-00000000800004dc
+=========
+frontend req: pc-00000000800004e0
+=========
+frontend req: pc-00000000800004e4
+=========
+frontend req: pc-00000000800004e4
+=========
+frontend req: pc-00000000800004e4
+=========
+frontend req: pc-00000000800004e4
+=========
+frontend req: pc-00000000800004e4
+=========
+frontend req: pc-00000000800004e4
+=========
+frontend req: pc-00000000800004e4
+alu resp 00000000800004dc: 0x0000000000000001 -> "tp"
+=========
+frontend req: pc-00000000800004e4
+alu resp 00000000800004e0: 0x0000000000000002 -> "t0"
+branch true val 800004c8
+=========
+frontend req: pc-00000000800004e4
+branch true val 800004c8
+=========
+frontend req: pc-00000000800004e4
+branch true val 800004c8
+=========
+frontend req: pc-00000000800004e4
+branch true val 800004c8
+=========
+frontend req: pc-00000000800004e4
+branch true val 800004c8
+=========
+frontend req: pc-00000000800004e4
+branch true val 800004c8
+=========
+frontend req: pc-00000000800004e4
+branch true val 800004c8
+req commit:800004dc
+=========
+frontend req: pc-00000000800004e4
+branch true val 800004c8
+req commit:800004e0
+=========
+frontend req: pc-00000000800004e4
+branch true val 800004c8
+req commit:800004e4
+=========
+frontend req: pc-00000000800004e4
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800004c8
+=========
+frontend req: pc-00000000800004cc
+=========
+frontend req: pc-00000000800004d0
+alu resp 00000000800004c8: 0x000000000000000e -> "ra"
+req commit:800004c8
+=========
+frontend req: pc-00000000800004d4
+alu resp 00000000800004cc: 0x0000000000000000 -> "zero"
+req commit:800004cc
+=========
+frontend req: pc-00000000800004d8
+alu resp 00000000800004d0: 0x000000000000000b -> "sp"
+req commit:800004d0
+=========
+frontend req: pc-00000000800004dc
+alu resp 00000000800004d4: 0x0000000000000000 -> "zero"
+req commit:800004d4
+=========
+frontend req: pc-00000000800004e0
+alu resp 00000000800004d8: 0x0000000000000019 -> "a4"
+req commit:800004d8
+=========
+alu resp 00000000800004dc: 0x0000000000000002 -> "tp"
+req commit:800004dc
+=========
+alu resp 00000000800004e0: 0x0000000000000002 -> "t0"
+req commit:800004e0
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-00000000800004e4
+=========
+frontend req: pc-00000000800004e4
+=========
+frontend req: pc-00000000800004e4
+=========
+frontend req: pc-00000000800004e4
+=========
+frontend req: pc-00000000800004e4
+=========
+frontend req: pc-00000000800004e4
+=========
+frontend req: pc-00000000800004e4
+=========
+frontend req: pc-00000000800004e4
+branch false val 800004c8
+=========
+frontend req: pc-00000000800004e4
+branch false val 800004c8
+=========
+frontend req: pc-00000000800004e4
+branch false val 800004c8
+=========
+frontend req: pc-00000000800004e4
+branch false val 800004c8
+=========
+frontend req: pc-00000000800004e4
+branch false val 800004c8
+=========
+frontend req: pc-00000000800004e4
+branch false val 800004c8
+=========
+frontend req: pc-00000000800004e4
+branch false val 800004c8
+=========
+frontend req: pc-00000000800004e4
+branch false val 800004c8
+=========
+frontend req: pc-00000000800004e4
+branch false val 800004c8
+req commit:800004e4
+=========
+frontend req: pc-00000000800004e4
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800004e8
+=========
+frontend req: pc-00000000800004ec
+=========
+frontend req: pc-00000000800004ec
+alu resp 00000000800004e8: 0x0000000000000019 -> "t2"
+branch false val 80000684
+req commit:800004e8
+=========
+frontend req: pc-00000000800004ec
+branch false val 80000684
+req commit:800004ec
+=========
+frontend req: pc-00000000800004ec
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800004f0
+=========
+frontend req: pc-00000000800004f4
+=========
+frontend req: pc-00000000800004f8
+alu resp 00000000800004f0: 0x000000000000001c -> "gp"
+req commit:800004f0
+=========
+frontend req: pc-00000000800004fc
+alu resp 00000000800004f4: 0x0000000000000000 -> "tp"
+req commit:800004f4
+=========
+frontend req: pc-0000000080000500
+alu resp 00000000800004f8: 0x000000000000000f -> "ra"
+req commit:800004f8
+=========
+frontend req: pc-0000000080000504
+alu resp 00000000800004fc: 0x0000000000000000 -> "zero"
+req commit:800004fc
+=========
+frontend req: pc-0000000080000508
+alu resp 0000000080000500: 0x0000000000000000 -> "zero"
+req commit:80000500
+=========
+alu resp 0000000080000504: 0x000000000000000b -> "sp"
+req commit:80000504
+=========
+alu resp 0000000080000508: 0x000000000000001a -> "a4"
+req commit:80000508
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-000000008000050c
+=========
+frontend req: pc-0000000080000510
+=========
+frontend req: pc-0000000080000514
+=========
+frontend req: pc-0000000080000514
+=========
+frontend req: pc-0000000080000514
+=========
+frontend req: pc-0000000080000514
+=========
+frontend req: pc-0000000080000514
+=========
+frontend req: pc-0000000080000514
+=========
+frontend req: pc-0000000080000514
+alu resp 000000008000050c: 0x0000000000000001 -> "tp"
+=========
+frontend req: pc-0000000080000514
+alu resp 0000000080000510: 0x0000000000000002 -> "t0"
+branch true val 800004f8
+=========
+frontend req: pc-0000000080000514
+branch true val 800004f8
+=========
+frontend req: pc-0000000080000514
+branch true val 800004f8
+=========
+frontend req: pc-0000000080000514
+branch true val 800004f8
+=========
+frontend req: pc-0000000080000514
+branch true val 800004f8
+=========
+frontend req: pc-0000000080000514
+branch true val 800004f8
+=========
+frontend req: pc-0000000080000514
+branch true val 800004f8
+req commit:8000050c
+=========
+frontend req: pc-0000000080000514
+branch true val 800004f8
+req commit:80000510
+=========
+frontend req: pc-0000000080000514
+branch true val 800004f8
+req commit:80000514
+=========
+frontend req: pc-0000000080000514
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800004f8
+=========
+frontend req: pc-00000000800004fc
+=========
+frontend req: pc-0000000080000500
+alu resp 00000000800004f8: 0x000000000000000f -> "ra"
+req commit:800004f8
+=========
+frontend req: pc-0000000080000504
+alu resp 00000000800004fc: 0x0000000000000000 -> "zero"
+req commit:800004fc
+=========
+frontend req: pc-0000000080000508
+alu resp 0000000080000500: 0x0000000000000000 -> "zero"
+req commit:80000500
+=========
+frontend req: pc-000000008000050c
+alu resp 0000000080000504: 0x000000000000000b -> "sp"
+req commit:80000504
+=========
+frontend req: pc-0000000080000510
+alu resp 0000000080000508: 0x000000000000001a -> "a4"
+req commit:80000508
+=========
+alu resp 000000008000050c: 0x0000000000000002 -> "tp"
+req commit:8000050c
+=========
+alu resp 0000000080000510: 0x0000000000000002 -> "t0"
+req commit:80000510
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-0000000080000514
+=========
+frontend req: pc-0000000080000514
+=========
+frontend req: pc-0000000080000514
+=========
+frontend req: pc-0000000080000514
+=========
+frontend req: pc-0000000080000514
+=========
+frontend req: pc-0000000080000514
+=========
+frontend req: pc-0000000080000514
+=========
+frontend req: pc-0000000080000514
+branch false val 800004f8
+=========
+frontend req: pc-0000000080000514
+branch false val 800004f8
+=========
+frontend req: pc-0000000080000514
+branch false val 800004f8
+=========
+frontend req: pc-0000000080000514
+branch false val 800004f8
+=========
+frontend req: pc-0000000080000514
+branch false val 800004f8
+=========
+frontend req: pc-0000000080000514
+branch false val 800004f8
+=========
+frontend req: pc-0000000080000514
+branch false val 800004f8
+=========
+frontend req: pc-0000000080000514
+branch false val 800004f8
+=========
+frontend req: pc-0000000080000514
+branch false val 800004f8
+req commit:80000514
+=========
+frontend req: pc-0000000080000514
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000518
+=========
+frontend req: pc-000000008000051c
+=========
+frontend req: pc-000000008000051c
+alu resp 0000000080000518: 0x000000000000001a -> "t2"
+branch false val 80000684
+req commit:80000518
+=========
+frontend req: pc-000000008000051c
+branch false val 80000684
+req commit:8000051c
+=========
+frontend req: pc-000000008000051c
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000520
+=========
+frontend req: pc-0000000080000524
+=========
+frontend req: pc-0000000080000528
+alu resp 0000000080000520: 0x000000000000001d -> "gp"
+req commit:80000520
+=========
+frontend req: pc-000000008000052c
+alu resp 0000000080000524: 0x0000000000000000 -> "tp"
+req commit:80000524
+=========
+frontend req: pc-0000000080000530
+alu resp 0000000080000528: 0x000000000000000b -> "sp"
+req commit:80000528
+=========
+frontend req: pc-0000000080000534
+alu resp 000000008000052c: 0x000000000000000d -> "ra"
+req commit:8000052c
+=========
+frontend req: pc-0000000080000538
+alu resp 0000000080000530: 0x0000000000000018 -> "a4"
+req commit:80000530
+=========
+alu resp 0000000080000534: 0x0000000000000001 -> "tp"
+req commit:80000534
+=========
+alu resp 0000000080000538: 0x0000000000000002 -> "t0"
+req commit:80000538
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-000000008000053c
+=========
+frontend req: pc-000000008000053c
+=========
+frontend req: pc-000000008000053c
+=========
+frontend req: pc-000000008000053c
+=========
+frontend req: pc-000000008000053c
+=========
+frontend req: pc-000000008000053c
+=========
+frontend req: pc-000000008000053c
+=========
+frontend req: pc-000000008000053c
+branch true val 80000528
+=========
+frontend req: pc-000000008000053c
+branch true val 80000528
+=========
+frontend req: pc-000000008000053c
+branch true val 80000528
+=========
+frontend req: pc-000000008000053c
+branch true val 80000528
+=========
+frontend req: pc-000000008000053c
+branch true val 80000528
+=========
+frontend req: pc-000000008000053c
+branch true val 80000528
+=========
+frontend req: pc-000000008000053c
+branch true val 80000528
+=========
+frontend req: pc-000000008000053c
+branch true val 80000528
+=========
+frontend req: pc-000000008000053c
+branch true val 80000528
+req commit:8000053c
+=========
+frontend req: pc-000000008000053c
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000528
+=========
+frontend req: pc-000000008000052c
+=========
+frontend req: pc-0000000080000530
+alu resp 0000000080000528: 0x000000000000000b -> "sp"
+req commit:80000528
+=========
+frontend req: pc-0000000080000534
+alu resp 000000008000052c: 0x000000000000000d -> "ra"
+req commit:8000052c
+=========
+frontend req: pc-0000000080000538
+alu resp 0000000080000530: 0x0000000000000018 -> "a4"
+req commit:80000530
+=========
+frontend req: pc-000000008000053c
+alu resp 0000000080000534: 0x0000000000000002 -> "tp"
+req commit:80000534
+=========
+frontend req: pc-000000008000053c
+alu resp 0000000080000538: 0x0000000000000002 -> "t0"
+branch false val 80000528
+req commit:80000538
+=========
+branch false val 80000528
+req commit:8000053c
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000540
+=========
+frontend req: pc-0000000080000544
+=========
+frontend req: pc-0000000080000544
+alu resp 0000000080000540: 0x0000000000000018 -> "t2"
+branch false val 80000684
+req commit:80000540
+=========
+frontend req: pc-0000000080000544
+branch false val 80000684
+req commit:80000544
+=========
+frontend req: pc-0000000080000544
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000548
+=========
+frontend req: pc-000000008000054c
+=========
+frontend req: pc-0000000080000550
+alu resp 0000000080000548: 0x000000000000001e -> "gp"
+req commit:80000548
+=========
+frontend req: pc-0000000080000554
+alu resp 000000008000054c: 0x0000000000000000 -> "tp"
+req commit:8000054c
+=========
+frontend req: pc-0000000080000558
+alu resp 0000000080000550: 0x000000000000000b -> "sp"
+req commit:80000550
+=========
+frontend req: pc-000000008000055c
+alu resp 0000000080000554: 0x000000000000000e -> "ra"
+req commit:80000554
+=========
+frontend req: pc-0000000080000560
+alu resp 0000000080000558: 0x0000000000000000 -> "zero"
+req commit:80000558
+=========
+alu resp 000000008000055c: 0x0000000000000019 -> "a4"
+req commit:8000055c
+=========
+alu resp 0000000080000560: 0x0000000000000001 -> "tp"
+req commit:80000560
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-0000000080000564
+=========
+frontend req: pc-0000000080000568
+=========
+frontend req: pc-0000000080000568
+=========
+frontend req: pc-0000000080000568
+=========
+frontend req: pc-0000000080000568
+=========
+frontend req: pc-0000000080000568
+=========
+frontend req: pc-0000000080000568
+=========
+frontend req: pc-0000000080000568
+=========
+frontend req: pc-0000000080000568
+alu resp 0000000080000564: 0x0000000000000002 -> "t0"
+branch true val 80000550
+=========
+frontend req: pc-0000000080000568
+branch true val 80000550
+=========
+frontend req: pc-0000000080000568
+branch true val 80000550
+=========
+frontend req: pc-0000000080000568
+branch true val 80000550
+=========
+frontend req: pc-0000000080000568
+branch true val 80000550
+=========
+frontend req: pc-0000000080000568
+branch true val 80000550
+=========
+frontend req: pc-0000000080000568
+branch true val 80000550
+=========
+frontend req: pc-0000000080000568
+branch true val 80000550
+req commit:80000564
+=========
+frontend req: pc-0000000080000568
+branch true val 80000550
+req commit:80000568
+=========
+frontend req: pc-0000000080000568
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000550
+=========
+frontend req: pc-0000000080000554
+=========
+frontend req: pc-0000000080000558
+alu resp 0000000080000550: 0x000000000000000b -> "sp"
+req commit:80000550
+=========
+frontend req: pc-000000008000055c
+alu resp 0000000080000554: 0x000000000000000e -> "ra"
+req commit:80000554
+=========
+frontend req: pc-0000000080000560
+alu resp 0000000080000558: 0x0000000000000000 -> "zero"
+req commit:80000558
+=========
+frontend req: pc-0000000080000564
+alu resp 000000008000055c: 0x0000000000000019 -> "a4"
+req commit:8000055c
+=========
+frontend req: pc-0000000080000568
+alu resp 0000000080000560: 0x0000000000000002 -> "tp"
+req commit:80000560
+=========
+alu resp 0000000080000564: 0x0000000000000002 -> "t0"
+branch false val 80000550
+req commit:80000564
+=========
+req commit:80000568
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-000000008000056c
+=========
+frontend req: pc-0000000080000570
+=========
+frontend req: pc-0000000080000570
+alu resp 000000008000056c: 0x0000000000000019 -> "t2"
+branch false val 80000684
+req commit:8000056c
+=========
+frontend req: pc-0000000080000570
+branch false val 80000684
+req commit:80000570
+=========
+frontend req: pc-0000000080000570
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000574
+=========
+frontend req: pc-0000000080000578
+=========
+frontend req: pc-000000008000057c
+alu resp 0000000080000574: 0x000000000000001f -> "gp"
+req commit:80000574
+=========
+frontend req: pc-0000000080000580
+alu resp 0000000080000578: 0x0000000000000000 -> "tp"
+req commit:80000578
+=========
+frontend req: pc-0000000080000584
+alu resp 000000008000057c: 0x000000000000000b -> "sp"
+req commit:8000057c
+=========
+frontend req: pc-0000000080000588
+alu resp 0000000080000580: 0x000000000000000f -> "ra"
+req commit:80000580
+=========
+frontend req: pc-000000008000058c
+alu resp 0000000080000584: 0x0000000000000000 -> "zero"
+req commit:80000584
+=========
+alu resp 0000000080000588: 0x0000000000000000 -> "zero"
+req commit:80000588
+=========
+alu resp 000000008000058c: 0x000000000000001a -> "a4"
+req commit:8000058c
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-0000000080000590
+=========
+frontend req: pc-0000000080000594
+=========
+frontend req: pc-0000000080000598
+=========
+frontend req: pc-0000000080000598
+=========
+frontend req: pc-0000000080000598
+=========
+frontend req: pc-0000000080000598
+=========
+frontend req: pc-0000000080000598
+=========
+frontend req: pc-0000000080000598
+=========
+frontend req: pc-0000000080000598
+alu resp 0000000080000590: 0x0000000000000001 -> "tp"
+=========
+frontend req: pc-0000000080000598
+alu resp 0000000080000594: 0x0000000000000002 -> "t0"
+branch true val 8000057c
+=========
+frontend req: pc-0000000080000598
+branch true val 8000057c
+=========
+frontend req: pc-0000000080000598
+branch true val 8000057c
+=========
+frontend req: pc-0000000080000598
+branch true val 8000057c
+=========
+frontend req: pc-0000000080000598
+branch true val 8000057c
+=========
+frontend req: pc-0000000080000598
+branch true val 8000057c
+=========
+frontend req: pc-0000000080000598
+branch true val 8000057c
+req commit:80000590
+=========
+frontend req: pc-0000000080000598
+branch true val 8000057c
+req commit:80000594
+=========
+frontend req: pc-0000000080000598
+branch true val 8000057c
+req commit:80000598
+=========
+frontend req: pc-0000000080000598
+flush!
+=========
+=========
+=========
+frontend req: pc-000000008000057c
+=========
+frontend req: pc-0000000080000580
+=========
+frontend req: pc-0000000080000584
+alu resp 000000008000057c: 0x000000000000000b -> "sp"
+req commit:8000057c
+=========
+frontend req: pc-0000000080000588
+alu resp 0000000080000580: 0x000000000000000f -> "ra"
+req commit:80000580
+=========
+frontend req: pc-000000008000058c
+alu resp 0000000080000584: 0x0000000000000000 -> "zero"
+req commit:80000584
+=========
+frontend req: pc-0000000080000590
+alu resp 0000000080000588: 0x0000000000000000 -> "zero"
+req commit:80000588
+=========
+frontend req: pc-0000000080000594
+alu resp 000000008000058c: 0x000000000000001a -> "a4"
+req commit:8000058c
+=========
+alu resp 0000000080000590: 0x0000000000000002 -> "tp"
+req commit:80000590
+=========
+alu resp 0000000080000594: 0x0000000000000002 -> "t0"
+req commit:80000594
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-0000000080000598
+=========
+frontend req: pc-0000000080000598
+=========
+frontend req: pc-0000000080000598
+=========
+frontend req: pc-0000000080000598
+=========
+frontend req: pc-0000000080000598
+=========
+frontend req: pc-0000000080000598
+=========
+frontend req: pc-0000000080000598
+=========
+frontend req: pc-0000000080000598
+branch false val 8000057c
+=========
+frontend req: pc-0000000080000598
+branch false val 8000057c
+=========
+frontend req: pc-0000000080000598
+branch false val 8000057c
+=========
+frontend req: pc-0000000080000598
+branch false val 8000057c
+=========
+frontend req: pc-0000000080000598
+branch false val 8000057c
+=========
+frontend req: pc-0000000080000598
+branch false val 8000057c
+=========
+frontend req: pc-0000000080000598
+branch false val 8000057c
+=========
+frontend req: pc-0000000080000598
+branch false val 8000057c
+=========
+frontend req: pc-0000000080000598
+branch false val 8000057c
+req commit:80000598
+=========
+frontend req: pc-0000000080000598
+flush!
+=========
+=========
+=========
+frontend req: pc-000000008000059c
+=========
+frontend req: pc-00000000800005a0
+=========
+frontend req: pc-00000000800005a0
+alu resp 000000008000059c: 0x000000000000001a -> "t2"
+branch false val 80000684
+req commit:8000059c
+=========
+frontend req: pc-00000000800005a0
+branch false val 80000684
+req commit:800005a0
+=========
+frontend req: pc-00000000800005a0
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800005a4
+=========
+frontend req: pc-00000000800005a8
+=========
+frontend req: pc-00000000800005ac
+alu resp 00000000800005a4: 0x0000000000000020 -> "gp"
+req commit:800005a4
+=========
+frontend req: pc-00000000800005b0
+alu resp 00000000800005a8: 0x0000000000000000 -> "tp"
+req commit:800005a8
+=========
+frontend req: pc-00000000800005b4
+alu resp 00000000800005ac: 0x000000000000000b -> "sp"
+req commit:800005ac
+=========
+frontend req: pc-00000000800005b8
+alu resp 00000000800005b0: 0x0000000000000000 -> "zero"
+req commit:800005b0
+=========
+frontend req: pc-00000000800005bc
+alu resp 00000000800005b4: 0x000000000000000d -> "ra"
+req commit:800005b4
+=========
+alu resp 00000000800005b8: 0x0000000000000018 -> "a4"
+req commit:800005b8
+=========
+alu resp 00000000800005bc: 0x0000000000000001 -> "tp"
+req commit:800005bc
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-00000000800005c0
+=========
+frontend req: pc-00000000800005c4
+=========
+frontend req: pc-00000000800005c4
+=========
+frontend req: pc-00000000800005c4
+=========
+frontend req: pc-00000000800005c4
+=========
+frontend req: pc-00000000800005c4
+=========
+frontend req: pc-00000000800005c4
+=========
+frontend req: pc-00000000800005c4
+=========
+frontend req: pc-00000000800005c4
+alu resp 00000000800005c0: 0x0000000000000002 -> "t0"
+branch true val 800005ac
+=========
+frontend req: pc-00000000800005c4
+branch true val 800005ac
+=========
+frontend req: pc-00000000800005c4
+branch true val 800005ac
+=========
+frontend req: pc-00000000800005c4
+branch true val 800005ac
+=========
+frontend req: pc-00000000800005c4
+branch true val 800005ac
+=========
+frontend req: pc-00000000800005c4
+branch true val 800005ac
+=========
+frontend req: pc-00000000800005c4
+branch true val 800005ac
+=========
+frontend req: pc-00000000800005c4
+branch true val 800005ac
+req commit:800005c0
+=========
+frontend req: pc-00000000800005c4
+branch true val 800005ac
+req commit:800005c4
+=========
+frontend req: pc-00000000800005c4
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800005ac
+=========
+frontend req: pc-00000000800005b0
+=========
+frontend req: pc-00000000800005b4
+alu resp 00000000800005ac: 0x000000000000000b -> "sp"
+req commit:800005ac
+=========
+frontend req: pc-00000000800005b8
+alu resp 00000000800005b0: 0x0000000000000000 -> "zero"
+req commit:800005b0
+=========
+frontend req: pc-00000000800005bc
+alu resp 00000000800005b4: 0x000000000000000d -> "ra"
+req commit:800005b4
+=========
+frontend req: pc-00000000800005c0
+alu resp 00000000800005b8: 0x0000000000000018 -> "a4"
+req commit:800005b8
+=========
+frontend req: pc-00000000800005c4
+alu resp 00000000800005bc: 0x0000000000000002 -> "tp"
+req commit:800005bc
+=========
+alu resp 00000000800005c0: 0x0000000000000002 -> "t0"
+branch false val 800005ac
+req commit:800005c0
+=========
+req commit:800005c4
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800005c8
+=========
+frontend req: pc-00000000800005cc
+=========
+frontend req: pc-00000000800005cc
+alu resp 00000000800005c8: 0x0000000000000018 -> "t2"
+branch false val 80000684
+req commit:800005c8
+=========
+frontend req: pc-00000000800005cc
+branch false val 80000684
+req commit:800005cc
+=========
+frontend req: pc-00000000800005cc
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800005d0
+=========
+frontend req: pc-00000000800005d4
+=========
+frontend req: pc-00000000800005d8
+alu resp 00000000800005d0: 0x0000000000000021 -> "gp"
+req commit:800005d0
+=========
+frontend req: pc-00000000800005dc
+alu resp 00000000800005d4: 0x0000000000000000 -> "tp"
+req commit:800005d4
+=========
+frontend req: pc-00000000800005e0
+alu resp 00000000800005d8: 0x000000000000000b -> "sp"
+req commit:800005d8
+=========
+frontend req: pc-00000000800005e4
+alu resp 00000000800005dc: 0x0000000000000000 -> "zero"
+req commit:800005dc
+=========
+frontend req: pc-00000000800005e8
+alu resp 00000000800005e0: 0x000000000000000e -> "ra"
+req commit:800005e0
+=========
+alu resp 00000000800005e4: 0x0000000000000000 -> "zero"
+req commit:800005e4
+=========
+alu resp 00000000800005e8: 0x0000000000000019 -> "a4"
+req commit:800005e8
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-00000000800005ec
+=========
+frontend req: pc-00000000800005f0
+=========
+frontend req: pc-00000000800005f4
+=========
+frontend req: pc-00000000800005f4
+=========
+frontend req: pc-00000000800005f4
+=========
+frontend req: pc-00000000800005f4
+=========
+frontend req: pc-00000000800005f4
+=========
+frontend req: pc-00000000800005f4
+=========
+frontend req: pc-00000000800005f4
+alu resp 00000000800005ec: 0x0000000000000001 -> "tp"
+=========
+frontend req: pc-00000000800005f4
+alu resp 00000000800005f0: 0x0000000000000002 -> "t0"
+branch true val 800005d8
+=========
+frontend req: pc-00000000800005f4
+branch true val 800005d8
+=========
+frontend req: pc-00000000800005f4
+branch true val 800005d8
+=========
+frontend req: pc-00000000800005f4
+branch true val 800005d8
+=========
+frontend req: pc-00000000800005f4
+branch true val 800005d8
+=========
+frontend req: pc-00000000800005f4
+branch true val 800005d8
+=========
+frontend req: pc-00000000800005f4
+branch true val 800005d8
+req commit:800005ec
+=========
+frontend req: pc-00000000800005f4
+branch true val 800005d8
+req commit:800005f0
+=========
+frontend req: pc-00000000800005f4
+branch true val 800005d8
+req commit:800005f4
+=========
+frontend req: pc-00000000800005f4
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800005d8
+=========
+frontend req: pc-00000000800005dc
+=========
+frontend req: pc-00000000800005e0
+alu resp 00000000800005d8: 0x000000000000000b -> "sp"
+req commit:800005d8
+=========
+frontend req: pc-00000000800005e4
+alu resp 00000000800005dc: 0x0000000000000000 -> "zero"
+req commit:800005dc
+=========
+frontend req: pc-00000000800005e8
+alu resp 00000000800005e0: 0x000000000000000e -> "ra"
+req commit:800005e0
+=========
+frontend req: pc-00000000800005ec
+alu resp 00000000800005e4: 0x0000000000000000 -> "zero"
+req commit:800005e4
+=========
+frontend req: pc-00000000800005f0
+alu resp 00000000800005e8: 0x0000000000000019 -> "a4"
+req commit:800005e8
+=========
+alu resp 00000000800005ec: 0x0000000000000002 -> "tp"
+req commit:800005ec
+=========
+alu resp 00000000800005f0: 0x0000000000000002 -> "t0"
+req commit:800005f0
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-00000000800005f4
+=========
+frontend req: pc-00000000800005f4
+=========
+frontend req: pc-00000000800005f4
+=========
+frontend req: pc-00000000800005f4
+=========
+frontend req: pc-00000000800005f4
+=========
+frontend req: pc-00000000800005f4
+=========
+frontend req: pc-00000000800005f4
+=========
+frontend req: pc-00000000800005f4
+branch false val 800005d8
+=========
+frontend req: pc-00000000800005f4
+branch false val 800005d8
+=========
+frontend req: pc-00000000800005f4
+branch false val 800005d8
+=========
+frontend req: pc-00000000800005f4
+branch false val 800005d8
+=========
+frontend req: pc-00000000800005f4
+branch false val 800005d8
+=========
+frontend req: pc-00000000800005f4
+branch false val 800005d8
+=========
+frontend req: pc-00000000800005f4
+branch false val 800005d8
+=========
+frontend req: pc-00000000800005f4
+branch false val 800005d8
+=========
+frontend req: pc-00000000800005f4
+branch false val 800005d8
+req commit:800005f4
+=========
+frontend req: pc-00000000800005f4
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800005f8
+=========
+frontend req: pc-00000000800005fc
+=========
+frontend req: pc-00000000800005fc
+alu resp 00000000800005f8: 0x0000000000000019 -> "t2"
+branch false val 80000684
+req commit:800005f8
+=========
+frontend req: pc-00000000800005fc
+branch false val 80000684
+req commit:800005fc
+=========
+frontend req: pc-00000000800005fc
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000600
+=========
+frontend req: pc-0000000080000604
+=========
+frontend req: pc-0000000080000608
+alu resp 0000000080000600: 0x0000000000000022 -> "gp"
+req commit:80000600
+=========
+frontend req: pc-000000008000060c
+alu resp 0000000080000604: 0x0000000000000000 -> "tp"
+req commit:80000604
+=========
+frontend req: pc-0000000080000610
+alu resp 0000000080000608: 0x000000000000000b -> "sp"
+req commit:80000608
+=========
+frontend req: pc-0000000080000614
+alu resp 000000008000060c: 0x0000000000000000 -> "zero"
+req commit:8000060c
+=========
+frontend req: pc-0000000080000618
+alu resp 0000000080000610: 0x0000000000000000 -> "zero"
+req commit:80000610
+=========
+alu resp 0000000080000614: 0x000000000000000f -> "ra"
+req commit:80000614
+=========
+alu resp 0000000080000618: 0x000000000000001a -> "a4"
+req commit:80000618
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-000000008000061c
+=========
+frontend req: pc-0000000080000620
+=========
+frontend req: pc-0000000080000624
+=========
+frontend req: pc-0000000080000624
+=========
+frontend req: pc-0000000080000624
+=========
+frontend req: pc-0000000080000624
+=========
+frontend req: pc-0000000080000624
+=========
+frontend req: pc-0000000080000624
+=========
+frontend req: pc-0000000080000624
+alu resp 000000008000061c: 0x0000000000000001 -> "tp"
+=========
+frontend req: pc-0000000080000624
+alu resp 0000000080000620: 0x0000000000000002 -> "t0"
+branch true val 80000608
+=========
+frontend req: pc-0000000080000624
+branch true val 80000608
+=========
+frontend req: pc-0000000080000624
+branch true val 80000608
+=========
+frontend req: pc-0000000080000624
+branch true val 80000608
+=========
+frontend req: pc-0000000080000624
+branch true val 80000608
+=========
+frontend req: pc-0000000080000624
+branch true val 80000608
+=========
+frontend req: pc-0000000080000624
+branch true val 80000608
+req commit:8000061c
+=========
+frontend req: pc-0000000080000624
+branch true val 80000608
+req commit:80000620
+=========
+frontend req: pc-0000000080000624
+branch true val 80000608
+req commit:80000624
+=========
+frontend req: pc-0000000080000624
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000608
+=========
+frontend req: pc-000000008000060c
+=========
+frontend req: pc-0000000080000610
+alu resp 0000000080000608: 0x000000000000000b -> "sp"
+req commit:80000608
+=========
+frontend req: pc-0000000080000614
+alu resp 000000008000060c: 0x0000000000000000 -> "zero"
+req commit:8000060c
+=========
+frontend req: pc-0000000080000618
+alu resp 0000000080000610: 0x0000000000000000 -> "zero"
+req commit:80000610
+=========
+frontend req: pc-000000008000061c
+alu resp 0000000080000614: 0x000000000000000f -> "ra"
+req commit:80000614
+=========
+frontend req: pc-0000000080000620
+alu resp 0000000080000618: 0x000000000000001a -> "a4"
+req commit:80000618
+=========
+alu resp 000000008000061c: 0x0000000000000002 -> "tp"
+req commit:8000061c
+=========
+alu resp 0000000080000620: 0x0000000000000002 -> "t0"
+req commit:80000620
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+=========
+frontend req: pc-0000000080000624
+=========
+frontend req: pc-0000000080000624
+=========
+frontend req: pc-0000000080000624
+=========
+frontend req: pc-0000000080000624
+=========
+frontend req: pc-0000000080000624
+=========
+frontend req: pc-0000000080000624
+=========
+frontend req: pc-0000000080000624
+=========
+frontend req: pc-0000000080000624
+branch false val 80000608
+=========
+frontend req: pc-0000000080000624
+branch false val 80000608
+=========
+frontend req: pc-0000000080000624
+branch false val 80000608
+=========
+frontend req: pc-0000000080000624
+branch false val 80000608
+=========
+frontend req: pc-0000000080000624
+branch false val 80000608
+=========
+frontend req: pc-0000000080000624
+branch false val 80000608
+=========
+frontend req: pc-0000000080000624
+branch false val 80000608
+=========
+frontend req: pc-0000000080000624
+branch false val 80000608
+=========
+frontend req: pc-0000000080000624
+branch false val 80000608
+req commit:80000624
+=========
+frontend req: pc-0000000080000624
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000628
+=========
+frontend req: pc-000000008000062c
+=========
+frontend req: pc-000000008000062c
+alu resp 0000000080000628: 0x000000000000001a -> "t2"
+branch false val 80000684
+req commit:80000628
+=========
+frontend req: pc-000000008000062c
+branch false val 80000684
+req commit:8000062c
+=========
+frontend req: pc-000000008000062c
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000630
+=========
+frontend req: pc-0000000080000634
+=========
+frontend req: pc-0000000080000638
+alu resp 0000000080000630: 0x0000000000000023 -> "gp"
+req commit:80000630
+=========
+frontend req: pc-000000008000063c
+alu resp 0000000080000634: 0x000000000000000f -> "ra"
+req commit:80000634
+=========
+frontend req: pc-0000000080000640
+alu resp 0000000080000638: 0x000000000000000f -> "sp"
+req commit:80000638
+=========
+frontend req: pc-0000000080000640
+alu resp 000000008000063c: 0x000000000000000f -> "t2"
+branch false val 80000684
+req commit:8000063c
+=========
+frontend req: pc-0000000080000640
+branch false val 80000684
+req commit:80000640
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000644
+=========
+frontend req: pc-0000000080000648
+=========
+frontend req: pc-000000008000064c
+alu resp 0000000080000644: 0x0000000000000024 -> "gp"
+req commit:80000644
+=========
+frontend req: pc-0000000080000650
+alu resp 0000000080000648: 0x0000000000000020 -> "ra"
+req commit:80000648
+=========
+frontend req: pc-0000000080000654
+alu resp 000000008000064c: 0x0000000000000020 -> "sp"
+req commit:8000064c
+=========
+frontend req: pc-0000000080000654
+alu resp 0000000080000650: 0x0000000000000020 -> "t2"
+branch false val 80000684
+req commit:80000650
+=========
+frontend req: pc-0000000080000654
+branch false val 80000684
+req commit:80000654
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000658
+=========
+frontend req: pc-000000008000065c
+=========
+frontend req: pc-0000000080000660
+alu resp 0000000080000658: 0x0000000000000025 -> "gp"
+req commit:80000658
+=========
+frontend req: pc-0000000080000664
+alu resp 000000008000065c: 0x0000000000000000 -> "ra"
+req commit:8000065c
+=========
+frontend req: pc-0000000080000664
+alu resp 0000000080000660: 0x0000000000000000 -> "t2"
+branch false val 80000684
+req commit:80000660
+=========
+frontend req: pc-0000000080000664
+branch false val 80000684
+req commit:80000664
+=========
+frontend req: pc-0000000080000664
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000668
+=========
+frontend req: pc-000000008000066c
+=========
+frontend req: pc-0000000080000670
+alu resp 0000000080000668: 0x0000000000000026 -> "gp"
+req commit:80000668
+=========
+frontend req: pc-0000000080000674
+alu resp 000000008000066c: 0x0000000000000010 -> "ra"
+req commit:8000066c
+=========
+frontend req: pc-0000000080000678
+alu resp 0000000080000670: 0x000000000000001e -> "sp"
+req commit:80000670
+=========
+frontend req: pc-000000008000067c
+alu resp 0000000080000674: 0x000000000000002e -> "zero"
+req commit:80000674
+=========
+frontend req: pc-000000008000067c
+alu resp 0000000080000678: 0x0000000000000000 -> "t2"
+branch false val 80000684
+req commit:80000678
+=========
+branch false val 80000684
+req commit:8000067c
+=========
+flush!
+=========
+=========
+=========
+frontend req: pc-0000000080000680
+=========
+frontend req: pc-0000000080000680
+branch true val 800006a0
+=========
+frontend req: pc-0000000080000680
+branch true val 800006a0
+req commit:80000680
+=========
+frontend req: pc-0000000080000680
+flush!
+=========
+=========
+=========
+frontend req: pc-00000000800006a0
+=========
+frontend req: pc-00000000800006a4
+=========
+frontend req: pc-00000000800006a8
+req commit:800006a0
+=========
+frontend req: pc-00000000800006ac
+alu resp 00000000800006a4: 0x0000000000000001 -> "gp"
+req commit:800006a4
 ecall : opcode:1110011 funct3:000 funct7:0000000 immi:000000000000, rs2:00000
 ecall decoded
-f1_resp pc: 0x800006a0
-fetch1 pc_mux_in: 0x00000000800006a4
 =========
-frontend req: pc-000000008000069c
-frontend req: pc-000000008000069c is ecall
-rcu commit mux in:true - 0000000080000694
-req commit:80000694
+frontend req: pc-00000000800006b0
+alu resp 00000000800006a8: 0x000000000000005d -> "a7"
+req commit:800006a8
 ecall : opcode:1110011 funct3:000 funct7:0000000 immi:000000000000, rs2:00000
 ecall decoded
-f1_resp pc: 0x800006a4
-fetch1 pc_mux_in: 0x00000000800006a8
 =========
-frontend req: pc-000000008000069c
-frontend req: pc-000000008000069c is ecall
-rcu commit mux in:true - 0000000080000698
-ecall
-req commit:80000698
+frontend req: pc-00000000800006b0
+alu resp 00000000800006ac: 0x0000000000000000 -> "a0"
+req commit:800006ac
 ecall : opcode:1110011 funct3:000 funct7:0000000 immi:000000000000, rs2:00000
 ecall decoded
-f1_resp pc: 0x800006a8
-fetch1 pc_mux_in: 0x00000000800006ac
 =========
-frontend req: pc-000000008000069c
-frontend req: pc-000000008000069c is ecall
-rcu commit mux in:true - 000000008000069c
-ecall
-req commit:8000069c
-f1_resp pc: 0x800006ac
-fetch1 pc_mux_in: 0x00000000800006b0
+frontend req: pc-00000000800006b0
+exception @ 00000000800006b0
+req commit:800006b0
 =========
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x0000000080000004
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000004
-fetch1 pc_mux_in: 0x0000000080000008
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000008
-fetch1 pc_mux_in: 0x000000008000000c
 =========
 frontend req: pc-0000000080000004
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000000c
-fetch1 pc_mux_in: 0x0000000080000010
 =========
 frontend req: pc-0000000080000008
-rcu commit mux in:false - 0000000000000000
-arf write: 0x0000000000000000 @ 30
-f1_resp pc: 0x80000010
-fetch1 pc_mux_in: 0x0000000080000014
 =========
 frontend req: pc-000000008000000c
-frontend req: pc-000000008000000c is BEQ, is branch true
-rcu req in: pc-000000008000000c is BEQ
-rcu commit mux in:true - 0000000080000004
 req commit:80000004
-f1_resp pc: 0x80000014
-fetch1 pc_mux_in: 0x0000000080000018
 =========
 frontend req: pc-000000008000000c
-frontend req: pc-000000008000000c is BEQ, is branch true
-rcu req in: pc-000000008000000c is BEQ
-rcu commit mux in:true - 0000000080000008
-rcu req iss: pc-000000008000000c is BEQ
-branch
+alu resp 0000000080000008: 0x0000000000000008 -> "t6"
 branch false val 80000040
 req commit:80000008
-f1_resp pc: 0x80000018
-fetch1 pc_mux_in: 0x000000008000001c
 =========
 frontend req: pc-000000008000000c
-frontend req: pc-000000008000000c is BEQ, is branch true
-rcu req in: pc-000000008000000c is BEQ
-rcu commit mux in:true - 000000008000000c
-rcu req iss: pc-000000008000000c is BEQ
-branch
 branch false val 80000040
 req commit:8000000c
-f1_resp pc: 0x8000001c
-fetch1 pc_mux_in: 0x0000000080000020
 =========
 frontend req: pc-000000008000000c
-frontend req: pc-000000008000000c is BEQ, is branch true
-rcu req in: pc-000000008000000c is BEQ
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x0000000080000010
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000010
-fetch1 pc_mux_in: 0x0000000080000014
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000014
-fetch1 pc_mux_in: 0x0000000080000018
 =========
 frontend req: pc-0000000080000010
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000018
-fetch1 pc_mux_in: 0x000000008000001c
 =========
 frontend req: pc-0000000080000014
-frontend req: pc-0000000080000014 is BEQ, is branch true
-rcu req in: pc-0000000080000014 is BEQ
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000001c
-fetch1 pc_mux_in: 0x0000000080000020
 =========
 frontend req: pc-0000000080000014
-frontend req: pc-0000000080000014 is BEQ, is branch true
-rcu req in: pc-0000000080000014 is BEQ
-rcu commit mux in:true - 0000000080000010
-rcu req iss: pc-0000000080000014 is BEQ
-branch
+alu resp 0000000080000010: 0x0000000000000009 -> "t6"
 branch false val 80000040
 req commit:80000010
-f1_resp pc: 0x80000020
-fetch1 pc_mux_in: 0x0000000080000024
 =========
 frontend req: pc-0000000080000014
-frontend req: pc-0000000080000014 is BEQ, is branch true
-rcu req in: pc-0000000080000014 is BEQ
-rcu commit mux in:true - 0000000080000014
-rcu req iss: pc-0000000080000014 is BEQ
-branch
 branch false val 80000040
 req commit:80000014
-f1_resp pc: 0x80000024
-fetch1 pc_mux_in: 0x0000000080000028
 =========
 frontend req: pc-0000000080000014
-frontend req: pc-0000000080000014 is BEQ, is branch true
-rcu req in: pc-0000000080000014 is BEQ
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x0000000080000018
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000018
-fetch1 pc_mux_in: 0x000000008000001c
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000001c
-fetch1 pc_mux_in: 0x0000000080000020
 =========
 frontend req: pc-0000000080000018
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000020
-fetch1 pc_mux_in: 0x0000000080000024
 =========
 frontend req: pc-000000008000001c
-frontend req: pc-000000008000001c is BEQ, is branch true
-rcu req in: pc-000000008000001c is BEQ
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000024
-fetch1 pc_mux_in: 0x0000000080000028
 =========
 frontend req: pc-000000008000001c
-frontend req: pc-000000008000001c is BEQ, is branch true
-rcu req in: pc-000000008000001c is BEQ
-rcu commit mux in:true - 0000000080000018
-rcu req iss: pc-000000008000001c is BEQ
-branch
+alu resp 0000000080000018: 0x000000000000000b -> "t6"
 branch false val 80000040
 req commit:80000018
-f1_resp pc: 0x80000028
-fetch1 pc_mux_in: 0x000000008000002c
 =========
 frontend req: pc-000000008000001c
-frontend req: pc-000000008000001c is BEQ, is branch true
-rcu req in: pc-000000008000001c is BEQ
-rcu commit mux in:true - 000000008000001c
-rcu req iss: pc-000000008000001c is BEQ
-branch
 branch false val 80000040
 req commit:8000001c
-f1_resp pc: 0x8000002c
-fetch1 pc_mux_in: 0x0000000080000030
 =========
 frontend req: pc-000000008000001c
-frontend req: pc-000000008000001c is BEQ, is branch true
-rcu req in: pc-000000008000001c is BEQ
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x0000000080000020
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000020
-fetch1 pc_mux_in: 0x0000000080000024
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000024
-fetch1 pc_mux_in: 0x0000000080000028
 =========
 frontend req: pc-0000000080000020
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000028
-fetch1 pc_mux_in: 0x000000008000002c
 =========
 frontend req: pc-0000000080000024
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000002c
-fetch1 pc_mux_in: 0x0000000080000030
 =========
 frontend req: pc-0000000080000028
-frontend req: pc-0000000080000028 is BEQ, is branch true
-rcu req in: pc-0000000080000028 is BEQ
-rcu commit mux in:true - 0000000080000020
+alu resp 0000000080000020: 0x0000000000000020 -> "t5"
 req commit:80000020
-f1_resp pc: 0x80000030
-fetch1 pc_mux_in: 0x0000000080000034
 =========
 frontend req: pc-0000000080000028
-frontend req: pc-0000000080000028 is BEQ, is branch true
-rcu req in: pc-0000000080000028 is BEQ
-rcu commit mux in:true - 0000000080000024
-rcu req iss: pc-0000000080000028 is BEQ
-branch
+alu resp 0000000080000024: 0x0000000000000000 -> "t5"
 branch true val 80000030
 req commit:80000024
-f1_resp pc: 0x80000034
-fetch1 pc_mux_in: 0x0000000080000038
 =========
 frontend req: pc-0000000080000028
-frontend req: pc-0000000080000028 is BEQ, is branch true
-rcu req in: pc-0000000080000028 is BEQ
-rcu commit mux in:true - 0000000080000028
-rcu req iss: pc-0000000080000028 is BEQ
-branch
 branch true val 80000030
 req commit:80000028
-f1_resp pc: 0x80000038
-fetch1 pc_mux_in: 0x000000008000003c
 =========
 frontend req: pc-0000000080000028
-frontend req: pc-0000000080000028 is BEQ, is branch true
-rcu req in: pc-0000000080000028 is BEQ
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x0000000080000030
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000030
-fetch1 pc_mux_in: 0x0000000080000034
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000034
-fetch1 pc_mux_in: 0x0000000080000038
 =========
 frontend req: pc-0000000080000030
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000038
-fetch1 pc_mux_in: 0x000000008000003c
 =========
 frontend req: pc-0000000080000034
-rcu commit mux in:false - 0000000000000000
-arf write: 0x0000000000000000 @ 30
-f1_resp pc: 0x8000003c
-fetch1 pc_mux_in: 0x0000000080000040
 =========
 frontend req: pc-0000000080000034
-rcu commit mux in:true - 0000000080000030
-branch
 branch true val 8000003c
 req commit:80000030
-f1_resp pc: 0x80000040
-fetch1 pc_mux_in: 0x0000000080000044
 =========
 frontend req: pc-0000000080000034
-rcu commit mux in:true - 0000000080000034
-branch
 branch true val 8000003c
 req commit:80000034
-f1_resp pc: 0x80000044
-fetch1 pc_mux_in: 0x0000000080000048
 =========
 frontend req: pc-0000000080000034
-rcu commit mux in:false - 0000000000000000
 flush!
-fetch1 pc_mux_in: 0x000000008000003c
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x8000003c
-fetch1 pc_mux_in: 0x0000000080000040
 =========
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000040
-fetch1 pc_mux_in: 0x0000000080000044
 =========
 frontend req: pc-000000008000003c
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000044
-fetch1 pc_mux_in: 0x0000000080000048
 =========
 frontend req: pc-0000000080000040
-rcu commit mux in:false - 0000000000000000
-f1_resp pc: 0x80000048
-fetch1 pc_mux_in: 0x000000008000004c
 =========
 frontend req: pc-0000000080000044
-rcu commit mux in:true - 000000008000003c
+alu resp 000000008000003c: 0x0000000000000539 -> "gp"
 req commit:8000003c
-f1_resp pc: 0x8000004c
-fetch1 pc_mux_in: 0x0000000080000050
 =========
 frontend req: pc-0000000080000048
-rcu commit mux in:true - 0000000080000040
+alu resp 0000000080000040: 0x0000000080001040 -> "t5"
 st req 0000000080000044 @ 0000000080001000
 req commit:80000040
-f1_resp pc: 0x80000050
-fetch1 pc_mux_in: 0x0000000080000054
 =========
-thread 'test::add_isa_test' panicked at 'test fail @ 1343', src/lib.rs:122:17
+thread 'test::add_isa_test' panicked at 'test fail @ 539', src/lib.rs:122:17
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
 failures:
     test::add_isa_test
 
-test result: FAILED. 14 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.01s
+test result: FAILED. 14 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.05s
 

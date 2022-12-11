@@ -59,18 +59,18 @@ impl CtrlSignals for Frontend{
         }
         let f2_resp = self.fetch2.borrow().resp_o();
         // println!("{} {}", f2_resp.0, &f2_resp.1.borrow());
-        if f2_resp.1.borrow().pc == 0x80000158{
-            println!("80000158 raw:{:8x}. rdy {}", f2_resp.1.borrow().raw, self.decode.borrow().rdy_o());
-        }
+        // if f2_resp.1.borrow().pc == 0x80000158{
+        //     println!("80000158 raw:{:8x}. rdy {}", f2_resp.1.borrow().raw, self.decode.borrow().rdy_o());
+        // }
 
 
         ref_cell_borrow_mut(&self.decode).req_i(self.fetch2.borrow().resp_o());
         ref_cell_borrow_mut(&self.fetch2).rdy_i(self.decode.borrow().rdy_o());
 
         let f1_resp = self.fetch1.borrow().resp_o();
-        if f1_resp.0{
-            println!("f1_resp pc: 0x{:08x}", f1_resp.1.borrow().pc);
-        }
+        // if f1_resp.0{
+        //     println!("f1_resp pc: 0x{:08x}", f1_resp.1.borrow().pc);
+        // }
         ref_cell_borrow_mut(&self.fetch2).req_i(self.fetch1.borrow().resp_o());
         ref_cell_borrow_mut(&self.fetch1).rdy_i(self.fetch2.borrow().rdy_o());
         let f1_pc_i: Vec<(bool, u64)> = vec![

@@ -1,5 +1,5 @@
 
-use crate::instr::intsr_type::*;
+use crate::instr::intsr_type::{*, InstrOpcode::*};
 #[derive(Default, Debug, PartialEq, Clone)]
 pub struct DecodedInstr{
     pub opcode: u8,
@@ -26,6 +26,8 @@ pub struct DecodedInstr{
     pub is_branch: bool,
     pub is_fence: bool,
     pub is_csr:bool,
+    pub csr_we: bool,
+    pub csr_re: bool, 
     pub is_syscall:bool,
 
     pub illegale_instr: bool,
@@ -84,8 +86,8 @@ impl DecodedInstr{
             // rv32i
             InstrType::U => {
                 match opcode{
-                    0b0110111 => InstrOpcode::LUI,
-                    0b0010111 => InstrOpcode::AUIPC,
+                    0b0110111 => LUI,
+                    0b0010111 => AUIPC,
                     _ => {
                         // panic!("illegale opcode {:07b} while opcode is InstrU", opcode)
                         msg = String::from(format!("illegale opcode {:07b} while opcode is InstrU", opcode));
@@ -94,14 +96,14 @@ impl DecodedInstr{
                     }
                 }
             },
-            InstrType::J => InstrOpcode::JAL,
+            InstrType::J => JAL,
             InstrType::B => match funct3{
-                0b000 => InstrOpcode::BEQ,
-                0b001 => InstrOpcode::BNE,
-                0b100 => InstrOpcode::BLT,
-                0b101 => InstrOpcode::BGE,
-                0b110 => InstrOpcode::BLTU,
-                0b111 => InstrOpcode::BGEU,
+                0b000 => BEQ,
+                0b001 => BNE,
+                0b100 => BLT,
+                0b101 => BGE,
+                0b110 => BLTU,
+                0b111 => BGEU,
                 _ => {
                     // panic!("illegale functs3 {:03b} while opcode is InstrB", funct3)
                     illegle_instr = true;
@@ -110,16 +112,16 @@ impl DecodedInstr{
                 }
             },
             InstrType::I => match opcode {
-                0b1100111 => InstrOpcode::JALR,
+                0b1100111 => JALR,
                 0b0000011 => match funct3{ // load 
-                    0b000 => InstrOpcode::LB,
-                    0b100 => InstrOpcode::LBU,
-                    0b001 => InstrOpcode::LH,
-                    0b101 => InstrOpcode::LHU,
-                    0b010 => InstrOpcode::LW,
+                    0b000 => LB,
+                    0b100 => LBU,
+                    0b001 => LH,
+                    0b101 => LHU,
+                    0b010 => LW,
                     // rv64i
-                    0b110 => InstrOpcode::LWU,
-                    0b011 => InstrOpcode::LD,
+                    0b110 => LWU,
+                    0b011 => LD,
                     _ => {
                         // panic!("illegale functs3 {:03b} while opcode is InstrI (load)", funct3)      
                         illegle_instr = true;
@@ -128,14 +130,14 @@ impl DecodedInstr{
                     }
                 }
                 0b0010011 => match funct3{ // alu
-                    0b000 => InstrOpcode::ADDI,
-                    0b010 => InstrOpcode::SLTI,
-                    0b011 => InstrOpcode::SLTIU,
-                    0b100 => InstrOpcode::XORI,
-                    0b110 => InstrOpcode::ORI,
-                    0b111 => InstrOpcode::ANDI,
+                    0b000 => ADDI,
+                    0b010 => SLTI,
+                    0b011 => SLTIU,
+                    0b100 => XORI,
+                    0b110 => ORI,
+                    0b111 => ANDI,
                     0b001 => match funct7 >> 1{
-                        0b000000 => InstrOpcode::SLLI,
+                        0b000000 => SLLI,
                         _ => {
                             // panic!("illegale functs7 {:07b} while opcode is InstrI and funct3 is 001 (shift left)", funct7)
                             illegle_instr = true;
@@ -144,8 +146,8 @@ impl DecodedInstr{
                         }
                     },
                     0b101 => match funct7 >> 1{
-                        0b000000 => InstrOpcode::SRLI,
-                        0b010000 => InstrOpcode::SRAI,
+                        0b000000 => SRLI,
+                        0b010000 => SRAI,
                         _ => { 
                             // panic!("illegale functs7 {:07b} while opcode is InstrI and funct3 is 101 (shift right)", funct7)
                             illegle_instr = true;
@@ -161,8 +163,8 @@ impl DecodedInstr{
                     }      
                 }
                 0b0001111 => match funct3{ // FENCE
-                    0b000 => InstrOpcode::FENCE,
-                    0b001 => InstrOpcode::FENCEI,
+                    0b000 => FENCE,
+                    0b001 => FENCEI,
                     _ => {
                         // panic!("illegale functs3 {:03b} while opcode is InstrI (InstrI fence)", funct3)   
                         illegle_instr = true;
@@ -174,10 +176,10 @@ impl DecodedInstr{
                     0b000 => match  immi{ // system call
                         0b000000000000 => {
                             println!("ecall decoded");
-                            InstrOpcode::ECALL
+                            ECALL
                         },
-                        0b000000000001 => InstrOpcode::EBREAK,
-                        0b001100000010 => InstrOpcode::MRET,
+                        0b000000000001 => EBREAK,
+                        0b001100000010 => MRET,
                         _=> {
                             // panic!("illegale immi {:012b} while opcode is InstrI-1110011 (s) and funct3 is 000 (sys call)", immi);
                             illegle_instr = true;
@@ -185,12 +187,12 @@ impl DecodedInstr{
                             Default::default()
                         }
                     }
-                    0b001 => InstrOpcode::CSRRW,
-                    0b010 => InstrOpcode::CSRRS,
-                    0b011 => InstrOpcode::CSRRC,
-                    0b101 => InstrOpcode::CSRRWI,
-                    0b110 => InstrOpcode::CSRRSI,
-                    0b111 => InstrOpcode::CSRRCI,
+                    0b001 => CSRRW,
+                    0b010 => CSRRS,
+                    0b011 => CSRRC,
+                    0b101 => CSRRWI,
+                    0b110 => CSRRSI,
+                    0b111 => CSRRCI,
                     _ => {
                         // panic!("illegale functs3 {:03b} while opcode is InstrI (InstrI s)", funct3) 
                         illegle_instr = true;
@@ -199,11 +201,11 @@ impl DecodedInstr{
                     }     
                 },
                 0b0011011 => match funct3 { // iw
-                    0b000 => InstrOpcode::ADDIW,
-                    0b001 => InstrOpcode::SLLIW,
+                    0b000 => ADDIW,
+                    0b001 => SLLIW,
                     0b101 => match funct7 >> 1{
-                        0b000000 => InstrOpcode::SRLIW,
-                        0b010000 => InstrOpcode::SRAIW,
+                        0b000000 => SRLIW,
+                        0b010000 => SRAIW,
                         _ => {
                             // panic!("illegale functs7 {:07b} while opcode is InstrI and funct3 is 101 (shift right w)", funct7)
                             illegle_instr = true;
@@ -228,8 +230,8 @@ impl DecodedInstr{
             InstrType::R => match opcode {
                 0b0110011 => match funct3 {
                     0b000 => match funct7 {
-                        0b0000000 => InstrOpcode::ADD,
-                        0b0100000 => InstrOpcode::SUB,
+                        0b0000000 => ADD,
+                        0b0100000 => SUB,
                         _ => {
                             // panic!("illegale functs7 {:07b} while InstrR (InstrI-alu) and funct3 is 000 (add and sub)", funct7)
                             illegle_instr = true;
@@ -237,13 +239,13 @@ impl DecodedInstr{
                             Default::default()
                         }
                     },
-                    0b001 => InstrOpcode::SLL,
-                    0b010 => InstrOpcode::SLT,
-                    0b011 => InstrOpcode::SLTU,
-                    0b100 => InstrOpcode::XOR,
+                    0b001 => SLL,
+                    0b010 => SLT,
+                    0b011 => SLTU,
+                    0b100 => XOR,
                     0b101 => match funct7 >> 1{
-                        0b000000 => InstrOpcode::SRL,
-                        0b010000 => InstrOpcode::SRA,
+                        0b000000 => SRL,
+                        0b010000 => SRA,
                         _ => {
                             // panic!("illegale functs7 {:07b} while opcode is InstrR  and funct3 is 101 (shift right)", funct7)
                             illegle_instr = true;
@@ -251,8 +253,8 @@ impl DecodedInstr{
                             Default::default()
                         }
                     },
-                    0b110 => InstrOpcode::OR,
-                    0b111 => InstrOpcode::AND,
+                    0b110 => OR,
+                    0b111 => AND,
                     _ => {
                         // panic!("illegale functs3 {:03b} while opcode is InstrR (alu)", funct3)  
                         illegle_instr = true;
@@ -262,8 +264,8 @@ impl DecodedInstr{
                 },
                 0b0111011 => match funct3{ // rv64i
                     0b000 => match funct7 {
-                        0b0000000 => InstrOpcode::ADDW,
-                        0b0100000 => InstrOpcode::SUBW,
+                        0b0000000 => ADDW,
+                        0b0100000 => SUBW,
                         _ => {
                             // panic!("illegale functs7 {:07b} while InstrR (InstrI-alu) and funct3 is 000 (add and sub rv64i)", funct7)
                             illegle_instr = true;
@@ -271,10 +273,10 @@ impl DecodedInstr{
                             Default::default()
                         }
                     },
-                    0b001 => InstrOpcode::SLLW,
+                    0b001 => SLLW,
                     0b101 => match funct7 >> 1{
-                        0b000000 => InstrOpcode::SRLW,
-                        0b010000 => InstrOpcode::SRAW,
+                        0b000000 => SRLW,
+                        0b010000 => SRAW,
                         _ => {
                             // panic!("illegale functs7 {:07b} while opcode is InstrR and funct3 is 101 (shift right rv64i)", funct7)
                             illegle_instr = true;
@@ -297,11 +299,11 @@ impl DecodedInstr{
             }
             
             InstrType::S => match funct3 {
-                0b000 => InstrOpcode::SB,
-                0b001 => InstrOpcode::SH,
-                0b010 => InstrOpcode::SW,
+                0b000 => SB,
+                0b001 => SH,
+                0b010 => SW,
                 // rv64i
-                0b011 => InstrOpcode::SD,
+                0b011 => SD,
                 _ => {
                     // panic!("illegale functs3 {:03b} while opcode is InstrS ", funct3) 
                     illegle_instr = true;
@@ -312,38 +314,44 @@ impl DecodedInstr{
         };
 
         let is_st = instr_type == InstrType::S;
-        let is_ld = (opcode_type == InstrOpcode::LB) || (opcode_type == InstrOpcode::LBU) || 
-                        (opcode_type == InstrOpcode::LH) || (opcode_type == InstrOpcode::LHU) ||
-                        (opcode_type == InstrOpcode::LW) || (opcode_type == InstrOpcode::LWU) ||
-                        (opcode_type == InstrOpcode::LD);
+        let is_ld = (opcode_type == LB) || (opcode_type == LBU) || 
+                        (opcode_type == LH) || (opcode_type == LHU) ||
+                        (opcode_type == LW) || (opcode_type == LWU) ||
+                        (opcode_type == LD);
         let is_alu = 
-            (opcode_type == InstrOpcode::ADD) || (opcode_type == InstrOpcode::SUB) || 
-            (opcode_type == InstrOpcode::SLL) || (opcode_type == InstrOpcode::SLT) || 
-            (opcode_type == InstrOpcode::SLTU) || (opcode_type == InstrOpcode::XOR) || 
-            (opcode_type == InstrOpcode::SRL) || (opcode_type == InstrOpcode::SRA) || 
-            (opcode_type == InstrOpcode::OR) || (opcode_type == InstrOpcode::AND) || 
-            (opcode_type == InstrOpcode::ADDW) || (opcode_type == InstrOpcode::SUBW) || 
-            (opcode_type == InstrOpcode::SLLW) || (opcode_type == InstrOpcode::SRLW) || 
-            (opcode_type == InstrOpcode::SRAW) || (opcode_type == InstrOpcode::ADDI) || 
-            (opcode_type == InstrOpcode::SLTI) || (opcode_type == InstrOpcode::SLTIU) || 
-            (opcode_type == InstrOpcode::XORI) || (opcode_type == InstrOpcode::ORI) || 
-            (opcode_type == InstrOpcode::ANDI) || (opcode_type == InstrOpcode::SLLI) || 
-            (opcode_type == InstrOpcode::SRLI) || (opcode_type == InstrOpcode::SRAI) || 
-            (opcode_type == InstrOpcode::ADDIW) || 
-            (opcode_type == InstrOpcode::SLLIW) || (opcode_type == InstrOpcode::SRLIW) || 
-            (opcode_type == InstrOpcode::SRAIW) ||  
-            (opcode_type == InstrOpcode::AUIPC) || (opcode_type == InstrOpcode::LUI);
+            (opcode_type == ADD) || (opcode_type == SUB) || 
+            (opcode_type == SLL) || (opcode_type == SLT) || 
+            (opcode_type == SLTU) || (opcode_type == XOR) || 
+            (opcode_type == SRL) || (opcode_type == SRA) || 
+            (opcode_type == OR) || (opcode_type == AND) || 
+            (opcode_type == ADDW) || (opcode_type == SUBW) || 
+            (opcode_type == SLLW) || (opcode_type == SRLW) || 
+            (opcode_type == SRAW) || (opcode_type == ADDI) || 
+            (opcode_type == SLTI) || (opcode_type == SLTIU) || 
+            (opcode_type == XORI) || (opcode_type == ORI) || 
+            (opcode_type == ANDI) || (opcode_type == SLLI) || 
+            (opcode_type == SRLI) || (opcode_type == SRAI) || 
+            (opcode_type == ADDIW) || 
+            (opcode_type == SLLIW) || (opcode_type == SRLIW) || 
+            (opcode_type == SRAIW) ||  
+            (opcode_type == AUIPC) || (opcode_type == LUI);
         let is_branch = instr_type == InstrType::B || instr_type == InstrType::J ||
-                                opcode_type == InstrOpcode::JALR;
-        let is_fence = opcode_type == InstrOpcode::FENCE || opcode_type == InstrOpcode::FENCEI;
+                                opcode_type == JALR;
+        let is_fence = opcode_type == FENCE || opcode_type == FENCEI;
         let is_csr = 
-            (opcode_type == InstrOpcode::CSRRW) || (opcode_type == InstrOpcode::CSRRS) || 
-            (opcode_type == InstrOpcode::CSRRC) || (opcode_type == InstrOpcode::CSRRWI) || 
-            (opcode_type == InstrOpcode::CSRRSI) || (opcode_type == InstrOpcode::CSRRCI);
+            (opcode_type == CSRRW) || (opcode_type == CSRRS) || 
+            (opcode_type == CSRRC) || (opcode_type == CSRRWI) || 
+            (opcode_type == CSRRSI) || (opcode_type == CSRRCI);
         let is_syscall = 
-            (opcode_type == InstrOpcode::ECALL) || (opcode_type == InstrOpcode::EBREAK) || 
-            (opcode_type == InstrOpcode::MRET);
-
+            (opcode_type == ECALL) || (opcode_type == EBREAK) || 
+            (opcode_type == MRET);
+        let (csr_re, csr_we): (bool, bool) = match opcode_type{
+            CSRRW | CSRRWI => (rd != 0, true),
+            CSRRC | CSRRCI | CSRRS | CSRRSI => (true, rs1 != 0),
+            _ => {
+                (false, false)
+            }
+        };
         DecodedInstr { 
             opcode: opcode, 
             rd: rd, 
@@ -367,6 +375,8 @@ impl DecodedInstr{
             is_branch: is_branch,
             is_fence: is_fence,
             is_csr:is_csr,
+            csr_re:csr_re,
+            csr_we:csr_we,
             is_syscall:is_syscall,
 
             illegale_instr:illegle_instr,
@@ -384,13 +394,13 @@ mod test{
         // 0000000:	05c0006f          	j	8000005c <reset_vector>
         let instr = DecodedInstr::new(0x05c0006f);
         assert_eq!(instr.instr_type, InstrType::J);
-        assert_eq!(instr.opcode_type, InstrOpcode::JAL);
+        assert_eq!(instr.opcode_type, JAL);
         assert_eq!(instr.immj, (0x8000005c & 0x1fffe));
         assert!(instr.is_branch);
 
         // 800000dc:	00051063          	bnez	a0,800000dc <reset_vector+0x80>
         let instr = DecodedInstr::new(0x00051063);
-        assert_eq!(instr.opcode_type, InstrOpcode::BNE);
+        assert_eq!(instr.opcode_type, BNE);
         assert_eq!(instr.rs1, 10);
         assert_eq!(instr.rs2, 0);
         assert_eq!(instr.immb, 0);
@@ -398,7 +408,7 @@ mod test{
 
         // 80000144:	00055c63          	bgez	a0,8000015c <reset_vector+0x100>
         let instr = DecodedInstr::new(0x00055c63);
-        assert_eq!(instr.opcode_type, InstrOpcode::BGE);
+        assert_eq!(instr.opcode_type, BGE);
         assert_eq!(instr.rs1, 10);
         assert_eq!(instr.rs2, 0);
         assert_eq!(instr.immb, (0x015c - 0x0144) & 0x1ffe);
@@ -407,11 +417,11 @@ mod test{
         // 800000d8:	f1402573          	csrr	a0,mhartid
         // 把控制状态寄存器 csr 的值写入 x[rd]，等同于 csrrs rd, csr, x0.
         let instr = DecodedInstr::new(0xf1402573);
-        assert_eq!(instr.opcode_type, InstrOpcode::CSRRS);
+        assert_eq!(instr.opcode_type, CSRRS);
         assert!(instr.is_csr);
 
         let instr = DecodedInstr::new(0x0012829b);
-        assert_eq!(instr.opcode_type, InstrOpcode::ADDIW);
+        assert_eq!(instr.opcode_type, ADDIW);
         assert!(instr.is_alu);
 
     }

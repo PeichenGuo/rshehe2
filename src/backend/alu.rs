@@ -6,7 +6,7 @@ use crate::interface::{CtrlSignals, Interface};
 use crate::instr::Instr;
 use crate::utils::*;
 use crate::instr::intsr_type::InstrOpcode::*;
-
+use crate::cfg::regfile_cfg::APF_MAPPING;
 pub struct ALU{
     output: DelayFIFO<Arc<RefCell<Instr>>>,
 }
@@ -58,7 +58,7 @@ impl ALU {
             ANDI => instr.rs1_data & sext(instr.decoded.immi as u64, 11),
             
             AUIPC => instr.pc.wrapping_add(sext(instr.decoded.immu as u64, 31)),
-            LUI => instr.decoded.immu as u64,
+            LUI => sext(instr.decoded.immu as u64, 31),
             _ => panic!("invalid opcode type for alu: {:?}", instr.decoded.opcode_type)
         }
     }
@@ -86,6 +86,9 @@ impl Interface for ALU{
     }
 
     fn resp_o(&self) -> (bool, Self::Output){
+        if self.output.resp_o().0{
+            println!("alu resp {:016x}: 0x{:016x} -> {:?}", self.output.resp_o().1.borrow().pc, self.output.resp_o().1.borrow().wb_data, APF_MAPPING[self.output.resp_o().1.borrow().decoded.rd as usize])
+        }
         self.output.resp_o().clone()
     }
     fn rdy_i(&mut self, rdy:bool){
@@ -233,5 +236,28 @@ mod test{
         assert_eq!(alu.resp_o().1.borrow().wb_vld, true);
         assert_eq!(alu.resp_o().1.borrow().wb_data, 0xc000_0000_0000_0000);
         alu.rdy_i(true);
+    }
+
+    // #[test]
+    fn addiw_debug_test(){
+        let mut alu = ALU::new(1);
+        
+        // add
+        let instr = Arc::new(RefCell::new(Instr::new(0x0)));
+        let mut tmp = ref_cell_borrow_mut(&instr);
+        tmp.decoded.is_alu = true;
+        tmp.decoded.opcode_type = ADDIW;
+        tmp.rs1_data = 0x8000;
+        tmp.decoded.immi = 0xfff;
+        tmp.rs2_data = 0x2;
+        drop(tmp);
+
+        alu.req_i((true, instr.clone()));
+        alu.tik();
+        assert_eq!(alu.resp_o().0, true);
+        assert_eq!(alu.resp_o().1.borrow().wb_vld, true);
+        assert_eq!(alu.resp_o().1.borrow().wb_data, 0x7fff);
+        alu.rdy_i(true);
+
     }
 }

@@ -67,12 +67,12 @@ impl CtrlSignals for HeHeCore{
         let frontend_req = self.frontend.borrow().resp_o();
         if self.frontend.borrow().resp_o().0 && self.backend.borrow().rdy_o(){
             println!("frontend req: pc-{:016x}", self.frontend.borrow().resp_o().1.borrow().pc);
-            if self.frontend.borrow().resp_o().1.borrow().decoded.opcode_type == InstrOpcode::ECALL{
-                println!("frontend req: pc-{:016x} is ecall", self.frontend.borrow().resp_o().1.borrow().pc)
-            }
-            if self.frontend.borrow().resp_o().1.borrow().decoded.opcode_type == InstrOpcode::BEQ{
-                println!("frontend req: pc-{:016x} is BEQ, is branch {}", self.frontend.borrow().resp_o().1.borrow().pc, self.frontend.borrow().resp_o().1.borrow().decoded.is_branch);
-            }
+            // if self.frontend.borrow().resp_o().1.borrow().decoded.opcode_type == InstrOpcode::ECALL{
+            //     println!("frontend req: pc-{:016x} is ecall", self.frontend.borrow().resp_o().1.borrow().pc)
+            // }
+            // if self.frontend.borrow().resp_o().1.borrow().decoded.opcode_type == InstrOpcode::BEQ{
+            //     println!("frontend req: pc-{:016x} is BEQ, is branch {}", self.frontend.borrow().resp_o().1.borrow().pc, self.frontend.borrow().resp_o().1.borrow().decoded.is_branch);
+            // }
         }
         ref_cell_borrow_mut(&self.backend).req_i(self.frontend.borrow().resp_o());
         ref_cell_borrow_mut(&self.frontend).rdy_i(self.backend.borrow().rdy_o());
@@ -112,14 +112,14 @@ mod test{
     fn add_isa_test(){
         let mut core = HeHeCore::new();
         core.load_elf("./isa_tests/add.hex");
-        for _i in 0..1000{
+        for _i in 0..3000{
             core.tik();
             if core.read_from_host() == 1{
                 println!("test succ!");
                 break;
             }
             else if core.read_from_host() != 0{
-                panic!("test fail @ {}", core.read_from_host());
+                panic!("test fail @ {:x}", core.read_from_host());
             }
         }
         panic!("time limit reach");

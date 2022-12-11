@@ -47,7 +47,6 @@ impl Interface for BRU{
 
     fn req_i(&mut self, req:(bool, Self::Input)){
         if self.rdy_o() && req.0 && req.1.borrow().decoded.is_branch{ //hsk
-            println!("branch");
             if !req.1.borrow().exception_vld{
                 let instr = req.1.clone();
                 let (branch, val) = self.calc(&instr.borrow());
@@ -69,6 +68,7 @@ impl Interface for BRU{
                 if !predict_succ{
                     tmp.predict_fail = true;
                 }
+                tmp.branch_vld = true;
                 tmp.branch_pc = final_bru_pc;
                 drop(tmp)
             }
