@@ -24,23 +24,24 @@ impl FakeLSU {
     }
     fn load(&self, instr: &Instr) -> u64{
         match instr.decoded.opcode_type{
-            LB => self.mem.borrow().lb(instr.rs1_data),
-            LBU => self.mem.borrow().lbu(instr.rs1_data),
-            LH => self.mem.borrow().lh(instr.rs1_data),
-            LHU => self.mem.borrow().lhu(instr.rs1_data),
-            LW => self.mem.borrow().lw(instr.rs1_data),
-            LWU => self.mem.borrow().lwu(instr.rs1_data),
-            LD => self.mem.borrow().ld(instr.rs1_data),
+            LB => self.mem.borrow().lb(instr.rs1_data.wrapping_add(sext(instr.decoded.immi as u64, 11))),
+            LBU => self.mem.borrow().lbu(instr.rs1_data.wrapping_add(sext(instr.decoded.immi as u64, 11))),
+            LH => self.mem.borrow().lh(instr.rs1_data.wrapping_add(sext(instr.decoded.immi as u64, 11))),
+            LHU => self.mem.borrow().lhu(instr.rs1_data.wrapping_add(sext(instr.decoded.immi as u64, 11))),
+            LW => self.mem.borrow().lw(instr.rs1_data.wrapping_add(sext(instr.decoded.immi as u64, 11))),
+            LWU => self.mem.borrow().lwu(instr.rs1_data.wrapping_add(sext(instr.decoded.immi as u64, 11))),
+            LD => self.mem.borrow().ld(instr.rs1_data.wrapping_add(sext(instr.decoded.immi as u64, 11))),
             _ => panic!("illegal opcode type {:?} for load", instr.decoded.opcode_type)
         }
     }
 
     fn store(&mut self, instr: &Instr){
+        println!("st req {:016x} @ {:016x}", instr.pc, instr.rs1_data.wrapping_add(sext(instr.decoded.imms as u64, 11)));
         match instr.decoded.opcode_type{
-            SB => ref_cell_borrow_mut(&self.mem).sb(instr.rs1_data, instr.rs2_data),
-            SH => ref_cell_borrow_mut(&self.mem).sh(instr.rs1_data, instr.rs2_data),
-            SW => ref_cell_borrow_mut(&self.mem).sw(instr.rs1_data, instr.rs2_data),
-            SD => ref_cell_borrow_mut(&self.mem).sd(instr.rs1_data, instr.rs2_data),
+            SB => ref_cell_borrow_mut(&self.mem).sb(instr.rs1_data.wrapping_add(sext(instr.decoded.imms as u64, 11)), instr.rs2_data),
+            SH => ref_cell_borrow_mut(&self.mem).sh(instr.rs1_data.wrapping_add(sext(instr.decoded.imms as u64, 11)), instr.rs2_data),
+            SW => ref_cell_borrow_mut(&self.mem).sw(instr.rs1_data.wrapping_add(sext(instr.decoded.imms as u64, 11)), instr.rs2_data),
+            SD => ref_cell_borrow_mut(&self.mem).sd(instr.rs1_data.wrapping_add(sext(instr.decoded.imms as u64, 11)), instr.rs2_data),
             _ => panic!("illegal opcode type {:?} for store", instr.decoded.opcode_type)
         };
     }

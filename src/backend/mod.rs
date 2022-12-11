@@ -248,7 +248,7 @@ mod test{
         tmp.decoded.opcode_type = LB;
         tmp.decoded.instr_type = I;
         tmp.decoded.rs1 = 0;
-        tmp.decoded.immi = 3;
+        tmp.decoded.immi = 0;
         tmp.decoded.rd = 0x4;
         drop(tmp);
 
