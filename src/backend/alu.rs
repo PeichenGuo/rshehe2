@@ -28,10 +28,10 @@ impl ALU {
             SUB => instr.rs1_data.wrapping_sub(instr.rs2_data),
             SUBW => sext(instr.rs1_data.wrapping_sub(instr.rs2_data), 31),
             
-            SLL => instr.rs1_data.wrapping_shl(instr.rs2_data as u32),
-            SLLI => instr.rs1_data.wrapping_shl(instr.decoded.shamt as u32),
-            SLLW => sext(instr.rs1_data.wrapping_shl(instr.rs2_data as u32), 31),
-            SLLIW => sext(instr.rs1_data.wrapping_shl(instr.decoded.shamt as u32), 31),
+            SLL => instr.rs1_data.wrapping_shl((instr.rs2_data % 64) as u32),
+            SLLI => instr.rs1_data.wrapping_shl((instr.decoded.shamt % 64) as u32),
+            SLLW => sext(instr.rs1_data.wrapping_shl((instr.rs2_data % 32) as u32), 31),
+            SLLIW => sext(instr.rs1_data.wrapping_shl((instr.decoded.shamt % 32) as u32), 31),
             
             SLT => signed_less_than(instr.rs1_data, instr.rs2_data) as u64,
             SLTI => signed_less_than(instr.rs1_data, sext(instr.decoded.immi as u64, 11)) as u64,
@@ -41,15 +41,15 @@ impl ALU {
             XOR => instr.rs1_data ^ instr.rs2_data,
             XORI => instr.rs1_data ^ sext(instr.decoded.immi as u64, 11),
             
-            SRL => instr.rs1_data.wrapping_shr(instr.rs2_data as u32),
-            SRLI => instr.rs1_data.wrapping_shr(instr.decoded.shamt as u32),
-            SRLW => sext(instr.rs1_data.wrapping_shr(instr.rs2_data as u32), 31),
-            SRLIW => sext(instr.rs1_data.wrapping_shr(instr.decoded.shamt as u32) , 31),
+            SRL => instr.rs1_data.wrapping_shr((instr.rs2_data % 64) as u32),
+            SRLI => instr.rs1_data.wrapping_shr((instr.decoded.shamt % 64) as u32),
+            SRLW => sext(instr.rs1_data.wrapping_shr((instr.rs2_data % 32) as u32), 31),
+            SRLIW => sext(instr.rs1_data.wrapping_shr((instr.decoded.shamt % 32) as u32) , 31),
             
-            SRA => sra64(instr.rs1_data, instr.rs2_data),
-            SRAI => sra64(instr.rs1_data, instr.decoded.shamt as u64),
-            SRAW => sext(sra64(instr.rs1_data, instr.rs2_data), 31),
-            SRAIW => sext(sra64(instr.rs1_data, instr.decoded.shamt as u64), 31),
+            SRA => sra64(instr.rs1_data, instr.rs2_data % 64),
+            SRAI => sra64(instr.rs1_data, instr.decoded.shamt as u64 % 64),
+            SRAW => sext(sra32(instr.rs1_data as u32, instr.rs2_data as u32 % 32) as u64, 31),
+            SRAIW => sext(sra32(instr.rs1_data as u32, instr.decoded.shamt as u32 % 64) as u64, 31),
             
             OR => instr.rs1_data | instr.rs2_data,
             ORI => instr.rs1_data | sext(instr.decoded.immi as u64, 11),
