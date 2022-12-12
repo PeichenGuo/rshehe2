@@ -18,6 +18,9 @@ pub struct FakeRCU{ // get pc and visit pht/btb to get a new pc
     arf: Arc<RefCell<ARF>>,
     csrf: Arc<RefCell<CSRF>>,
 
+    branch_num: u64,
+    predict_fail_num: u64,
+
     branch: (bool, u64),
     flush: bool
 }
@@ -31,7 +34,9 @@ impl FakeRCU{
             arf:arf,
             csrf: csrf,
             branch: (false, 0),
-            flush: false
+            flush: false,
+            branch_num:0,
+            predict_fail_num:0
         }
     }
 
@@ -114,6 +119,10 @@ impl FakeRCU{
     }
     pub fn branch_o(&self) -> (bool, u64){
         self.branch
+    }
+
+    pub fn predict_succ_rate(&self) -> f64{
+        1f64 - (self.predict_fail_num as f64 / self.branch_num as f64)
     }
 }
 
@@ -213,6 +222,13 @@ impl CtrlSignals for FakeRCU{
         else{
             self.flush = false;
             self.branch = (false, 0);
+        }
+
+        if self.commit.resp_o().0 && self.commit.resp_o().1.borrow().decoded.is_branch{
+            self.branch_num += 1;
+            if self.commit.resp_o().1.borrow().predict_fail{
+                self.predict_fail_num += 1;
+            }
         }
         if self.commit.resp_o().0{
             println!("req commit:{:0x}", self.commit.resp_o().1.borrow().pc);

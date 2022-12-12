@@ -814,6 +814,7 @@
             core.tik();
             if core.read_from_host() == 1{
                 println!("======test succ!======");
+                panic!("succ rate is {}", core.predict_succ_rate());
                 return;
             }
             else if core.read_from_host() != 0{

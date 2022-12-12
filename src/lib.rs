@@ -1,7 +1,3 @@
-
-// use crate::cfg::memory_cfg::*;
-// use crate::cfg::core_cfg;
-
 use frontend::Frontend;
 use backend::FakeBackend;
 use interface::CtrlSignals;
@@ -58,6 +54,10 @@ impl HeHeCore{
 
     pub fn read_from_host(&self) -> u32{
         self.mem.borrow().lw(TOHOST_PADDR) as u32
+    }
+
+    pub fn predict_succ_rate(&self) -> f64{
+        self.backend.borrow().predict_succ_rate()
     }
 }
 

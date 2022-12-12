@@ -52,6 +52,10 @@ impl FakeBackend {
     pub fn rdy_o(&self) -> bool{
         self.rcu.borrow().rdy_o()
     }
+
+    pub fn predict_succ_rate(&self) -> f64{
+        self.rcu.borrow().predict_succ_rate()
+    }
 }
 
 impl  CtrlSignals for FakeBackend {
