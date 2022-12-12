@@ -69,6 +69,9 @@ impl Interface for ALU{
     type Output = Arc<RefCell<Instr>>;
 
     fn req_i(&mut self, req:(bool, Self::Input)){
+        // if req.0{
+        //     println!("alu req in: {:016x}, alu rdy:{}", req.1.borrow().pc, self.rdy_o());
+        // }
         if self.rdy_o() && req.0 && req.1.borrow().decoded.is_alu{ //hsk
             if !req.1.borrow().exception_vld{
                 let instr = req.1.clone();
@@ -236,28 +239,5 @@ mod test{
         assert_eq!(alu.resp_o().1.borrow().wb_vld, true);
         assert_eq!(alu.resp_o().1.borrow().wb_data, 0xc000_0000_0000_0000);
         alu.rdy_i(true);
-    }
-
-    // #[test]
-    fn addiw_debug_test(){
-        let mut alu = ALU::new(1);
-        
-        // add
-        let instr = Arc::new(RefCell::new(Instr::new(0x0)));
-        let mut tmp = ref_cell_borrow_mut(&instr);
-        tmp.decoded.is_alu = true;
-        tmp.decoded.opcode_type = ADDIW;
-        tmp.rs1_data = 0x8000;
-        tmp.decoded.immi = 0xfff;
-        tmp.rs2_data = 0x2;
-        drop(tmp);
-
-        alu.req_i((true, instr.clone()));
-        alu.tik();
-        assert_eq!(alu.resp_o().0, true);
-        assert_eq!(alu.resp_o().1.borrow().wb_vld, true);
-        assert_eq!(alu.resp_o().1.borrow().wb_data, 0x7fff);
-        alu.rdy_i(true);
-
     }
 }

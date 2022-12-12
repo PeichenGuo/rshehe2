@@ -53,8 +53,8 @@ impl<T> Interface for DelayFIFO<T>
     }
 
     fn resp_o(&self) -> (bool, Self::Output){
-        if self.head < self.tail || self.head == self.tail && self.full{ 
-            (self.delays[self.head as usize] == 0 && !self.empty, self.data[self.head as usize].clone())
+        if !self.empty{ 
+            (self.delays[self.head as usize] == 0, self.data[self.head as usize].clone())
         }
         else{
             (false, default::Default::default())

@@ -8,7 +8,7 @@ use crate::utils::*;
 use std::sync::Arc;
 use crate::cfg::backend_cfg::*;
 use crate::instr::intsr_type::InstrOpcode;
-use crate::cfg::{core_cfg::*, regfile_cfg::*};
+use crate::cfg::{regfile_cfg::*};
 pub struct FakeRCU{ // get pc and visit pht/btb to get a new pc
     // pc_i: Vec<(bool, u32)>,
     // input: Mux<u32>, 
@@ -58,6 +58,7 @@ impl FakeRCU{
             }
             ref_cell_borrow_mut(&instr).done = true;
             self.commit.req_i((true, instr.clone()));
+            // self.commit.display()
         }
         self.commit_mux.rdy_o()
     }
@@ -80,7 +81,7 @@ impl FakeRCU{
         }
     }
     fn set_busy(&self, instr: Arc<RefCell<Instr>>){
-        // println!("set busy {}", instr.borrow().decoded.rd);
+        // println!("instr @ {:016x} set busy {}", instr.borrow().pc, APF_MAPPING[instr.borrow().decoded.rd as usize]);
         match instr.borrow().decoded.instr_type{
             InstrType::R | InstrType::U | InstrType::I | InstrType::J => {
                 let mut tmp = ref_cell_borrow_mut(&self.arf);
@@ -95,7 +96,7 @@ impl FakeRCU{
     }
 
     fn set_free(&self, instr: Arc<RefCell<Instr>>){
-        // println!("set free {}", instr.borrow().decoded.rd);
+        // println!("instr @ {:016x} set free {}", instr.borrow().pc, APF_MAPPING[instr.borrow().decoded.rd as usize]);
         match instr.borrow().decoded.instr_type{
             InstrType::R | InstrType::U | InstrType::I | InstrType::J => {
                 let mut tmp = ref_cell_borrow_mut(&self.arf);
@@ -121,8 +122,8 @@ impl Interface for FakeRCU{
     type Output = Arc<RefCell<Instr>>;
 
     fn req_i(&mut self, req:(bool, Self::Input)){
-        // if req.1.borrow().decoded.opcode_type == InstrOpcode::BEQ{
-        //     println!("rcu req in: pc-{:016x} is BEQ", req.1.borrow().pc)
+        // if req.0{
+        //     println!("rcu req in: pc-{:016x}", req.1.borrow().pc)
         // }
         self.output.req_i(req.clone());
     }
@@ -189,8 +190,8 @@ impl CtrlSignals for FakeRCU{
 
         if self.commit.resp_o().0 && self.commit.resp_o().1.borrow().decoded.opcode_type == InstrOpcode::MRET{ // mret
             let instr = self.commit.resp_o().1;
-            let final_predict_pc:u64 = if instr.borrow().predicted_direction {instr.borrow().predicted_pc} 
-                                    else {instr.borrow().pc + 4};
+            // let final_predict_pc:u64 = if instr.borrow().predicted_direction {instr.borrow().predicted_pc} 
+            //                         else {instr.borrow().pc + 4};
             let pc_val = self.csrf.borrow().get(CSR_MEPC_ADDRESS);
             // TODO: 将特权级设置成 CSRs[mstatus].MPP,
             // * CSRs[mstatus].MIE 置成 CSRs[mstatus].MPIE, 并且将 CSRs[mstatus].MPIE 为 1
@@ -216,10 +217,18 @@ impl CtrlSignals for FakeRCU{
         self.commit.rdy_i(true); // dump finished req 
     }
     fn rst(&mut self, rst:bool){
+        if rst{
+            self.branch = (false, 0);
+            self.flush = false;
+        }
         self.output.rst(rst);
         self.commit.rst(rst);
     }
     fn flush(&mut self, rst:bool){
+        if rst{
+            self.branch = (false, 0);
+            self.flush = false;
+        }
         self.output.flush(rst);
         self.commit.flush(rst);
     }

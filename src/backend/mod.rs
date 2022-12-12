@@ -64,9 +64,10 @@ impl  CtrlSignals for FakeBackend {
         // println!("bru_resp({}, {:016x})", bru_resp.0, bru_resp.1.borrow().pc);
         // println!("lsu_resp({}, {:016x})", lsu_resp.0, lsu_resp.1.borrow().pc);
         // println!("csr_resp({}, {:016x})", csr_resp.0, csr_resp.1.borrow().pc);
-        // println!("alu_resp({}, {:016x})", alu_resp.0, alu_resp.1.borrow().pc);
+        println!("alu_resp({}, {:016x})", alu_resp.0, alu_resp.1.borrow().pc);
         let mut tmp = ref_cell_borrow_mut(&self.rcu);
         let rdy = tmp.commit(vec![bru_resp, lsu_resp, csr_resp, alu_resp]);
+        println!("rcu commit rdy vec:{:?}", rdy);
         drop(tmp);
         
         // println!("{:?}", rdy);
@@ -89,7 +90,7 @@ impl  CtrlSignals for FakeBackend {
         // fu req
         let mut rcu_tmp = ref_cell_borrow_mut(&self.rcu);
         let rcu_req = rcu_tmp.resp_o();
-        // println!("rcu_req({}, {:016x})", rcu_req.0, rcu_req.1.borrow().pc);
+        // println!("backend rcu_req({}, {:016x})", rcu_req.0, rcu_req.1.borrow().pc);
 
         if rcu_req.1.borrow().decoded.is_alu{
             let mut alu_tmp = ref_cell_borrow_mut(&self.alu);

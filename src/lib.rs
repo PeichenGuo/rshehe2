@@ -11,7 +11,6 @@ use std::{sync::Arc};
 use std::cell::RefCell;
 use cfg::memory_cfg::*;
 
-use crate::instr::intsr_type::InstrOpcode;
 
 pub mod memory;
 pub mod cfg;
@@ -64,7 +63,7 @@ impl HeHeCore{
 
 impl CtrlSignals for HeHeCore{
     fn tik(&mut self){
-        let frontend_req = self.frontend.borrow().resp_o();
+        // let frontend_req = self.frontend.borrow().resp_o();
         if self.frontend.borrow().resp_o().0 && self.backend.borrow().rdy_o(){
             println!("frontend req: pc-{:016x}", self.frontend.borrow().resp_o().1.borrow().pc);
             // if self.frontend.borrow().resp_o().1.borrow().decoded.opcode_type == InstrOpcode::ECALL{
@@ -80,9 +79,9 @@ impl CtrlSignals for HeHeCore{
         // println!("frontend_req({}, {})", frontend_req.0, frontend_req.1.borrow());
 
         ref_cell_borrow_mut(&self.frontend).flush(self.backend.borrow().flush_o());
-        // if self.backend.borrow().flush_o(){
-        //     println!("flush!");
-        // }
+        if self.backend.borrow().flush_o(){
+            println!("flush!");
+        }
         ref_cell_borrow_mut(&self.frontend).branch_i(self.backend.borrow().branch_o());
         // if self.backend.borrow().branch_o().0 {
         //     println!("branch {} - 0x{:0x}", self.backend.borrow().branch_o().0, 
@@ -99,13 +98,13 @@ impl CtrlSignals for HeHeCore{
         ref_cell_borrow_mut(&self.backend).rst(rst);
     }
     fn flush(&mut self, rst:bool){
+        println!("core flush");
         ref_cell_borrow_mut(&self.frontend).flush(rst);
         ref_cell_borrow_mut(&self.backend).flush(rst);
     }
 }
 #[cfg(test)]
 mod test{
-    use std::thread::panicking;
 
     use crate::{HeHeCore, interface::CtrlSignals};
     #[test]

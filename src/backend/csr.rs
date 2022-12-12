@@ -5,7 +5,7 @@ use std::cell::RefCell;
 use crate::interface::{CtrlSignals, Interface};
 use crate::instr::Instr;
 use crate::utils::*;
-use crate::instr::intsr_type::{InstrOpcode::{*, self}};
+use crate::instr::intsr_type::{InstrOpcode::{*}};
 
 pub struct CSR{
     output: DelayFIFO<Arc<RefCell<Instr>>>,
@@ -93,7 +93,6 @@ impl CtrlSignals for CSR{
 mod test{
     use std::cell::RefCell;
     use crate::backend::csr::CSR;
-    use crate::cfg::regfile_cfg::CSR_MTVEC_ADDRESS;
     use crate::instr::Instr;
     use crate::interface::{Interface, CtrlSignals};
     use crate::instr::intsr_type::InstrOpcode::*;

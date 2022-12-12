@@ -1,8 +1,6 @@
 use std::cell::{RefCell};
 
 use crate::buffers::delay_fifo::{DelayFIFO};
-use crate::instr::decoded_instr;
-use crate::instr::intsr_type::InstrOpcode;
 use crate::interface::{CtrlSignals, Interface};
 use crate::instr::{Instr, decoded_instr::DecodedInstr};
 use std::sync::Arc;
@@ -15,6 +13,7 @@ pub struct Decode{ // get pc and visit pht/btb to get a new pc
     // pc_i: Vec<(bool, u32)>,
     // input: Mux<u32>, 
     branch_onflight: bool, 
+    branch_onflight_q: bool, 
     output: DelayFIFO<Arc<RefCell<Instr>>>,
 }
 
@@ -22,7 +21,8 @@ impl Decode{
     pub fn new() -> Self{
         Decode { 
             branch_onflight: false,
-            output: DelayFIFO::new(8, vec![1]),
+            branch_onflight_q: false,
+            output: DelayFIFO::new(1, vec![1]),
         }
     }
 }
@@ -32,16 +32,16 @@ impl Interface for Decode{
     type Output = Arc<RefCell<Instr>>;
 
     fn req_i(&mut self, req:(bool, Self::Input)){
-        if req.1.borrow().pc == 0x80000158{
-            println!("80000158 raw:{:8x}. rdy {}", req.1.borrow().raw, self.rdy_o());
-        }
-        if self.branch_onflight{
+        // println!("branch_onflight: {}, branch_onflight_q: {}", self.branch_onflight, self.branch_onflight_q);
+        if self.branch_onflight_q{
+            self.output.req_i((false, Default::default()));
             return;
         }
         if req.0 && self.rdy_o(){ // hsk
             let docoded_instr: DecodedInstr = DecodedInstr::new(req.1.borrow().raw);
             if docoded_instr.is_branch || docoded_instr.is_syscall{
                 self.branch_onflight = true;
+                // println!("branch on flight set @ instr: {:016x}", req.1.borrow().pc);
             }
             let mut tmp = ref_cell_borrow_mut(&req.1);
             if docoded_instr.illegale_instr {
@@ -56,14 +56,20 @@ impl Interface for Decode{
             tmp.decoded = docoded_instr;
             drop(tmp);
         }
+        // if req.0 {
+        //     println!("decode req in @ {:016x}", req.1.borrow().pc);
+        // }
         let req_i = (req.0, req.1.clone());
         self.output.req_i(req_i);
     }
     fn rdy_o(&self) -> bool{
-        self.output.rdy_o() && !self.branch_onflight
+        self.output.rdy_o() && !self.branch_onflight_q.clone()
     }
 
     fn resp_o(&self) -> (bool, Self::Output){
+        // if self.output.resp_o().0{
+        //     println!("decode resp vld : instr {:16x}", self.output.resp_o().1.borrow().pc);
+        // }
         self.output.resp_o().clone()
     }
     fn rdy_i(&mut self, rdy:bool){
@@ -73,14 +79,22 @@ impl Interface for Decode{
 
 impl CtrlSignals for Decode {
     fn tik(&mut self){
+        self.branch_onflight_q = self.branch_onflight;
         self.output.tik();
     }
     fn rst(&mut self, rst:bool){
-        self.branch_onflight = false;
+        if rst{
+            self.branch_onflight = false;
+            self.branch_onflight_q = false;
+        }
         self.output.rst(rst);
     }
     fn flush(&mut self, rst:bool){
-        self.branch_onflight = false;
+        if rst {println!("decode flush")};
+        if rst{
+            self.branch_onflight = false;
+            self.branch_onflight_q = false;
+        }
         self.output.flush(rst);
     }
 }
