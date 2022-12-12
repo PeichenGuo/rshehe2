@@ -36,6 +36,7 @@ pub enum InstrOpcode{
     SLLW,
     SRLW,
     SRAW,
+
     // m extension
     MUL,
     MULH,
@@ -45,6 +46,12 @@ pub enum InstrOpcode{
     DIVU,
     REM,
     REMU,
+    // rv64i
+    MULW,
+    DIVW,
+    DIVUW,
+    REMW,
+    REMUW,
 
     // * I
     JALR,

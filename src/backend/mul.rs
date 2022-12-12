@@ -23,13 +23,18 @@ impl MUL {
         let rs2 = instr.rs2_data;
         match instr.decoded.opcode_type{
             MUL => (rs1 as i64 as u128 * rs2 as i64 as u128) as u64,
+            MULW => sext((rs1 as i32  * rs2 as i32) as u64, 31),
             MULH => ((rs1 as i64 as u128).wrapping_mul(rs1 as i64 as u128) >> 64) as u64,
             MULHSU => ((rs1 as i64 as u128).wrapping_mul(rs2 as u128) >> 64) as u64,
             MULHU => ((rs1 as u128 * rs2 as u128) >> 64) as u64,
             DIV => ((rs1 as i64) / (rs2 as i64)) as u64,
+            DIVW => sext(((rs1 as i32) / (rs2 as i32)) as u64, 31),
             DIVU => rs1 / rs2,
+            DIVUW => sext(((rs1 as u32) / (rs2 as u32)) as u64, 31),
             REM => ((rs1 as i64) % (rs2 as i64)) as u64,
+            REMW => sext(((rs1 as i32) % (rs2 as i32)) as u64, 31),
             REMU => rs1 % rs2,
+            REMUW => sext(((rs1 as u32) % (rs2 as u32)) as u64, 31),
             _ => panic!("invalid opcode type for mul: {:?}", instr.decoded.opcode_type)
         }
         

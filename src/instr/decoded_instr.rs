@@ -233,7 +233,7 @@ impl DecodedInstr{
                     0b000 => match funct7 {
                         0b0000000 => ADD,
                         0b0100000 => SUB,
-                        0b0110011 => match funct3 {
+                        0b0000001 => match funct3 {
                             0b000 => MUL,
                             0b001 => MULH,
                             0b010 => MULHSU,
@@ -278,6 +278,14 @@ impl DecodedInstr{
                     0b000 => match funct7 {
                         0b0000000 => ADDW,
                         0b0100000 => SUBW,
+                        0b0000001 => match funct3 {
+                            0b000 => MULW,
+                            0b100 => DIVW,
+                            0b101 => DIVUW,
+                            0b110 => REMW,
+                            0b111 => REMUW,
+                            _ => panic!("should not panic.")
+                        },
                         _ => {
                             // panic!("illegale functs7 {:07b} while InstrR (InstrI-alu) and funct3 is 000 (add and sub rv64i)", funct7)
                             illegle_instr = true;
