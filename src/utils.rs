@@ -3,13 +3,10 @@ pub fn ref_cell_borrow_mut<'a, T>(ref_cell: &'a RefCell<T>) -> RefMut<'a, T> {
     ref_cell.borrow_mut()
 }
 pub fn signed_less_than(a: u64, b:u64) -> bool{
-    if (a >> 63) == 1 && (b >> 63) == 1 {
-        (a << 1) > (b << 1)
+    if (a >> 63) == (b >> 63){
+        a < b
     }
-    else if (a >> 63) == 0 && (b >> 63) == 0 {
-        (a << 1) < (b << 1)
-    }
-    else if (a >> 63) == 0 && (b >> 63) == 0{
+    else if (a >> 63) == 1 && (b >> 63) == 0{
         true
     }
     else{

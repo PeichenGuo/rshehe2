@@ -90,7 +90,7 @@ impl CtrlSignals for Decode {
         self.output.rst(rst);
     }
     fn flush(&mut self, rst:bool){
-        if rst {println!("decode flush")};
+        // if rst {println!("decode flush")};
         if rst{
             self.branch_onflight = false;
             self.branch_onflight_q = false;

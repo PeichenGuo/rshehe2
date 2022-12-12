@@ -64,10 +64,10 @@ impl  CtrlSignals for FakeBackend {
         // println!("bru_resp({}, {:016x})", bru_resp.0, bru_resp.1.borrow().pc);
         // println!("lsu_resp({}, {:016x})", lsu_resp.0, lsu_resp.1.borrow().pc);
         // println!("csr_resp({}, {:016x})", csr_resp.0, csr_resp.1.borrow().pc);
-        println!("alu_resp({}, {:016x})", alu_resp.0, alu_resp.1.borrow().pc);
+        // println!("alu_resp({}, {:016x})", alu_resp.0, alu_resp.1.borrow().pc);
         let mut tmp = ref_cell_borrow_mut(&self.rcu);
         let rdy = tmp.commit(vec![bru_resp, lsu_resp, csr_resp, alu_resp]);
-        println!("rcu commit rdy vec:{:?}", rdy);
+        // println!("rcu commit rdy vec:{:?}", rdy);
         drop(tmp);
         
         // println!("{:?}", rdy);

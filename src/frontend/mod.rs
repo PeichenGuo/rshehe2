@@ -52,7 +52,7 @@ impl CtrlSignals for Frontend{
         // * 所有的前传都不进行握手！合理的
         
         if self.branch_vld {
-            println!("frontend branch vld");
+            // println!("frontend branch vld");
             self.flush(true);
         }
         // let f2_resp = self.fetch2.borrow().resp_o();
@@ -93,7 +93,7 @@ impl CtrlSignals for Frontend{
         ref_cell_borrow_mut(&self.decode).rst(rst);
     }
     fn flush(&mut self, rst:bool){
-        if rst {println!("frontend flush")};
+        // if rst {println!("frontend flush")};
         ref_cell_borrow_mut(&self.fetch1).flush(rst);
         ref_cell_borrow_mut(&self.fetch2).flush(rst);
         ref_cell_borrow_mut(&self.decode).flush(rst);
