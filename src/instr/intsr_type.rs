@@ -19,7 +19,7 @@ impl Default for InstrType {
 #[derive(Debug, Clone, Copy)]
 // #[derive(Default)]
 pub enum InstrOpcode{
-    // R
+    // * R
     ADD,
     SUB,
     SLL,
@@ -36,8 +36,17 @@ pub enum InstrOpcode{
     SLLW,
     SRLW,
     SRAW,
+    // m extension
+    MUL,
+    MULH,
+    MULHSU,
+    MULHU,
+    DIV,
+    DIVU,
+    REM,
+    REMU,
 
-    // I
+    // * I
     JALR,
 
     LB,
@@ -78,14 +87,14 @@ pub enum InstrOpcode{
     CSRRSI,
     CSRRCI,
 
-    // S
+    // * S
     SB,
     SH,
     SW,
     // rv64i
     SD,
 
-    // B
+    // * B
     BEQ,
     BNE,
     BLT,
@@ -93,11 +102,11 @@ pub enum InstrOpcode{
     BLTU,
     BGEU,
 
-    // U
+    // * U
     LUI, 
     AUIPC,
 
-    // J
+    // * J
     JAL
 
 }

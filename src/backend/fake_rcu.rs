@@ -285,8 +285,8 @@ mod test{
         drop(tmp);
 
         assert_ne!(arf.borrow().get(3), 0xdead_beaf);
-        let rdy = fake_rcu.commit(vec![(false, Default::default()), (true, instr.clone()), (false, Default::default()), (false, Default::default())]);
-        assert_eq!(rdy, [false, true, false, false]);
+        let rdy = fake_rcu.commit(vec![(false, Default::default()), (true, instr.clone()), (false, Default::default()), (false, Default::default()), (false, Default::default())]);
+        assert_eq!(rdy, [false, true, false, false, false]);
         fake_rcu.tik();
         assert_eq!(arf.borrow().get(3), 0xdead_beaf);
         assert_eq!(fake_rcu.flush_o(), true);

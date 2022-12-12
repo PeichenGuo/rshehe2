@@ -4,18 +4,21 @@ pub mod fake_lsu;
 pub mod bru;
 pub mod csr;
 pub mod fake_rcu;
+pub mod mul;
 
 use std::{sync::Arc, cell::RefCell};
 
-use crate::{backend::{alu::ALU, fake_lsu::FakeLSU, bru::BRU, csr::CSR, fake_rcu::FakeRCU}, memory::{memory::Memory, regfiles::{ARF, CSRF}}, utils::ref_cell_borrow_mut};
+use crate::{backend::{alu::ALU, mul::MUL, fake_lsu::FakeLSU, bru::BRU, csr::CSR, fake_rcu::FakeRCU}, memory::{memory::Memory, regfiles::{ARF, CSRF}}, utils::ref_cell_borrow_mut};
 use crate::instr::Instr;
 use crate::interface::{CtrlSignals, Interface};
 pub struct FakeBackend{
     alu: Arc<RefCell<ALU>>,
+
     lsu: Arc<RefCell<FakeLSU>>,
     bru: Arc<RefCell<BRU>>,
     csr: Arc<RefCell<CSR>>,
     rcu: Arc<RefCell<FakeRCU>>,
+    mul: Arc<RefCell<MUL>>,
 
     // mem:Arc<RefCell<Memory>>,
     // arf:Arc<RefCell<ARF>>,
@@ -30,6 +33,7 @@ impl FakeBackend {
             bru: Arc::new(RefCell::new(BRU::new(1))), 
             csr: Arc::new(RefCell::new(CSR::new(1))), 
             rcu: Arc::new(RefCell::new(FakeRCU::new(arf.clone(), csrf.clone(), 1, 1))), 
+            mul: Arc::new(RefCell::new(MUL::new(1))), 
             // mem: (mem.clone()), 
             // arf: (arf.clone()), 
             // csrf: (csrf.clone()) 
@@ -60,13 +64,14 @@ impl  CtrlSignals for FakeBackend {
         let bru_resp = self.bru.borrow().resp_o();
         let lsu_resp = self.lsu.borrow().resp_o();
         let csr_resp = self.csr.borrow().resp_o();
+        let mul_resp = self.mul.borrow().resp_o();
         let alu_resp = self.alu.borrow().resp_o();
         // println!("bru_resp({}, {:016x})", bru_resp.0, bru_resp.1.borrow().pc);
         // println!("lsu_resp({}, {:016x})", lsu_resp.0, lsu_resp.1.borrow().pc);
         // println!("csr_resp({}, {:016x})", csr_resp.0, csr_resp.1.borrow().pc);
         // println!("alu_resp({}, {:016x})", alu_resp.0, alu_resp.1.borrow().pc);
         let mut tmp = ref_cell_borrow_mut(&self.rcu);
-        let rdy = tmp.commit(vec![bru_resp, lsu_resp, csr_resp, alu_resp]);
+        let rdy = tmp.commit(vec![bru_resp, lsu_resp, csr_resp, mul_resp, alu_resp]);
         // println!("rcu commit rdy vec:{:?}", rdy);
         drop(tmp);
         
@@ -83,8 +88,12 @@ impl  CtrlSignals for FakeBackend {
         csr_tmp.rdy_i(rdy[2]);
         drop(csr_tmp);
 
+        let mut mul_tmp = ref_cell_borrow_mut(&self.mul);
+        mul_tmp.rdy_i(rdy[3]);
+        drop(mul_tmp);
+
         let mut alu_tmp = ref_cell_borrow_mut(&self.alu);
-        alu_tmp.rdy_i(rdy[3]);
+        alu_tmp.rdy_i(rdy[4]);
         drop(alu_tmp);
 
         // fu req
@@ -97,6 +106,12 @@ impl  CtrlSignals for FakeBackend {
             alu_tmp.req_i(rcu_req);
             rcu_tmp.rdy_i(alu_tmp.rdy_o());
             drop(alu_tmp);
+        }
+        else if rcu_req.1.borrow().decoded.is_mul{
+            let mut mul_tmp = ref_cell_borrow_mut(&self.mul);
+            mul_tmp.req_i(rcu_req);
+            rcu_tmp.rdy_i(mul_tmp.rdy_o());
+            drop(mul_tmp);
         }
         else if rcu_req.1.borrow().decoded.is_csr || rcu_req.1.borrow().decoded.is_syscall{
             let mut csr_tmp = ref_cell_borrow_mut(&self.csr);

@@ -49,3 +49,27 @@ pub fn sra32(a:u32, b:u32) -> u32 {
 //     }
 // }
 
+pub fn c2o(a:u64) -> u64{
+    if (a >> 63) == 0{
+        a
+    }else{
+        !((a & 0x7fff_ffff_ffff_ffff) - 1)
+    }
+}
+
+pub fn o2c(a:u64) -> u64{
+    if (a >> 63) == 0{
+        a
+    }else{
+        !(a & 0x7fff_ffff_ffff_ffff) + 1
+    }
+}
+
+pub fn signed_time(a:u64, b:u64) -> (u64, u64){
+    let sa = c2o(a);
+    let sb = c2o(b);
+    let umul:u128 = (sa & 0x7fff_ffff_ffff_ffff) as u128 * (sb & 0x7fff_ffff_ffff_ffff) as u128;
+    let sign = (sa >> 63) ^ (sb >> 63);
+    let anws = umul | ((sign as u128) << 127);
+    (anws as u64, (anws >> 64) as u64)
+}
