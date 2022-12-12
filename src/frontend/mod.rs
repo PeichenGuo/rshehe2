@@ -114,7 +114,7 @@ mod test{
     #[test]
     fn frontend_basic_test_on_add(){
         let mem = Arc::new(RefCell::new(Memory::new()));
-        mem.borrow_mut().read_file("./isa/build/hex/rv64ui/add.hex", 0x8000_0000);
+        mem.borrow_mut().read_file("./tests/isa/build/hex/rv64ui/add.hex", 0x8000_0000);
 
         let mut frontend = Frontend::new(mem.clone());
         assert_eq!(frontend.resp_o().0, false);

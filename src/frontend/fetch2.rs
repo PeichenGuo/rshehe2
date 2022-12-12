@@ -71,7 +71,7 @@ mod test{
     #[test]
     fn basic_fetch2_test(){
         let mem = Arc::new(RefCell::new(Memory::new()));
-        mem.borrow_mut().read_file("./isa/build/hex/rv64ui/add.hex", 0x8000_0000);
+        mem.borrow_mut().read_file("./tests/isa/build/hex/rv64ui/add.hex", 0x8000_0000);
         let mut fetch2 = Fetch2::new(mem.clone());
         let addr:u64 = 0x8000_0000;
 

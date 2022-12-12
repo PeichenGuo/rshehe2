@@ -160,7 +160,7 @@ mod test {
     #[test]
     fn basic_load_on_add_hex(){
         let mut mem = Memory::new();
-        mem.read_file("./isa/build/hex/rv64ui/add.hex", 0);
+        mem.read_file("./tests/isa/build/hex/rv64ui/add.hex", 0);
 
         assert_eq!(mem.lbu(0x0), 0x6fu64);
         assert_eq!(mem.lbu(0x1), 0x0u64);

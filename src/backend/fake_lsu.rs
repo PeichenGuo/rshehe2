@@ -118,7 +118,7 @@ mod test{
     #[test]
     fn basic_fake_lsu_test_on_add_hex(){
         let mem = Arc::new(RefCell::new(Memory::new()));
-        ref_cell_borrow_mut(&mem.clone()).read_file("./isa/build/hex/rv64ui/add.hex", 0);
+        ref_cell_borrow_mut(&mem.clone()).read_file("./tests/isa/build/hex/rv64ui/add.hex", 0);
         let mut fake_lsu = FakeLSU::new(mem.clone(), vec![1]);
         let instr = Arc::new(RefCell::new(Instr::new(0x0)));
     
