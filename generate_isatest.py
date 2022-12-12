@@ -1,6 +1,6 @@
 import os;
 PATH = "./isa/build/hex"
-TEST_NAME = 'rv64ui'
+TEST_NAME = 'rv64um'
 FILE_NAME = f'isatest_{TEST_NAME}.rs'
 TESTS_PATH = './tests'
 
@@ -33,7 +33,7 @@ for filename in os.listdir(PATH + "/" + TEST_NAME):
     #[test]
     fn isatest_{TEST_NAME}_{test}(){{
         let mut core = HeHeCore::new();
-        core.load_elf("./isa/build/hex/rv64ui/{test}.hex");
+        core.load_elf("./isa/build/hex/{TEST_NAME}/{test}.hex");
         for _i in 0..3000{{
             core.tik();
             if core.read_from_host() == 1{{

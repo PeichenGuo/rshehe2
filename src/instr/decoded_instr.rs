@@ -229,11 +229,9 @@ impl DecodedInstr{
                 }
             },
             InstrType::R => match opcode {
-                0b0110011 => match funct3 {
-                    0b000 => match funct7 {
-                        0b0000000 => ADD,
-                        0b0100000 => SUB,
-                        0b0000001 => match funct3 {
+                0b0110011 => {
+                    if funct7 == 0b0000001{
+                        match funct3 {
                             0b000 => MUL,
                             0b001 => MULH,
                             0b010 => MULHSU,
@@ -243,72 +241,85 @@ impl DecodedInstr{
                             0b110 => REM,
                             0b111 => REMU,
                             _ => panic!("should not panic.")
-                        },
-                        _ => {
-                            // panic!("illegale functs7 {:07b} while InstrR (InstrI-alu) and funct3 is 000 (add and sub)", funct7)
-                            illegle_instr = true;
-                            msg = String::from(format!("illegale functs7 {:07b} while InstrR (InstrI-alu) and funct3 is 000 (add and sub)", funct7));
-                            Default::default()
                         }
-                    },
-                    0b001 => SLL,
-                    0b010 => SLT,
-                    0b011 => SLTU,
-                    0b100 => XOR,
-                    0b101 => match funct7 >> 1{
-                        0b000000 => SRL,
-                        0b010000 => SRA,
-                        _ => {
-                            // panic!("illegale functs7 {:07b} while opcode is InstrR  and funct3 is 101 (shift right)", funct7)
-                            illegle_instr = true;
-                            msg = String::from(format!("illegale functs7 {:07b} while opcode is InstrR  and funct3 is 101 (shift right)", funct7));
-                            Default::default()
+                    } else{
+                        match funct3 {
+                            0b000 => match funct7 {
+                                0b0000000 => ADD,
+                                0b0100000 => SUB,
+                                _ => {
+                                    // panic!("illegale functs7 {:07b} while InstrR (InstrI-alu) and funct3 is 000 (add and sub)", funct7)
+                                    illegle_instr = true;
+                                    msg = String::from(format!("illegale functs7 {:07b} while InstrR (InstrI-alu) and funct3 is 000 (add and sub)", funct7));
+                                    Default::default()
+                                }
+                            },
+                            0b001 => SLL,
+                            0b010 => SLT,
+                            0b011 => SLTU,
+                            0b100 => XOR,
+                            0b101 => match funct7 >> 1{
+                                0b000000 => SRL,
+                                0b010000 => SRA,
+                                _ => {
+                                    // panic!("illegale functs7 {:07b} while opcode is InstrR  and funct3 is 101 (shift right)", funct7)
+                                    illegle_instr = true;
+                                    msg = String::from(format!("illegale functs7 {:07b} while opcode is InstrR  and funct3 is 101 (shift right)", funct7));
+                                    Default::default()
+                                }
+                            },
+                            0b110 => OR,
+                            0b111 => AND,
+                            _ => {
+                                // panic!("illegale functs3 {:03b} while opcode is InstrR (alu)", funct3)  
+                                illegle_instr = true;
+                                msg = String::from(format!("illegale functs3 {:03b} while opcode is InstrR (alu)", funct3));
+                                Default::default()
+                            }    
                         }
-                    },
-                    0b110 => OR,
-                    0b111 => AND,
-                    _ => {
-                        // panic!("illegale functs3 {:03b} while opcode is InstrR (alu)", funct3)  
-                        illegle_instr = true;
-                        msg = String::from(format!("illegale functs3 {:03b} while opcode is InstrR (alu)", funct3));
-                        Default::default()
-                    }    
-                },
-                0b0111011 => match funct3{ // rv64i
-                    0b000 => match funct7 {
-                        0b0000000 => ADDW,
-                        0b0100000 => SUBW,
-                        0b0000001 => match funct3 {
+                    }
+                }
+                0b0111011 => {
+                    if funct7 == 0b0000001{
+                        match funct3 {
                             0b000 => MULW,
                             0b100 => DIVW,
                             0b101 => DIVUW,
                             0b110 => REMW,
                             0b111 => REMUW,
                             _ => panic!("should not panic.")
-                        },
-                        _ => {
-                            // panic!("illegale functs7 {:07b} while InstrR (InstrI-alu) and funct3 is 000 (add and sub rv64i)", funct7)
-                            illegle_instr = true;
-                            msg = String::from(format!("illegale functs7 {:07b} while InstrR (InstrI-alu) and funct3 is 000 (add and sub rv64i)", funct7));
-                            Default::default()
                         }
-                    },
-                    0b001 => SLLW,
-                    0b101 => match funct7 >> 1{
-                        0b000000 => SRLW,
-                        0b010000 => SRAW,
-                        _ => {
-                            // panic!("illegale functs7 {:07b} while opcode is InstrR and funct3 is 101 (shift right rv64i)", funct7)
-                            illegle_instr = true;
-                            msg = String::from(format!("illegale functs7 {:07b} while opcode is InstrR and funct3 is 101 (shift right rv64i)", funct7));
-                            Default::default()
+                    }
+                    else{
+                        match funct3{ // rv64i
+                            0b000 => match funct7 {
+                                0b0000000 => ADDW,
+                                0b0100000 => SUBW,
+                                _ => {
+                                    // panic!("illegale functs7 {:07b} while InstrR (InstrI-alu) and funct3 is 000 (add and sub rv64i)", funct7)
+                                    illegle_instr = true;
+                                    msg = String::from(format!("illegale functs7 {:07b} while InstrR (InstrI-alu) and funct3 is 000 (add and sub rv64i)", funct7));
+                                    Default::default()
+                                }
+                            },
+                            0b001 => SLLW,
+                            0b101 => match funct7 >> 1{
+                                0b000000 => SRLW,
+                                0b010000 => SRAW,
+                                _ => {
+                                    // panic!("illegale functs7 {:07b} while opcode is InstrR and funct3 is 101 (shift right rv64i)", funct7)
+                                    illegle_instr = true;
+                                    msg = String::from(format!("illegale functs7 {:07b} while opcode is InstrR and funct3 is 101 (shift right rv64i)", funct7));
+                                    Default::default()
+                                }
+                            },
+                            _ => {
+                                // panic!("illegale functs3 {:03b} while opcode is InstrR (rv64i)", funct3) 
+                                illegle_instr = true;
+                                msg = String::from(format!("illegale functs3 {:03b} while opcode is InstrR (rv64i)", funct3));
+                                Default::default()
+                            }
                         }
-                    },
-                    _ => {
-                        // panic!("illegale functs3 {:03b} while opcode is InstrR (rv64i)", funct3) 
-                        illegle_instr = true;
-                        msg = String::from(format!("illegale functs3 {:03b} while opcode is InstrR (rv64i)", funct3));
-                        Default::default()
                     }
                 },
                 _ => {
@@ -359,7 +370,11 @@ impl DecodedInstr{
             (opcode_type == MUL) || (opcode_type == MULH) || 
             (opcode_type == MULHSU) || (opcode_type == MULHU) || 
             (opcode_type == DIV) || (opcode_type == DIVU) || 
-            (opcode_type == REM) || (opcode_type == REMU);
+            (opcode_type == REM) || (opcode_type == REMU) || 
+            (opcode_type == MULW) || 
+            (opcode_type == DIVW) || (opcode_type == DIVUW) || 
+            (opcode_type == REMW) || (opcode_type == REMUW)
+            ;
         let is_branch = instr_type == InstrType::B || instr_type == InstrType::J ||
                                 opcode_type == JALR;
         let is_fence = opcode_type == FENCE || opcode_type == FENCEI;
@@ -449,6 +464,11 @@ mod test{
         let instr = DecodedInstr::new(0x0012829b);
         assert_eq!(instr.opcode_type, ADDIW);
         assert!(instr.is_alu);
+
+        let instr = DecodedInstr::new(0x0220c73b);
+        assert_eq!(instr.opcode_type, DIVW);
+        assert!(!instr.is_alu);
+        assert!(instr.is_mul);
 
     }
 }

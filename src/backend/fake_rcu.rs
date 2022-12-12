@@ -43,7 +43,7 @@ impl FakeRCU{
         // println!("rcu commit mux req in :{:?}", self.gen_rdy_o());
         self.commit_mux.rdy_i(self.gen_rdy_o());
         let instr = &self.commit_mux.resp_o()[0].1;
-        // println!("rcu commit mux in:{} - {:016x}", self.commit_mux.resp_o()[0].0, instr.borrow().pc);
+        println!("rcu commit mux in:{} - {:016x}", self.commit_mux.resp_o()[0].0, instr.borrow().pc);
         if self.commit_mux.resp_o()[0].0 && self.commit.rdy_o(){
             if !self.commit_mux.resp_o().get(0).unwrap().1.borrow().exception_vld{
                 if instr.borrow().wb_vld{
@@ -134,8 +134,11 @@ impl Interface for FakeRCU{
     fn resp_o(&self) -> (bool, Self::Output){
         let instr:Arc<RefCell<Instr>> = self.output.resp_o().1;
         // println!("self.iss_rdy():{}", self.iss_rdy());
-        // if self.output.resp_o().1.borrow().decoded.opcode_type == InstrOpcode::BEQ{
-        //     println!("rcu req iss: pc-{:016x} is BEQ", self.output.resp_o().1.borrow().pc);
+        // if self.output.resp_o().1.borrow().decoded.opcode_type == InstrOpcode::DIVW{
+        //     println!("rcu req iss: pc-{:016x} is DIVW", self.output.resp_o().1.borrow().pc);
+        // }
+        // if self.output.resp_o().0{
+        //     println!("rcu iss instr {:016x}. iss_rdy:{}", self.output.resp_o().1.borrow().pc, self.iss_rdy());
         // }
         if self.iss_rdy(){
             let rs1_data = self.arf.borrow().get(instr.borrow().decoded.rs1);

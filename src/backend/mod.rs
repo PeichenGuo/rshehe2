@@ -13,12 +13,11 @@ use crate::instr::Instr;
 use crate::interface::{CtrlSignals, Interface};
 pub struct FakeBackend{
     alu: Arc<RefCell<ALU>>,
-
+    mul: Arc<RefCell<MUL>>,
     lsu: Arc<RefCell<FakeLSU>>,
     bru: Arc<RefCell<BRU>>,
     csr: Arc<RefCell<CSR>>,
     rcu: Arc<RefCell<FakeRCU>>,
-    mul: Arc<RefCell<MUL>>,
 
     // mem:Arc<RefCell<Memory>>,
     // arf:Arc<RefCell<ARF>>,
@@ -102,12 +101,14 @@ impl  CtrlSignals for FakeBackend {
         // println!("backend rcu_req({}, {:016x})", rcu_req.0, rcu_req.1.borrow().pc);
 
         if rcu_req.1.borrow().decoded.is_alu{
+            // println!("alu in");
             let mut alu_tmp = ref_cell_borrow_mut(&self.alu);
             alu_tmp.req_i(rcu_req);
             rcu_tmp.rdy_i(alu_tmp.rdy_o());
             drop(alu_tmp);
         }
         else if rcu_req.1.borrow().decoded.is_mul{
+            // println!("mul in");
             let mut mul_tmp = ref_cell_borrow_mut(&self.mul);
             mul_tmp.req_i(rcu_req);
             rcu_tmp.rdy_i(mul_tmp.rdy_o());
@@ -142,6 +143,7 @@ impl  CtrlSignals for FakeBackend {
         // println!();
         // println!();
         ref_cell_borrow_mut(&self.alu).tik();
+        ref_cell_borrow_mut(&self.mul).tik();
         ref_cell_borrow_mut(&self.lsu).tik();
         ref_cell_borrow_mut(&self.bru).tik();
         ref_cell_borrow_mut(&self.csr).tik();
@@ -195,7 +197,9 @@ mod test{
         // bne arf[1] arf[2] (predict fail)
         // nop                                      bne arf[1] arf[2]       
         // nop                                                              flush_vld 
-        // TODO: need check flush did happend
+        // mul arf[1] arf[2] -> arf[5]
+        // 
+
 
         // addi 0xf -> arf[1]
         let instr = Arc::new(RefCell::new(Instr::new(0x8000_0000)));
@@ -279,6 +283,7 @@ mod test{
         assert_eq!(0xf << 0x1, arf.borrow().get(3));
         // assert_eq!(0xf << 0x1, arf.borrow().get(4));
 
+
         // nop
         backend.tik();
 
@@ -307,6 +312,32 @@ mod test{
         // nop
         backend.tik();
         assert_eq!(backend.branch_o(), (true, 0x8000_0123));
+        backend.flush(true);
+        backend.tik();
 
+        // mul arf[1] arf[2] -> arf[5]
+        let instr = Arc::new(RefCell::new(Instr::new(0x8000_0100)));
+        let mut tmp = ref_cell_borrow_mut(&instr);
+        tmp.decoded.is_alu = false;
+        tmp.decoded.is_mul = true;
+        tmp.decoded.opcode_type = MUL;
+        tmp.decoded.instr_type = R;
+        tmp.decoded.rs1 = 1;
+        tmp.decoded.rs2 = 2;
+        tmp.decoded.rd = 0x5;
+        drop(tmp);
+
+        backend.req_i((true, instr.clone()));
+        backend.tik();
+
+        // nop
+        backend.tik();
+
+        // nop
+        backend.tik();
+
+        // nop
+        backend.tik();
+        assert_eq!(arf.borrow().get(5), 0xf * 0x1);
     }
 }
