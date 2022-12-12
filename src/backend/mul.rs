@@ -153,7 +153,6 @@ mod test{
     use crate::backend::mul::MUL;
     use crate::instr::Instr;
     use crate::interface::{Interface, CtrlSignals};
-    use crate::instr::intsr_type::InstrOpcode::*;
     use crate::utils::ref_cell_borrow_mut;
     use std::sync::Arc;
     use std::mem::drop;
