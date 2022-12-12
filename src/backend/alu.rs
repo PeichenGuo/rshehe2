@@ -43,8 +43,8 @@ impl ALU {
             
             SRL => instr.rs1_data.wrapping_shr((instr.rs2_data % 64) as u32),
             SRLI => instr.rs1_data.wrapping_shr((instr.decoded.shamt % 64) as u32),
-            SRLW => sext(instr.rs1_data.wrapping_shr((instr.rs2_data % 32) as u32), 31),
-            SRLIW => sext(instr.rs1_data.wrapping_shr((instr.decoded.shamt % 32) as u32) , 31),
+            SRLW => sext((instr.rs1_data & 0xffff_ffff).wrapping_shr((instr.rs2_data % 32) as u32), 31),
+            SRLIW => sext((instr.rs1_data & 0xffff_ffff).wrapping_shr((instr.decoded.shamt % 32) as u32) , 31),
             
             SRA => sra64(instr.rs1_data, instr.rs2_data % 64),
             SRAI => sra64(instr.rs1_data, instr.decoded.shamt as u64 % 64),
