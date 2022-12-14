@@ -16,6 +16,7 @@ pub mod buffers;
 pub mod frontend;
 pub mod backend;
 pub mod utils;
+pub mod bpu; 
 
 #[macro_use]
 extern crate lazy_static;

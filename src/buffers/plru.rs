@@ -1,17 +1,18 @@
-use std::{fmt::Debug, default};
+use std::{fmt::Debug};
 
 use crate::interface::CtrlSignals;
 
 #[derive(Default, Debug)]
-pub struct BufPLRU<T, D>{
-    max_size:u16,
+pub struct PLRU<T, D>{
+    width:usize,
+    max_size:usize,
     tag: Vec<T>,
     vld: Vec<bool>,
     data: Vec<D>,
     tree: Vec<bool>, // true points left, false points right
 }
 
-impl<T, D> CtrlSignals for BufPLRU<T, D>
+impl<T, D> CtrlSignals for PLRU<T, D>
     where T: Default + Debug + Clone + Copy  + PartialEq, 
           D: Default + Debug + Clone + Copy  + PartialEq
 {
@@ -35,13 +36,15 @@ impl<T, D> CtrlSignals for BufPLRU<T, D>
     // }
 }
 
-impl<T, D> BufPLRU<T, D>
+impl<T, D> PLRU<T, D>
     where T: Default + Debug + Clone + Copy  + PartialEq,
           D: Default + Debug + Clone + Copy + PartialEq
 {
-    pub fn new(size: u16) -> Self{
-        BufPLRU{
-            max_size:size,
+    pub fn new(width: usize) -> Self{
+        let size = 2u32.pow(width as u32);
+        PLRU{
+            width:width,
+            max_size:size as usize,
             vld: vec![false; size as usize],
             tag: vec![Default::default(); size as usize],
             data: vec![Default::default(); size as usize],
@@ -50,20 +53,25 @@ impl<T, D> BufPLRU<T, D>
     }
 
     pub fn insert(&mut self, val: (T,D)){
-        let mut pt = 0;
-        for lvl in 0..((self.max_size as f64).log2() as usize){
-            let direction = self.tree[pt];
-            self.tree[pt] = !self.tree[pt];
-            let past_levels_size = 2usize.pow(lvl as u32) - 1;
-            let nxt_level_start = 2usize.pow((lvl + 1) as u32) - 1;
-            let this_level_index = pt - past_levels_size;
-            pt = nxt_level_start + this_level_index * 2 + if direction {0} else {1};
+        if self.get(val.0).0{
+            // FIXME: lazy code, 2logn, should be 1logn
+            self.update(val.0, val.1);
         }
-        pt -= self.max_size as usize - 1;
-        self.vld[pt] = true;
-        self.tag[pt] = val.0;
-        self.data[pt] = val.1;
-        println!("after insert {:?}", self.tree);
+        else{
+            let mut pt = 0;
+            for lvl in 0..self.width{
+                let direction = self.tree[pt];
+                self.tree[pt] = !self.tree[pt];
+                let past_levels_size = 2usize.pow(lvl as u32) - 1;
+                let nxt_level_start = 2usize.pow((lvl + 1) as u32) - 1;
+                let this_level_index = pt - past_levels_size;
+                pt = nxt_level_start + this_level_index * 2 + if direction {0} else {1};
+            }
+            pt -= self.max_size as usize - 1;
+            self.vld[pt] = true;
+            self.tag[pt] = val.0;
+            self.data[pt] = val.1;
+        }
     }
 
     pub fn get(&mut self, tag: T) -> (bool, D){
@@ -76,10 +84,17 @@ impl<T, D> BufPLRU<T, D>
         }
     }
 
+    pub fn update(&mut self, tag:T, data:D){
+        if let Some(id) = self.tag.iter().position(|x| x == &tag){
+            self.trace_back(id);
+            self.data[id] = data;
+        } 
+    }
+
     fn trace_back(&mut self, id:usize){
         let mut pt = id + self.max_size as usize - 1;
         println!("before trace back: {:?}", self.tree);
-        for lvl in (0..((self.max_size as f64).log2() as usize)).rev(){
+        for lvl in (0..self.width).rev(){
             let past_levels_size = 2usize.pow((lvl + 1) as u32) - 1;
             let last_level_start = 2usize.pow(lvl as u32) - 1;
             let direction:bool = pt - past_levels_size % 2 == 0;
@@ -98,10 +113,10 @@ impl<T, D> BufPLRU<T, D>
 
 #[cfg(test)]
 mod test{
-    use crate::{buffers::plru::BufPLRU, interface::{Interface, CtrlSignals}};
+    use crate::{buffers::plru::PLRU, interface::{CtrlSignals}};
     #[test]
     fn basic_plru_test(){
-        let mut plru = BufPLRU::<usize, &str>::new(8);
+        let mut plru = PLRU::<usize, &str>::new(3);
 
         assert_eq!(plru.get(2).0, false);
         plru.insert((1, "one"));

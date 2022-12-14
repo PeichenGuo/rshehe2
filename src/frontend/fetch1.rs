@@ -5,13 +5,15 @@ use crate::buffers::mux::{Mux};
 use crate::interface::{CtrlSignals, Interface};
 use crate::instr::Instr;
 use crate::utils::ref_cell_borrow_mut;
+use crate::bpu::{BPU, pht::PFSM};
 use std::sync::Arc;
+use crate::cfg::frontend_cfg::*;
 // use std::
 pub struct Fetch1{ // get pc and visit pht/btb to get a new pc
     // pc_i: Vec<(bool, u32)>,
     pc_mux: Mux<u64>, 
     output: DelayFIFO<Arc<RefCell<Instr>>>,
-    
+    bpu: BPU
 }
 
 impl Fetch1 {
@@ -20,6 +22,8 @@ impl Fetch1 {
             // pc_i: vec![(false, 0); pc_i_size as usize],
             pc_mux: Mux::new(pc_i_size, 1),
             output: DelayFIFO::<Arc<RefCell<Instr>>>::new(1, vec![1]),
+            bpu:BPU::new(BTB_PC_WIDTH, BTB_PC_LOW, BTB_PC_WIDTH, GSHARE_HISTORY_WIDTH as u32, GSHARE_PC_WIDTH as u32, 
+                GSHARE_PC_LOW, GSHARE_PC_DO_HASH, PFSM::default())
         }
     }
 
