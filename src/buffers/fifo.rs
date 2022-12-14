@@ -129,7 +129,7 @@ impl<T> DelayFIFO<T>
 
 #[cfg(test)]
 mod test{
-    use crate::{buffers::delay_fifo::DelayFIFO, interface::{Interface, CtrlSignals}};
+    use crate::{buffers::fifo::DelayFIFO, interface::{Interface, CtrlSignals}};
     #[test]
     fn basic_delay_fifo_test(){
         // 0 delay

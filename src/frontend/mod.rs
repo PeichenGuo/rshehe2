@@ -12,6 +12,8 @@ use crate::utils::*;
 pub mod fetch1;
 pub mod fetch2;
 pub mod decode;
+
+pub mod bpu;
 pub struct Frontend{
     fetch1: Arc<RefCell<Fetch1>>,
     fetch2: Arc<RefCell<Fetch2>>,

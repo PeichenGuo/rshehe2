@@ -1,6 +1,6 @@
 use std::cell::{RefCell};
 
-use crate::buffers::delay_fifo::{DelayFIFO};
+use crate::buffers::fifo::{DelayFIFO};
 use crate::interface::{CtrlSignals, Interface};
 use crate::instr::{Instr};
 use crate::memory::memory::Memory;

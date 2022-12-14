@@ -1,4 +1,4 @@
-use crate::buffers::delay_fifo::{DelayFIFO};
+use crate::buffers::fifo::{DelayFIFO};
 use std::sync::Arc;
 use std::cell::RefCell;
 
@@ -69,6 +69,7 @@ impl Interface for BRU{
                     tmp.predict_fail = true;
                 }
                 tmp.branch_vld = true;
+                tmp.branch_direction = branch;
                 tmp.branch_pc = final_bru_pc;
                 drop(tmp)
             }
