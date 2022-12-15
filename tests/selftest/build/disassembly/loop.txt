@@ -8,7 +8,7 @@ Disassembly of section .text:
    0:	00100293          	li	t0,1
    4:	00000313          	li	t1,0
    8:	00000393          	li	t2,0
-   c:	06400e13          	li	t3,100
+   c:	00a00e13          	li	t3,10
   10:	00a00e93          	li	t4,10
 
 0000000000000014 <loop>:
@@ -16,7 +16,7 @@ Disassembly of section .text:
   18:	00128293          	addi	t0,t0,1
   1c:	fffe0e13          	addi	t3,t3,-1
   20:	fe0e1ae3          	bnez	t3,14 <loop>
-  24:	06400e13          	li	t3,100
+  24:	00a00e13          	li	t3,10
   28:	fffe8e93          	addi	t4,t4,-1
   2c:	fe0e94e3          	bnez	t4,14 <loop>
 

@@ -22,7 +22,7 @@ impl GShare {
             pc_low:pc_low,
             _pc_hash:pc_hash,
         
-            pht:PHT::new(2usize.pow(history_width), 2usize.pow(pc_width), pfsm)
+            pht:PHT::new(2usize.pow(pc_width), 2usize.pow(history_width), pfsm)
         }
     }
 
@@ -50,6 +50,13 @@ impl GShare {
 
     fn history_cut(&self) -> u64{
         self.history & ((1 << self.history_width) - 1)
+    }
+    pub fn display(&self){
+        assert_eq!(self.history_width, 3);
+        let history_cut = self.history_cut();
+        println!("gshare disaplay. history is {:03b}", history_cut);
+        self.pht.disaplay();
+        println!();
     }
 } 
 

@@ -51,6 +51,7 @@ impl CtrlSignals for Frontend{
         
         if self.branch.0 {
             // println!("frontend branch vld");
+            ref_cell_borrow_mut(&self.fetch1).branch_i(self.branch);
             self.flush(true);
         }
         // let f2_resp = self.fetch2.borrow().resp_o();

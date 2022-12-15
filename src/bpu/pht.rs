@@ -31,6 +31,10 @@ impl PFSM {
     pub fn predict(&self) -> bool{
         self.accept_set.contains(&self.state)
     }
+
+    pub fn disaplay(&self){
+        println!("state-{:b}, accept: {}", self.state, self.accept_set.contains(&self.state));
+    }
 }
 
 impl Default for PFSM {
@@ -73,20 +77,29 @@ pub struct PHT{
 }
 
 impl PHT {
-    pub fn new(w:usize, l: usize, pfsm: PFSM) -> Self{
+    pub fn new(pc_size:usize, history_size: usize, pfsm: PFSM) -> Self{
         PHT{
             pfsm_table:{
-                vec![vec![pfsm;l];w]
+                vec![vec![pfsm;history_size];pc_size]
             }
         }
     }
 
-    pub fn branch(&mut self, w:usize, l: usize, direction: bool){
-        self.pfsm_table[w][l].branch(direction);
+    pub fn branch(&mut self, pc_size:usize, history_size: usize, direction: bool){
+        self.pfsm_table[pc_size][history_size].branch(direction);
     }
 
-    pub fn predict(&self, w:usize, l: usize) -> bool{
-        self.pfsm_table[w][l].predict()
+    pub fn predict(&self, pc_size:usize, history_size: usize) -> bool{
+        self.pfsm_table[pc_size][history_size].predict()
+    }
+
+    pub fn disaplay(&self){
+        for i in 0..self.pfsm_table.len(){
+            for j in 0..self.pfsm_table[i].len(){
+                print!("pht[{i}][{j}]: ");
+                self.pfsm_table[i][j].disaplay();
+            }
+        }
     }
 }
 

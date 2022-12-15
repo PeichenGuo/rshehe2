@@ -52,5 +52,6 @@
         }
         succ_msg.push_str(format!("loop test: {}\n", core.predict_succ_rate()).as_str());
         fs::write("./predict_succ_rate_on_loop.txt", succ_msg).unwrap();
+        panic!("");
     }
 }

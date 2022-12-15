@@ -12,7 +12,7 @@ pub struct BPU{
 impl BPU {
     pub fn new(btb_width:usize,btb_pc_width: usize, btb_pc_low:usize,  gshare_history_width: u32, 
             gshare_pc_width: u32, gshare_pc_low:usize, gshare_pc_hash:bool, pfsm:PFSM) -> Self{
-        let btb = BTB::new(btb_width, btb_pc_low, btb_pc_width);
+        let btb = BTB::new(btb_width, btb_pc_width, btb_pc_low);
         let gshare = GShare::new(gshare_history_width, gshare_pc_width, gshare_pc_low, gshare_pc_hash, pfsm);
         BPU{
             btb,
@@ -29,6 +29,10 @@ impl BPU {
         let btb_predict = self.btb.predict(pc);
         let gshare_predict = self.gshare.predict(pc);
         (gshare_predict & btb_predict.0, btb_predict.1)
+    }
+    pub fn disaplay(&self){
+        self.btb.disaplay();
+        self.gshare.display();
     }
 } 
 

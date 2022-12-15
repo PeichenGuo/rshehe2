@@ -25,7 +25,7 @@ impl Fetch1 {
             // pc_i: vec![(false, 0); pc_i_size as usize],
             pc_mux,
             output,
-            bpu:BPU::new(BTB_WIDTH, BTB_PC_LOW, BTB_PC_WIDTH, GSHARE_HISTORY_WIDTH as u32, GSHARE_PC_WIDTH as u32, 
+            bpu:BPU::new(BTB_WIDTH, BTB_PC_WIDTH, BTB_PC_LOW, GSHARE_HISTORY_WIDTH as u32, GSHARE_PC_WIDTH as u32, 
                 GSHARE_PC_LOW, GSHARE_PC_DO_HASH, pfsm)
         }
     }
@@ -35,19 +35,21 @@ impl Fetch1 {
         self.pc_mux.rdy_i(self.gen_rdy_o());
         if self.pc_mux.resp_o().get(0).unwrap().0 && self.output.rdy_o(){ // hsk
             let instr = Arc::new(RefCell::new(Instr::new(self.pc_mux.resp_o().get(0).unwrap().1)));
-            let predriction = self.bpu.predict(instr.borrow().pc);
-            let mut tmp = ref_cell_borrow_mut(&instr);
             if BPU_ENABLE{
+                let predriction = self.bpu.predict(instr.borrow().pc);
+                let mut tmp = ref_cell_borrow_mut(&instr);
                 tmp.predicted_direction = predriction.0;
                 tmp.predicted_pc = predriction.1;
+                self.bpu.disaplay();
+                drop(tmp);
             }
             else{
+                let mut tmp = ref_cell_borrow_mut(&instr);
                 tmp.predicted_direction = false;
-                tmp.predicted_pc = predriction.1;
+                tmp.predicted_pc = 0;
+                drop(tmp);
             }
-            
-            drop(tmp);
-            // println!("fetch1 pc_mux_in: 0x{:016x}", instr.borrow().pc);
+        // println!("fetch1 pc_mux_in: 0x{:016x}", instr.borrow().pc);
             self.output.req_i((true, instr.clone()));
         }
         self.pc_mux.rdy_o()
@@ -59,6 +61,7 @@ impl Fetch1 {
 
     pub fn branch_i(&mut self, branch: (bool, u64, bool, u64)){
         if branch.0{
+            // println!("+++ branch update @ {:016x} -> {:016x} {}", branch.1, branch.3, branch.2);
             self.bpu.branch(branch.1, branch.2, branch.3);
         }
     }

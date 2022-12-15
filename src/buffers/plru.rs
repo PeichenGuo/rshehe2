@@ -1,4 +1,4 @@
-use std::{fmt::Debug};
+use std::{fmt::{Debug, LowerHex}};
 
 use crate::interface::CtrlSignals;
 
@@ -13,8 +13,8 @@ pub struct PLRU<T, D>{
 }
 
 impl<T, D> CtrlSignals for PLRU<T, D>
-    where T: Default + Debug + Clone + Copy  + PartialEq, 
-          D: Default + Debug + Clone + Copy  + PartialEq
+    where T: Default + Debug + Clone + Copy  + PartialEq + LowerHex, 
+          D: Default + Debug + Clone + Copy  + PartialEq + LowerHex
 {
     fn tik(&mut self){
        
@@ -37,8 +37,8 @@ impl<T, D> CtrlSignals for PLRU<T, D>
 }
 
 impl<T, D> PLRU<T, D>
-    where T: Default + Debug + Clone + Copy  + PartialEq,
-          D: Default + Debug + Clone + Copy + PartialEq
+    where T: Default + Debug + Clone + Copy  + PartialEq + LowerHex,
+          D: Default + Debug + Clone + Copy + PartialEq + LowerHex
 {
     pub fn new(width: usize) -> Self{
         let size = 2u32.pow(width as u32);
@@ -105,6 +105,11 @@ impl<T, D> PLRU<T, D>
     }
 
     pub fn display(&self){
+        println!("===plru disaplay===");
+        for i in 0..self.max_size{
+            println!("{}\t{:016x}\t{:016x}", self.vld[i], self.tag[i], self.data[i])
+        }
+        println!("===plru disaplay===");
     }
 
 }
@@ -114,38 +119,38 @@ mod test{
     use crate::{buffers::plru::PLRU, interface::{CtrlSignals}};
     #[test]
     fn basic_plru_test(){
-        let mut plru = PLRU::<usize, &str>::new(3);
+        let mut plru = PLRU::<usize, usize>::new(3);
 
         assert_eq!(plru.get(2).0, false);
-        plru.insert((1, "one"));
+        plru.insert((1, 1));
         assert_eq!(plru.get(1).0, true);
-        assert_eq!(plru.get(1).1, "one");
+        assert_eq!(plru.get(1).1, 1);
         
-        plru.insert((2, "two"));
-        plru.insert((3, "three"));
-        plru.insert((4, "four"));
-        plru.insert((5, "five"));
-        plru.insert((6, "five"));
-        plru.insert((7, "five"));
-        plru.insert((8, "five"));
-        plru.insert((9, "five"));
+        plru.insert((2, 2));
+        plru.insert((3, 3));
+        plru.insert((4, 4));
+        plru.insert((5, 5));
+        plru.insert((6, 5));
+        plru.insert((7, 5));
+        plru.insert((8, 5));
+        plru.insert((9, 5));
 
         assert_eq!(plru.get(1).0, false);
 
         assert_eq!(plru.get(2).0, true);
-        assert_eq!(plru.get(2).1, "two");
+        assert_eq!(plru.get(2).1, 2);
 
-        plru.insert((10, "ten"));
+        plru.insert((10, 10));
 
         assert_eq!(plru.get(2).0, true);
-        assert_eq!(plru.get(2).1, "two");
+        assert_eq!(plru.get(2).1, 2);
 
 
         plru.flush(true);
         assert_eq!(plru.get(2).0, false);
-        plru.insert((1, "one"));
+        plru.insert((1, 1));
         assert_eq!(plru.get(1).0, true);
-        assert_eq!(plru.get(1).1, "one");
+        assert_eq!(plru.get(1).1, 1);
 
     }
 }

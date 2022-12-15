@@ -6,7 +6,8 @@ pub struct BTB{
 }
 
 impl BTB {
-    pub fn new(width: usize, pc_low:usize,pc_width:usize,) ->Self{
+    pub fn new(width: usize, pc_width:usize, pc_low:usize) ->Self{
+        println!("pc_low:{}, pc_width:{}", pc_low, pc_width);
         BTB { 
             plru: PLRU::<u64, u64>::new(width),
             pc_low: pc_low,
@@ -21,6 +22,9 @@ impl BTB {
     }
     pub fn predict(&mut self, pc: u64) -> (bool, u64){
         self.plru.get(self.pc_cut(pc))
+    }
+    pub fn disaplay(&self){
+        self.plru.display();
     }
 }
 
