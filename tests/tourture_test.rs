@@ -10,7 +10,7 @@
     #[test]
     fn torture_test1(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test1.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test1.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -27,7 +27,7 @@
     #[test]
     fn torture_test10(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test10.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test10.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -44,7 +44,7 @@
     #[test]
     fn torture_test100(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test100.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test100.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -61,7 +61,7 @@
     #[test]
     fn torture_test11(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test11.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test11.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -78,7 +78,7 @@
     #[test]
     fn torture_test12(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test12.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test12.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -95,7 +95,7 @@
     #[test]
     fn torture_test13(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test13.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test13.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -112,7 +112,7 @@
     #[test]
     fn torture_test14(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test14.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test14.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -129,7 +129,7 @@
     #[test]
     fn torture_test15(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test15.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test15.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -146,7 +146,7 @@
     #[test]
     fn torture_test16(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test16.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test16.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -163,7 +163,7 @@
     #[test]
     fn torture_test17(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test17.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test17.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -180,7 +180,7 @@
     #[test]
     fn torture_test18(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test18.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test18.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -197,7 +197,7 @@
     #[test]
     fn torture_test19(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test19.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test19.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -214,7 +214,7 @@
     #[test]
     fn torture_test2(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test2.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test2.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -231,7 +231,7 @@
     #[test]
     fn torture_test20(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test20.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test20.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -248,7 +248,7 @@
     #[test]
     fn torture_test21(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test21.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test21.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -265,7 +265,7 @@
     #[test]
     fn torture_test22(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test22.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test22.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -282,7 +282,7 @@
     #[test]
     fn torture_test23(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test23.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test23.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -299,7 +299,7 @@
     #[test]
     fn torture_test24(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test24.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test24.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -316,7 +316,7 @@
     #[test]
     fn torture_test25(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test25.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test25.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -333,7 +333,7 @@
     #[test]
     fn torture_test26(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test26.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test26.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -350,7 +350,7 @@
     #[test]
     fn torture_test27(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test27.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test27.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -367,7 +367,7 @@
     #[test]
     fn torture_test28(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test28.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test28.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -384,7 +384,7 @@
     #[test]
     fn torture_test29(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test29.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test29.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -401,7 +401,7 @@
     #[test]
     fn torture_test3(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test3.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test3.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -418,7 +418,7 @@
     #[test]
     fn torture_test30(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test30.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test30.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -435,7 +435,7 @@
     #[test]
     fn torture_test31(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test31.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test31.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -452,7 +452,7 @@
     #[test]
     fn torture_test32(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test32.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test32.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -469,7 +469,7 @@
     #[test]
     fn torture_test33(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test33.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test33.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -486,7 +486,7 @@
     #[test]
     fn torture_test34(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test34.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test34.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -503,7 +503,7 @@
     #[test]
     fn torture_test35(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test35.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test35.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -520,7 +520,7 @@
     #[test]
     fn torture_test36(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test36.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test36.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -537,7 +537,7 @@
     #[test]
     fn torture_test37(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test37.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test37.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -554,7 +554,7 @@
     #[test]
     fn torture_test38(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test38.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test38.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -571,7 +571,7 @@
     #[test]
     fn torture_test39(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test39.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test39.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -588,7 +588,7 @@
     #[test]
     fn torture_test4(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test4.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test4.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -605,7 +605,7 @@
     #[test]
     fn torture_test40(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test40.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test40.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -622,7 +622,7 @@
     #[test]
     fn torture_test41(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test41.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test41.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -639,7 +639,7 @@
     #[test]
     fn torture_test42(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test42.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test42.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -656,7 +656,7 @@
     #[test]
     fn torture_test43(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test43.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test43.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -673,7 +673,7 @@
     #[test]
     fn torture_test44(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test44.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test44.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -690,7 +690,7 @@
     #[test]
     fn torture_test45(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test45.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test45.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -707,7 +707,7 @@
     #[test]
     fn torture_test46(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test46.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test46.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -724,7 +724,7 @@
     #[test]
     fn torture_test47(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test47.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test47.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -741,7 +741,7 @@
     #[test]
     fn torture_test48(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test48.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test48.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -758,7 +758,7 @@
     #[test]
     fn torture_test49(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test49.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test49.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -775,7 +775,7 @@
     #[test]
     fn torture_test5(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test5.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test5.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -792,7 +792,7 @@
     #[test]
     fn torture_test50(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test50.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test50.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -809,7 +809,7 @@
     #[test]
     fn torture_test51(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test51.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test51.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -826,7 +826,7 @@
     #[test]
     fn torture_test52(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test52.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test52.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -843,7 +843,7 @@
     #[test]
     fn torture_test53(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test53.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test53.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -860,7 +860,7 @@
     #[test]
     fn torture_test54(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test54.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test54.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -877,7 +877,7 @@
     #[test]
     fn torture_test55(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test55.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test55.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -894,7 +894,7 @@
     #[test]
     fn torture_test56(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test56.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test56.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -911,7 +911,7 @@
     #[test]
     fn torture_test57(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test57.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test57.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -928,7 +928,7 @@
     #[test]
     fn torture_test58(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test58.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test58.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -945,7 +945,7 @@
     #[test]
     fn torture_test59(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test59.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test59.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -962,7 +962,7 @@
     #[test]
     fn torture_test6(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test6.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test6.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -979,7 +979,7 @@
     #[test]
     fn torture_test60(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test60.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test60.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -996,7 +996,7 @@
     #[test]
     fn torture_test61(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test61.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test61.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1013,7 +1013,7 @@
     #[test]
     fn torture_test62(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test62.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test62.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1030,7 +1030,7 @@
     #[test]
     fn torture_test63(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test63.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test63.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1047,7 +1047,7 @@
     #[test]
     fn torture_test64(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test64.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test64.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1064,7 +1064,7 @@
     #[test]
     fn torture_test65(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test65.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test65.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1081,7 +1081,7 @@
     #[test]
     fn torture_test66(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test66.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test66.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1098,7 +1098,7 @@
     #[test]
     fn torture_test67(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test67.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test67.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1115,7 +1115,7 @@
     #[test]
     fn torture_test68(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test68.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test68.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1132,7 +1132,7 @@
     #[test]
     fn torture_test69(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test69.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test69.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1149,7 +1149,7 @@
     #[test]
     fn torture_test7(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test7.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test7.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1166,7 +1166,7 @@
     #[test]
     fn torture_test70(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test70.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test70.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1183,7 +1183,7 @@
     #[test]
     fn torture_test71(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test71.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test71.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1200,7 +1200,7 @@
     #[test]
     fn torture_test72(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test72.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test72.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1217,7 +1217,7 @@
     #[test]
     fn torture_test73(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test73.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test73.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1234,7 +1234,7 @@
     #[test]
     fn torture_test74(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test74.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test74.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1251,7 +1251,7 @@
     #[test]
     fn torture_test75(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test75.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test75.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1268,7 +1268,7 @@
     #[test]
     fn torture_test76(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test76.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test76.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1285,7 +1285,7 @@
     #[test]
     fn torture_test77(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test77.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test77.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1302,7 +1302,7 @@
     #[test]
     fn torture_test78(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test78.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test78.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1319,7 +1319,7 @@
     #[test]
     fn torture_test79(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test79.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test79.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1336,7 +1336,7 @@
     #[test]
     fn torture_test8(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test8.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test8.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1353,7 +1353,7 @@
     #[test]
     fn torture_test80(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test80.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test80.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1370,7 +1370,7 @@
     #[test]
     fn torture_test81(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test81.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test81.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1387,7 +1387,7 @@
     #[test]
     fn torture_test82(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test82.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test82.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1404,7 +1404,7 @@
     #[test]
     fn torture_test83(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test83.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test83.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1421,7 +1421,7 @@
     #[test]
     fn torture_test84(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test84.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test84.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1438,7 +1438,7 @@
     #[test]
     fn torture_test85(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test85.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test85.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1455,7 +1455,7 @@
     #[test]
     fn torture_test86(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test86.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test86.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1472,7 +1472,7 @@
     #[test]
     fn torture_test87(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test87.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test87.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1489,7 +1489,7 @@
     #[test]
     fn torture_test88(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test88.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test88.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1506,7 +1506,7 @@
     #[test]
     fn torture_test89(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test89.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test89.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1523,7 +1523,7 @@
     #[test]
     fn torture_test9(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test9.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test9.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1540,7 +1540,7 @@
     #[test]
     fn torture_test90(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test90.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test90.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1557,7 +1557,7 @@
     #[test]
     fn torture_test91(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test91.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test91.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1574,7 +1574,7 @@
     #[test]
     fn torture_test92(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test92.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test92.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1591,7 +1591,7 @@
     #[test]
     fn torture_test93(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test93.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test93.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1608,7 +1608,7 @@
     #[test]
     fn torture_test94(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test94.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test94.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1625,7 +1625,7 @@
     #[test]
     fn torture_test95(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test95.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test95.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1642,7 +1642,7 @@
     #[test]
     fn torture_test96(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test96.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test96.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1659,7 +1659,7 @@
     #[test]
     fn torture_test97(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test97.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test97.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1676,7 +1676,7 @@
     #[test]
     fn torture_test98(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test98.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test98.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{
@@ -1693,7 +1693,7 @@
     #[test]
     fn torture_test99(){
         let mut core = HeHeCore::new();
-        core.load_elf("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test99.hex");
+        core.load_hex("/work/stu/pguo/code/rshehe/tests/torture/build/hex/test99.hex");
         for _i in 0..1000000{
             core.tik();
             if core.read_from_host() == 1{

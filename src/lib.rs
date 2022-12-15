@@ -44,7 +44,7 @@ impl HeHeCore{
             _csrf: csrf .clone()
         }
     }
-    pub fn load_elf(&self, d:&str){
+    pub fn load_hex(&self, d:&str){
         ref_cell_borrow_mut(&self.mem).read_file(d, ELF_START_PADDR);
     }
 
@@ -111,7 +111,7 @@ mod test{
     #[test]
     fn add_isa_test(){
         let mut core = HeHeCore::new();
-        core.load_elf("./tests/isa/build/hex/rv64ui/add.hex");
+        core.load_hex("./tests/isa/build/hex/rv64ui/add.hex");
         for _i in 0..3000{
             core.tik();
             if core.read_from_host() == 1{
