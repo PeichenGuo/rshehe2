@@ -1,50 +1,258 @@
 
-/work/stu/pguo/code/rshehe/tests/selftest/build/elf/loop.elf:     file format elf64-littleriscv
+/Users/guopeichen/code/lab/rshehe2/tests/selftest/build/elf/loop.elf:     file format elf64-littleriscv
 
 
 Disassembly of section .text:
 
-0000000080000000 <_start>:
-    80000000:	00100293          	li	t0,1
-    80000004:	00000313          	li	t1,0
-    80000008:	00000393          	li	t2,0
-    8000000c:	3e800e13          	li	t3,1000
-    80000010:	06400e93          	li	t4,100
+0000000000000000 <_start>:
+   0:	00100293          	li	t0,1
+   4:	00000313          	li	t1,0
+   8:	00000393          	li	t2,0
+   c:	06400e13          	li	t3,100
+  10:	00a00e93          	li	t4,10
 
-0000000080000014 <loop>:
-    80000014:	00530333          	add	t1,t1,t0
-    80000018:	00128293          	addi	t0,t0,1
-    8000001c:	fffe0e13          	addi	t3,t3,-1
-    80000020:	fe0e1ae3          	bnez	t3,80000014 <loop>
-    80000024:	00000e13          	li	t3,0
-    80000028:	fffe8e93          	addi	t4,t4,-1
-    8000002c:	fe0e94e3          	bnez	t4,80000014 <loop>
+0000000000000014 <loop>:
+  14:	00530333          	add	t1,t1,t0
+  18:	00128293          	addi	t0,t0,1
+  1c:	fffe0e13          	addi	t3,t3,-1
+  20:	fe0e1ae3          	bnez	t3,14 <loop>
+  24:	06400e13          	li	t3,100
+  28:	fffe8e93          	addi	t4,t4,-1
+  2c:	fe0e94e3          	bnez	t4,14 <loop>
 
-0000000080000030 <write_to_host>:
-    80000030:	80001f37          	lui	t5,0x80001
-    80000034:	00100f93          	li	t6,1
-    80000038:	01ff2023          	sw	t6,0(t5) # ffffffff80001000 <__global_pointer$+0xffffffff000007b0>
-    8000003c:	000902b7          	lui	t0,0x90
-    80000040:	0012829b          	addiw	t0,t0,1
-    80000044:	00c29293          	slli	t0,t0,0xc
-    80000048:	0002af83          	lw	t6,0(t0) # 90000 <_start-0x7ff70000>
-    8000004c:	fe5ff06f          	j	80000030 <write_to_host>
+0000000000000030 <write_to_host>:
+  30:	80001f37          	lui	t5,0x80001
+  34:	00100f93          	li	t6,1
+  38:	01ff2023          	sw	t6,0(t5) # ffffffff80001000 <write_to_host+0xffffffff80000fd0>
+  3c:	000902b7          	lui	t0,0x90
+  40:	0012829b          	addiw	t0,t0,1 # 90001 <write_to_host+0x8ffd1>
+  44:	00c29293          	slli	t0,t0,0xc
+  48:	0002af83          	lw	t6,0(t0)
+  4c:	fe5ff06f          	j	30 <write_to_host>
+
+Disassembly of section .debug_line:
+
+0000000000000000 <.debug_line>:
+   0:	00ba                	.2byte	0xba
+   2:	0000                	.2byte	0x0
+   4:	0005                	.2byte	0x5
+   6:	0008                	.2byte	0x8
+   8:	002e                	.2byte	0x2e
+   a:	0000                	.2byte	0x0
+   c:	0101                	.2byte	0x101
+   e:	fb01                	.2byte	0xfb01
+  10:	0d0e                	.2byte	0xd0e
+  12:	0100                	.2byte	0x100
+  14:	0101                	.2byte	0x101
+  16:	0001                	.2byte	0x1
+  18:	0000                	.2byte	0x0
+  1a:	0001                	.2byte	0x1
+  1c:	0100                	.2byte	0x100
+  1e:	0101                	.2byte	0x101
+  20:	021f 0000 0000      	.byte	0x1f, 0x02, 0x00, 0x00, 0x00, 0x00
+  26:	0000                	.2byte	0x0
+  28:	0000                	.2byte	0x0
+  2a:	0102                	.2byte	0x102
+  2c:	021f 020f 0000      	.byte	0x1f, 0x02, 0x0f, 0x02, 0x00, 0x00
+  32:	0000                	.2byte	0x0
+  34:	0001                	.2byte	0x1
+  36:	0000                	.2byte	0x0
+  38:	0100                	.2byte	0x100
+  3a:	0900                	.2byte	0x900
+  3c:	0002                	.2byte	0x2
+  3e:	0000                	.2byte	0x0
+  40:	0000                	.2byte	0x0
+  42:	0000                	.2byte	0x0
+  44:	1500                	.2byte	0x1500
+  46:	00090103          	lb	sp,0(s2)
+  4a:	0100                	.2byte	0x100
+  4c:	00090103          	lb	sp,0(s2)
+  50:	0100                	.2byte	0x100
+  52:	00090103          	lb	sp,0(s2)
+  56:	0100                	.2byte	0x100
+  58:	00090103          	lb	sp,0(s2)
+  5c:	0100                	.2byte	0x100
+  5e:	00090203          	lb	tp,0(s2)
+  62:	0100                	.2byte	0x100
+  64:	00090103          	lb	sp,0(s2)
+  68:	0100                	.2byte	0x100
+  6a:	00090103          	lb	sp,0(s2)
+  6e:	0100                	.2byte	0x100
+  70:	00090103          	lb	sp,0(s2)
+  74:	0100                	.2byte	0x100
+  76:	00090103          	lb	sp,0(s2)
+  7a:	0100                	.2byte	0x100
+  7c:	00090103          	lb	sp,0(s2)
+  80:	0100                	.2byte	0x100
+  82:	00090103          	lb	sp,0(s2)
+  86:	0100                	.2byte	0x100
+  88:	00090203          	lb	tp,0(s2)
+  8c:	0100                	.2byte	0x100
+  8e:	00090103          	lb	sp,0(s2)
+  92:	0100                	.2byte	0x100
+  94:	00090103          	lb	sp,0(s2)
+  98:	0100                	.2byte	0x100
+  9a:	00090103          	lb	sp,0(s2)
+  9e:	0100                	.2byte	0x100
+  a0:	00090103          	lb	sp,0(s2)
+  a4:	0100                	.2byte	0x100
+  a6:	00090103          	lb	sp,0(s2)
+  aa:	0100                	.2byte	0x100
+  ac:	00090103          	lb	sp,0(s2)
+  b0:	0100                	.2byte	0x100
+  b2:	00090103          	lb	sp,0(s2)
+  b6:	0100                	.2byte	0x100
+  b8:	0009                	.2byte	0x9
+  ba:	0000                	.2byte	0x0
+  bc:	0101                	.2byte	0x101
+
+Disassembly of section .debug_line_str:
+
+0000000000000000 <.debug_line_str>:
+   0:	6573552f          	.4byte	0x6573552f
+   4:	7372                	.2byte	0x7372
+   6:	6f75672f          	.4byte	0x6f75672f
+   a:	6570                	.2byte	0x6570
+   c:	6369                	.2byte	0x6369
+   e:	6568                	.2byte	0x6568
+  10:	2f6e                	.2byte	0x2f6e
+  12:	65646f63          	bltu	s0,s6,670 <write_to_host+0x640>
+  16:	62616c2f          	.4byte	0x62616c2f
+  1a:	6873722f          	.4byte	0x6873722f
+  1e:	6865                	.2byte	0x6865
+  20:	3265                	.2byte	0x3265
+  22:	7365742f          	.4byte	0x7365742f
+  26:	7374                	.2byte	0x7374
+  28:	6c65732f          	.4byte	0x6c65732f
+  2c:	7466                	.2byte	0x7466
+  2e:	7365                	.2byte	0x7365
+  30:	0074                	.2byte	0x74
+  32:	6573552f          	.4byte	0x6573552f
+  36:	7372                	.2byte	0x7372
+  38:	6f75672f          	.4byte	0x6f75672f
+  3c:	6570                	.2byte	0x6570
+  3e:	6369                	.2byte	0x6369
+  40:	6568                	.2byte	0x6568
+  42:	2f6e                	.2byte	0x2f6e
+  44:	65646f63          	bltu	s0,s6,6a2 <write_to_host+0x672>
+  48:	62616c2f          	.4byte	0x62616c2f
+  4c:	6873722f          	.4byte	0x6873722f
+  50:	6865                	.2byte	0x6865
+  52:	3265                	.2byte	0x3265
+  54:	7365742f          	.4byte	0x7365742f
+  58:	7374                	.2byte	0x7374
+  5a:	6c65732f          	.4byte	0x6c65732f
+  5e:	7466                	.2byte	0x7466
+  60:	7365                	.2byte	0x7365
+  62:	2f74                	.2byte	0x2f74
+  64:	00637273          	csrrci	tp,0x6,6
+  68:	6f6c                	.2byte	0x6f6c
+  6a:	532e706f          	j	e759c <write_to_host+0xe756c>
+	...
+
+Disassembly of section .debug_info:
+
+0000000000000000 <.debug_info>:
+   0:	0024                	.2byte	0x24
+   2:	0000                	.2byte	0x0
+   4:	0005                	.2byte	0x5
+   6:	0801                	.2byte	0x801
+   8:	0000                	.2byte	0x0
+   a:	0000                	.2byte	0x0
+   c:	0001                	.2byte	0x1
+	...
+  16:	0000                	.2byte	0x0
+  18:	5000                	.2byte	0x5000
+	...
+  26:	8001                	.2byte	0x8001
+
+Disassembly of section .debug_abbrev:
+
+0000000000000000 <.debug_abbrev>:
+   0:	1101                	.2byte	0x1101
+   2:	1000                	.2byte	0x1000
+   4:	12011117          	auipc	sp,0x12011
+   8:	1b0e030f          	.4byte	0x1b0e030f
+   c:	250e                	.2byte	0x250e
+   e:	130e                	.2byte	0x130e
+  10:	0005                	.2byte	0x5
+	...
+
+Disassembly of section .debug_aranges:
+
+0000000000000000 <.debug_aranges>:
+   0:	002c                	.2byte	0x2c
+   2:	0000                	.2byte	0x0
+   4:	0002                	.2byte	0x2
+   6:	0000                	.2byte	0x0
+   8:	0000                	.2byte	0x0
+   a:	0008                	.2byte	0x8
+	...
+
+Disassembly of section .debug_str:
+
+0000000000000000 <.debug_str>:
+   0:	6573552f          	.4byte	0x6573552f
+   4:	7372                	.2byte	0x7372
+   6:	6f75672f          	.4byte	0x6f75672f
+   a:	6570                	.2byte	0x6570
+   c:	6369                	.2byte	0x6369
+   e:	6568                	.2byte	0x6568
+  10:	2f6e                	.2byte	0x2f6e
+  12:	65646f63          	bltu	s0,s6,670 <write_to_host+0x640>
+  16:	62616c2f          	.4byte	0x62616c2f
+  1a:	6873722f          	.4byte	0x6873722f
+  1e:	6865                	.2byte	0x6865
+  20:	3265                	.2byte	0x3265
+  22:	7365742f          	.4byte	0x7365742f
+  26:	7374                	.2byte	0x7374
+  28:	6c65732f          	.4byte	0x6c65732f
+  2c:	7466                	.2byte	0x7466
+  2e:	7365                	.2byte	0x7365
+  30:	2f74                	.2byte	0x2f74
+  32:	2f637273          	csrrci	tp,0x2f6,6
+  36:	6f6c                	.2byte	0x6f6c
+  38:	532e706f          	j	e756a <write_to_host+0xe753a>
+  3c:	2f00                	.2byte	0x2f00
+  3e:	7355                	.2byte	0x7355
+  40:	7265                	.2byte	0x7265
+  42:	75672f73          	csrrs	t5,0x756,a4
+  46:	6965706f          	j	576dc <write_to_host+0x576ac>
+  4a:	6e656863          	bltu	a0,t1,73a <write_to_host+0x70a>
+  4e:	646f632f          	.4byte	0x646f632f
+  52:	2f65                	.2byte	0x2f65
+  54:	616c                	.2byte	0x616c
+  56:	2f62                	.2byte	0x2f62
+  58:	7372                	.2byte	0x7372
+  5a:	6568                	.2byte	0x6568
+  5c:	6568                	.2byte	0x6568
+  5e:	2f32                	.2byte	0x2f32
+  60:	6574                	.2byte	0x6574
+  62:	2f737473          	csrrci	s0,0x2f7,6
+  66:	666c6573          	csrrsi	a0,0x666,24
+  6a:	6574                	.2byte	0x6574
+  6c:	47007473          	csrrci	s0,0x470,0
+  70:	554e                	.2byte	0x554e
+  72:	4120                	.2byte	0x4120
+  74:	2e322053          	.4byte	0x2e322053
+  78:	33 39 00            	Address 0x0000000000000078 is out of bounds.
+
 
 Disassembly of section .riscv.attributes:
 
 0000000000000000 <.riscv.attributes>:
-   0:	1e41                	addi	t3,t3,-16
-   2:	0000                	unimp
-   4:	7200                	ld	s0,32(a2)
-   6:	7369                	lui	t1,0xffffa
-   8:	01007663          	bgeu	zero,a6,14 <_start-0x7fffffec>
-   c:	0014                	0x14
-   e:	0000                	unimp
-  10:	7205                	lui	tp,0xfffe1
-  12:	3676                	fld	fa2,376(sp)
-  14:	6934                	ld	a3,80(a0)
-  16:	7032                	0x7032
-  18:	5f30                	lw	a2,120(a4)
-  1a:	326d                	addiw	tp,tp,-5
-  1c:	3070                	fld	fa2,224(s0)
+   0:	1e41                	.2byte	0x1e41
+   2:	0000                	.2byte	0x0
+   4:	7200                	.2byte	0x7200
+   6:	7369                	.2byte	0x7369
+   8:	01007663          	bgeu	zero,a6,14 <.riscv.attributes+0x14>
+   c:	0014                	.2byte	0x14
+   e:	0000                	.2byte	0x0
+  10:	7205                	.2byte	0x7205
+  12:	3676                	.2byte	0x3676
+  14:	6934                	.2byte	0x6934
+  16:	7032                	.2byte	0x7032
+  18:	5f30                	.2byte	0x5f30
+  1a:	326d                	.2byte	0x326d
+  1c:	3070                	.2byte	0x3070
 	...

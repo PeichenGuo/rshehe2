@@ -102,9 +102,7 @@ mod test{
     use crate::{frontend::fetch1::Fetch1, interface::{Interface, CtrlSignals}};
     #[test]
     fn basic_fetch1_test(){
-        println!("1");
         let mut fetch1 = Fetch1::new(4);
-        println!("1.1");
         let mut addr:u64 = 0x8000_0000;
 
         fetch1.pc_i(vec![
@@ -113,11 +111,9 @@ mod test{
             (false, 0), // pc + 4
             (true, addr) // start pc
         ]); 
-        println!("2");
         fetch1.rdy_i(true);
         assert_eq!(fetch1.resp_o().0, false);
         fetch1.tik();
-        println!("3");
         assert_eq!(fetch1.resp_o().0, true);
         assert_eq!(fetch1.resp_o().1.borrow().pc_vld, true);
         assert_eq!(fetch1.resp_o().1.borrow().pc, addr, 

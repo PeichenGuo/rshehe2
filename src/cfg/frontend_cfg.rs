@@ -1,6 +1,6 @@
 use super::core_cfg::*;
 
-pub const BPU_ENABLE: bool = true;
+pub const BPU_ENABLE: bool = false;
 
 pub const BTB_WIDTH:usize = 5;
 pub const BTB_PC_WIDTH:usize = VIRTUAL_ADDR_WIDTH;

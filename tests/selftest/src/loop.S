@@ -4,14 +4,14 @@ _start:
     addi t0, x0, 0x1
     addi t1, x0, 0x0
     li   t2, 0
-    addi t3, x0, 1000
-    li   t4, 100
+    addi t3, x0, 100
+    li   t4, 10
 loop:
     add t1, t1, t0
     add t0, t0, 0x1
     add t3, t3, -1
     bne t3, x0, loop
-    li t3, 0
+    li t3, 100
     add t4, t4, -1
     bne t4, x0, loop
 write_to_host:
