@@ -36,8 +36,8 @@
         let mut core = HeHeCore::new();
         let mut succ_msg: String = String::from("predict_succ_rate_on_torture:\n=============================\n");
         core.rst(true);
-        core.load_hex(format!("{PROJ_ROOT}/{TEST_ROOT}/selftest/build/hex/loop2.hex").as_str());
-        for _j in 0..10000{
+        core.load_hex(format!("{PROJ_ROOT}/{TEST_ROOT}/selftest/build/hex/loop.hex").as_str());
+        for _j in 0..100000{
             core.tik();
             if core.read_from_host() == 1{
                 println!("======test succ!======");
@@ -52,6 +52,5 @@
         }
         succ_msg.push_str(format!("loop test: {}\n", core.predict_succ_rate()).as_str());
         fs::write("./predict_succ_rate_on_loop.txt", succ_msg).unwrap();
-        panic!("");
     }
 }
