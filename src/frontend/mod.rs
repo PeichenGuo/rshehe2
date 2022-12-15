@@ -18,8 +18,7 @@ pub struct Frontend{
     fetch2: Arc<RefCell<Fetch2>>,
     decode: Arc<RefCell<Decode>>,
 
-    branch_vld: bool,
-    branch_pc: u64
+    branch:(bool, u64, bool, u64)
 }
 
 impl Frontend {
@@ -28,14 +27,12 @@ impl Frontend {
             fetch1: (Arc::new(RefCell::new(Fetch1::new(4)))), 
             fetch2: (Arc::new(RefCell::new(Fetch2::new(mem.clone())))), 
             decode: (Arc::new(RefCell::new(Decode::new()))), 
-            branch_vld:false,
-            branch_pc:0,
+            branch: (false, 0, false, 0)
         }
     }
 
-    pub fn branch_i(&mut self, branch:(bool, u64)){
-        self.branch_vld = branch.0;
-        self.branch_pc = branch.1;
+    pub fn branch_i(&mut self, branch:(bool, u64, bool, u64)){
+        self.branch = branch;
     }
 
     pub fn resp_o(&self) -> (bool, Arc<RefCell<Instr>>){
@@ -52,7 +49,7 @@ impl CtrlSignals for Frontend{
         // ! 因此比较反直觉的是，这里的vld-rdy握手是逆序的，从后面往前处理，才能让后面的接受者有地方接受
         // * 所有的前传都不进行握手！合理的
         
-        if self.branch_vld {
+        if self.branch.0 {
             // println!("frontend branch vld");
             self.flush(true);
         }
@@ -73,7 +70,7 @@ impl CtrlSignals for Frontend{
         ref_cell_borrow_mut(&self.fetch2).req_i(self.fetch1.borrow().resp_o());
         ref_cell_borrow_mut(&self.fetch1).rdy_i(self.fetch2.borrow().rdy_o());
         let f1_pc_i: Vec<(bool, u64)> = vec![
-            (self.branch_vld, self.branch_pc), // branch unit
+            (self.branch.0, self.branch.3), // branch unit
             (f1_resp.1.borrow().predicted_direction , f1_resp.1.borrow().predicted_pc), // branch predict
             (f1_resp.0, f1_resp.1.borrow().pc + 4), // pc + 4
             (true, 0x8000_0000) // start_pc
@@ -121,17 +118,17 @@ mod test{
         assert_eq!(frontend.resp_o().0, false);
         frontend.rdy_i(true);
 
-        frontend.branch_i((false, 0));
+        frontend.branch_i((false, 0, false, 0));
         frontend.tik();
         assert_eq!(frontend.resp_o().0, false);
         frontend.rdy_i(true);
 
-        frontend.branch_i((false, 0));
+        frontend.branch_i((false, 0, false, 0));
         frontend.tik();
         assert_eq!(frontend.resp_o().0, false);
         frontend.rdy_i(true);
 
-        frontend.branch_i((false, 0));
+        frontend.branch_i((false, 0, false, 0));
         frontend.tik();
         assert_eq!(frontend.resp_o().0, true);
         assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);
@@ -139,13 +136,13 @@ mod test{
         assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::JAL);
         frontend.rdy_i(true);
 
-        frontend.branch_i((false, 0));
+        frontend.branch_i((false, 0, false, 0));
         frontend.tik();
         assert_eq!(frontend.resp_o().0, false);
 
-        frontend.branch_i((true, 0x8000_0004));
+        frontend.branch_i((true, 0, true, 0x8000_0004));
         frontend.tik();
-        frontend.branch_i((false, 0));
+        frontend.branch_i((false, 0, false, 0));
         frontend.tik();
         frontend.tik();
         assert_eq!(frontend.resp_o().0, true);
@@ -154,7 +151,7 @@ mod test{
         assert_eq!(frontend.resp_o().1.borrow().decoded.opcode_type, InstrOpcode::CSRRS);
         frontend.rdy_i(true);
 
-        frontend.branch_i((false, 0));
+        frontend.branch_i((false, 0, false, 0));
         frontend.tik();
         assert_eq!(frontend.resp_o().0, true);
         assert_eq!(frontend.resp_o().1.borrow().decoded_vld, true);

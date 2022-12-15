@@ -21,7 +21,7 @@ pub struct FakeRCU{ // get pc and visit pht/btb to get a new pc
     branch_num: u64,
     predict_fail_num: u64,
 
-    branch: (bool, u64),
+    branch: (bool, u64, bool, u64),
     flush: bool
 }
 
@@ -33,7 +33,7 @@ impl FakeRCU{
             commit_mux: Mux::new(FU_NUM as u8, FU_COMMIT_NUM as u8), // alu bru csr lsu -> rcu
             arf:arf,
             csrf: csrf,
-            branch: (false, 0),
+            branch: (false, 0, false, 0),
             flush: false,
             branch_num:0,
             predict_fail_num:0
@@ -117,7 +117,7 @@ impl FakeRCU{
     pub fn flush_o(&self) -> bool{
         self.flush
     }
-    pub fn branch_o(&self) -> (bool, u64){
+    pub fn branch_o(&self) -> (bool, u64, bool, u64){
         self.branch
     }
 
@@ -217,11 +217,11 @@ impl CtrlSignals for FakeRCU{
 
         if self.commit.resp_o().0 && self.commit.resp_o().1.borrow().branch_vld { // FIXME: no pre-exec
             self.flush = true;
-            self.branch = (true, self.commit.resp_o().1.borrow().branch_pc);
+            self.branch = (true, self.commit.resp_o().1.borrow().pc, self.commit.resp_o().1.borrow().branch_direction, self.commit.resp_o().1.borrow().branch_pc);
         }
         else{
             self.flush = false;
-            self.branch = (false, 0);
+            self.branch = (false, 0, false, 0);
         }
 
         if self.commit.resp_o().0 && self.commit.resp_o().1.borrow().decoded.is_branch{
@@ -237,7 +237,7 @@ impl CtrlSignals for FakeRCU{
     }
     fn rst(&mut self, rst:bool){
         if rst{
-            self.branch = (false, 0);
+            self.branch = (false, 0, false, 0);
             self.flush = false;
         }
         self.output.rst(rst);
@@ -245,7 +245,7 @@ impl CtrlSignals for FakeRCU{
     }
     fn flush(&mut self, rst:bool){
         if rst{
-            self.branch = (false, 0);
+            self.branch = (false, 0, false, 0);
             self.flush = false;
         }
         self.output.flush(rst);
@@ -309,10 +309,10 @@ mod test{
         fake_rcu.tik();
         assert_eq!(arf.borrow().get(3), 0xdead_beaf);
         assert_eq!(fake_rcu.flush_o(), true);
-        assert_eq!(fake_rcu.branch_o(), (true, 0x8000_1000));
+        assert_eq!(fake_rcu.branch_o().0, true);
 
         fake_rcu.tik();
         assert_ne!(fake_rcu.flush_o(), true);
-        assert_ne!(fake_rcu.branch_o(), (true, 0x8000_1000));
+        assert_ne!(fake_rcu.branch_o().0, true);
     }
 }

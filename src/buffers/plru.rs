@@ -93,7 +93,6 @@ impl<T, D> PLRU<T, D>
 
     fn trace_back(&mut self, id:usize){
         let mut pt = id + self.max_size as usize - 1;
-        println!("before trace back: {:?}", self.tree);
         for lvl in (0..self.width).rev(){
             let past_levels_size = 2usize.pow((lvl + 1) as u32) - 1;
             let last_level_start = 2usize.pow(lvl as u32) - 1;
@@ -103,7 +102,6 @@ impl<T, D> PLRU<T, D>
                 self.tree[pt] = !self.tree[pt];
             }
         }
-        println!("after trace back: {:?}", self.tree);
     }
 
     pub fn display(&self){

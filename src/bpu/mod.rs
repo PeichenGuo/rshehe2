@@ -10,11 +10,13 @@ pub struct BPU{
 }
 
 impl BPU {
-    pub fn new(btb_pc_width: usize, btb_pc_low:usize, btb_width:usize, gshare_history_width: u32, 
-        gshare_pc_width: u32, gshare_pc_low:usize, gshare_pc_hash:bool, pfsm:PFSM) -> Self{
+    pub fn new(btb_width:usize,btb_pc_width: usize, btb_pc_low:usize,  gshare_history_width: u32, 
+            gshare_pc_width: u32, gshare_pc_low:usize, gshare_pc_hash:bool, pfsm:PFSM) -> Self{
+        let btb = BTB::new(btb_width, btb_pc_low, btb_pc_width);
+        let gshare = GShare::new(gshare_history_width, gshare_pc_width, gshare_pc_low, gshare_pc_hash, pfsm);
         BPU{
-            btb: BTB::new(btb_width, btb_pc_low, btb_pc_width),
-            gshare: GShare::new(gshare_history_width, gshare_pc_width, gshare_pc_low, gshare_pc_hash, pfsm)
+            btb,
+            gshare
         }
     }
 
