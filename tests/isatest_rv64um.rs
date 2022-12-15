@@ -8,26 +8,9 @@
     use rshehe::{HeHeCore, interface::CtrlSignals}; 
     
         #[test]
-        fn isatest_rv64um_mulhu(){
-            let mut core = HeHeCore::new();
-            core.load_elf("/Users/guopeichen/code/lab/rshehe2/tests/isa/build/hex/rv64um/mulhu.hex");
-            for _i in 0..3000{
-                core.tik();
-                if core.read_from_host() == 1{
-                    println!("======test succ!======");
-                    return;
-                }
-                else if core.read_from_host() != 0{
-                    panic!("test fail @ {:x}", core.read_from_host());
-                }
-            }
-            panic!("rv64um_mulhu: time limit reach");
-        }
-
-        #[test]
         fn isatest_rv64um_div(){
             let mut core = HeHeCore::new();
-            core.load_elf("/Users/guopeichen/code/lab/rshehe2/tests/isa/build/hex/rv64um/div.hex");
+            core.load_elf("/work/stu/pguo/code/rshehe/tests/isa/build/hex/rv64um/div.hex");
             for _i in 0..3000{
                 core.tik();
                 if core.read_from_host() == 1{
@@ -42,9 +25,77 @@
         }
 
         #[test]
+        fn isatest_rv64um_divu(){
+            let mut core = HeHeCore::new();
+            core.load_elf("/work/stu/pguo/code/rshehe/tests/isa/build/hex/rv64um/divu.hex");
+            for _i in 0..3000{
+                core.tik();
+                if core.read_from_host() == 1{
+                    println!("======test succ!======");
+                    return;
+                }
+                else if core.read_from_host() != 0{
+                    panic!("test fail @ {:x}", core.read_from_host());
+                }
+            }
+            panic!("rv64um_divu: time limit reach");
+        }
+
+        #[test]
+        fn isatest_rv64um_divuw(){
+            let mut core = HeHeCore::new();
+            core.load_elf("/work/stu/pguo/code/rshehe/tests/isa/build/hex/rv64um/divuw.hex");
+            for _i in 0..3000{
+                core.tik();
+                if core.read_from_host() == 1{
+                    println!("======test succ!======");
+                    return;
+                }
+                else if core.read_from_host() != 0{
+                    panic!("test fail @ {:x}", core.read_from_host());
+                }
+            }
+            panic!("rv64um_divuw: time limit reach");
+        }
+
+        #[test]
+        fn isatest_rv64um_divw(){
+            let mut core = HeHeCore::new();
+            core.load_elf("/work/stu/pguo/code/rshehe/tests/isa/build/hex/rv64um/divw.hex");
+            for _i in 0..3000{
+                core.tik();
+                if core.read_from_host() == 1{
+                    println!("======test succ!======");
+                    return;
+                }
+                else if core.read_from_host() != 0{
+                    panic!("test fail @ {:x}", core.read_from_host());
+                }
+            }
+            panic!("rv64um_divw: time limit reach");
+        }
+
+        #[test]
+        fn isatest_rv64um_mul(){
+            let mut core = HeHeCore::new();
+            core.load_elf("/work/stu/pguo/code/rshehe/tests/isa/build/hex/rv64um/mul.hex");
+            for _i in 0..3000{
+                core.tik();
+                if core.read_from_host() == 1{
+                    println!("======test succ!======");
+                    return;
+                }
+                else if core.read_from_host() != 0{
+                    panic!("test fail @ {:x}", core.read_from_host());
+                }
+            }
+            panic!("rv64um_mul: time limit reach");
+        }
+
+        #[test]
         fn isatest_rv64um_mulh(){
             let mut core = HeHeCore::new();
-            core.load_elf("/Users/guopeichen/code/lab/rshehe2/tests/isa/build/hex/rv64um/mulh.hex");
+            core.load_elf("/work/stu/pguo/code/rshehe/tests/isa/build/hex/rv64um/mulh.hex");
             for _i in 0..3000{
                 core.tik();
                 if core.read_from_host() == 1{
@@ -61,7 +112,7 @@
         #[test]
         fn isatest_rv64um_mulhsu(){
             let mut core = HeHeCore::new();
-            core.load_elf("/Users/guopeichen/code/lab/rshehe2/tests/isa/build/hex/rv64um/mulhsu.hex");
+            core.load_elf("/work/stu/pguo/code/rshehe/tests/isa/build/hex/rv64um/mulhsu.hex");
             for _i in 0..3000{
                 core.tik();
                 if core.read_from_host() == 1{
@@ -76,9 +127,9 @@
         }
 
         #[test]
-        fn isatest_rv64um_rem(){
+        fn isatest_rv64um_mulhu(){
             let mut core = HeHeCore::new();
-            core.load_elf("/Users/guopeichen/code/lab/rshehe2/tests/isa/build/hex/rv64um/rem.hex");
+            core.load_elf("/work/stu/pguo/code/rshehe/tests/isa/build/hex/rv64um/mulhu.hex");
             for _i in 0..3000{
                 core.tik();
                 if core.read_from_host() == 1{
@@ -89,13 +140,13 @@
                     panic!("test fail @ {:x}", core.read_from_host());
                 }
             }
-            panic!("rv64um_rem: time limit reach");
+            panic!("rv64um_mulhu: time limit reach");
         }
 
         #[test]
         fn isatest_rv64um_mulw(){
             let mut core = HeHeCore::new();
-            core.load_elf("/Users/guopeichen/code/lab/rshehe2/tests/isa/build/hex/rv64um/mulw.hex");
+            core.load_elf("/work/stu/pguo/code/rshehe/tests/isa/build/hex/rv64um/mulw.hex");
             for _i in 0..3000{
                 core.tik();
                 if core.read_from_host() == 1{
@@ -110,9 +161,9 @@
         }
 
         #[test]
-        fn isatest_rv64um_divuw(){
+        fn isatest_rv64um_rem(){
             let mut core = HeHeCore::new();
-            core.load_elf("/Users/guopeichen/code/lab/rshehe2/tests/isa/build/hex/rv64um/divuw.hex");
+            core.load_elf("/work/stu/pguo/code/rshehe/tests/isa/build/hex/rv64um/rem.hex");
             for _i in 0..3000{
                 core.tik();
                 if core.read_from_host() == 1{
@@ -123,13 +174,13 @@
                     panic!("test fail @ {:x}", core.read_from_host());
                 }
             }
-            panic!("rv64um_divuw: time limit reach");
+            panic!("rv64um_rem: time limit reach");
         }
 
         #[test]
-        fn isatest_rv64um_remw(){
+        fn isatest_rv64um_remu(){
             let mut core = HeHeCore::new();
-            core.load_elf("/Users/guopeichen/code/lab/rshehe2/tests/isa/build/hex/rv64um/remw.hex");
+            core.load_elf("/work/stu/pguo/code/rshehe/tests/isa/build/hex/rv64um/remu.hex");
             for _i in 0..3000{
                 core.tik();
                 if core.read_from_host() == 1{
@@ -140,30 +191,13 @@
                     panic!("test fail @ {:x}", core.read_from_host());
                 }
             }
-            panic!("rv64um_remw: time limit reach");
-        }
-
-        #[test]
-        fn isatest_rv64um_divu(){
-            let mut core = HeHeCore::new();
-            core.load_elf("/Users/guopeichen/code/lab/rshehe2/tests/isa/build/hex/rv64um/divu.hex");
-            for _i in 0..3000{
-                core.tik();
-                if core.read_from_host() == 1{
-                    println!("======test succ!======");
-                    return;
-                }
-                else if core.read_from_host() != 0{
-                    panic!("test fail @ {:x}", core.read_from_host());
-                }
-            }
-            panic!("rv64um_divu: time limit reach");
+            panic!("rv64um_remu: time limit reach");
         }
 
         #[test]
         fn isatest_rv64um_remuw(){
             let mut core = HeHeCore::new();
-            core.load_elf("/Users/guopeichen/code/lab/rshehe2/tests/isa/build/hex/rv64um/remuw.hex");
+            core.load_elf("/work/stu/pguo/code/rshehe/tests/isa/build/hex/rv64um/remuw.hex");
             for _i in 0..3000{
                 core.tik();
                 if core.read_from_host() == 1{
@@ -178,9 +212,9 @@
         }
 
         #[test]
-        fn isatest_rv64um_mul(){
+        fn isatest_rv64um_remw(){
             let mut core = HeHeCore::new();
-            core.load_elf("/Users/guopeichen/code/lab/rshehe2/tests/isa/build/hex/rv64um/mul.hex");
+            core.load_elf("/work/stu/pguo/code/rshehe/tests/isa/build/hex/rv64um/remw.hex");
             for _i in 0..3000{
                 core.tik();
                 if core.read_from_host() == 1{
@@ -191,41 +225,7 @@
                     panic!("test fail @ {:x}", core.read_from_host());
                 }
             }
-            panic!("rv64um_mul: time limit reach");
-        }
-
-        #[test]
-        fn isatest_rv64um_divw(){
-            let mut core = HeHeCore::new();
-            core.load_elf("/Users/guopeichen/code/lab/rshehe2/tests/isa/build/hex/rv64um/divw.hex");
-            for _i in 0..3000{
-                core.tik();
-                if core.read_from_host() == 1{
-                    println!("======test succ!======");
-                    return;
-                }
-                else if core.read_from_host() != 0{
-                    panic!("test fail @ {:x}", core.read_from_host());
-                }
-            }
-            panic!("rv64um_divw: time limit reach");
-        }
-
-        #[test]
-        fn isatest_rv64um_remu(){
-            let mut core = HeHeCore::new();
-            core.load_elf("/Users/guopeichen/code/lab/rshehe2/tests/isa/build/hex/rv64um/remu.hex");
-            for _i in 0..3000{
-                core.tik();
-                if core.read_from_host() == 1{
-                    println!("======test succ!======");
-                    return;
-                }
-                else if core.read_from_host() != 0{
-                    panic!("test fail @ {:x}", core.read_from_host());
-                }
-            }
-            panic!("rv64um_remu: time limit reach");
+            panic!("rv64um_remw: time limit reach");
         }
 
 

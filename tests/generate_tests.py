@@ -83,31 +83,3 @@ for filename in os.listdir(TORTURE_PATH):
 testfile.write(FILE_TAIL)
 testfile.close()
 
-# for benchmark in os.listdir(BENCHMARK_DIR):
-#     if benchmark.find(".riscv") == -1:
-#         continue
-#     benchmark_name = benchmark.split(".")[0]
-#     file_name = f'benchmark_{benchmark_name}.rs'
-#     testfile = open(TESTS_PATH + '/' + file_name, mode='w')
-#     testfile.write(FILE_HEADER(name))
-#     str = f"""\
-#     #[test]
-#     fn benchmark_{benchmark_name}(){{
-#         let mut core = HeHeCore::new();
-#         core.load_elf("./{BENCHMARK_DIR}/benchmark");
-#         for _i in 0..2000000{{
-#             core.tik();
-#             if core.read_from_host() == 1{{
-#                 println!("======test succ!======");
-#                 return;
-#             }}
-#             else if core.read_from_host() != 0{{
-#                 panic!("test fail @ {{:x}}", core.read_from_host());
-#             }}
-#         }}
-#         panic!("benchmark_{benchmark_name}: time limit reach");
-#     }}\n\n"""
-#     testfile.write(str)
-
-#     testfile.write(FILE_TAIL)
-#     testfile.close()

@@ -1,8 +1,10 @@
 #[cfg(test)] mod test {
     use rshehe::{HeHeCore, interface::CtrlSignals}; 
     use std::fs;
+    use std::env;
     #[test]
     fn predict_succ_rate(){
+        let PROJ_ROOT = env::vars();
         let mut core = HeHeCore::new();
         let mut succ_msg: String = String::from("predict_succ_rate_on_torture:\n=============================\n");
         for i in 1..101{
