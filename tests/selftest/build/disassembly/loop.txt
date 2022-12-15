@@ -1,0 +1,50 @@
+
+/work/stu/pguo/code/rshehe/tests/selftest/build/elf/loop.elf:     file format elf64-littleriscv
+
+
+Disassembly of section .text:
+
+0000000080000000 <_start>:
+    80000000:	00100293          	li	t0,1
+    80000004:	00000313          	li	t1,0
+    80000008:	00000393          	li	t2,0
+    8000000c:	3e800e13          	li	t3,1000
+    80000010:	06400e93          	li	t4,100
+
+0000000080000014 <loop>:
+    80000014:	00530333          	add	t1,t1,t0
+    80000018:	00128293          	addi	t0,t0,1
+    8000001c:	fffe0e13          	addi	t3,t3,-1
+    80000020:	fe0e1ae3          	bnez	t3,80000014 <loop>
+    80000024:	00000e13          	li	t3,0
+    80000028:	fffe8e93          	addi	t4,t4,-1
+    8000002c:	fe0e94e3          	bnez	t4,80000014 <loop>
+
+0000000080000030 <write_to_host>:
+    80000030:	80001f37          	lui	t5,0x80001
+    80000034:	00100f93          	li	t6,1
+    80000038:	01ff2023          	sw	t6,0(t5) # ffffffff80001000 <__global_pointer$+0xffffffff000007b0>
+    8000003c:	000902b7          	lui	t0,0x90
+    80000040:	0012829b          	addiw	t0,t0,1
+    80000044:	00c29293          	slli	t0,t0,0xc
+    80000048:	0002af83          	lw	t6,0(t0) # 90000 <_start-0x7ff70000>
+    8000004c:	fe5ff06f          	j	80000030 <write_to_host>
+
+Disassembly of section .riscv.attributes:
+
+0000000000000000 <.riscv.attributes>:
+   0:	1e41                	addi	t3,t3,-16
+   2:	0000                	unimp
+   4:	7200                	ld	s0,32(a2)
+   6:	7369                	lui	t1,0xffffa
+   8:	01007663          	bgeu	zero,a6,14 <_start-0x7fffffec>
+   c:	0014                	0x14
+   e:	0000                	unimp
+  10:	7205                	lui	tp,0xfffe1
+  12:	3676                	fld	fa2,376(sp)
+  14:	6934                	ld	a3,80(a0)
+  16:	7032                	0x7032
+  18:	5f30                	lw	a2,120(a4)
+  1a:	326d                	addiw	tp,tp,-5
+  1c:	3070                	fld	fa2,224(s0)
+	...
