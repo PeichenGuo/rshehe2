@@ -1,16 +1,13 @@
 #[cfg(test)] mod test {
     use rshehe::{HeHeCore, interface::CtrlSignals}; 
     use std::fs;
-    use std::env;
     #[test]
     fn predict_succ_rate_on_torture(){
-        let PROJ_ROOT = env!("PROJ_ROOT");
-        let TEST_ROOT = env!("TEST_ROOT");
         let mut core = HeHeCore::new();
         let mut succ_msg: String = String::from("predict_succ_rate_on_torture:\n=============================\n");
         for i in 1..101{
             core.rst(true);
-            core.load_hex(format!("{PROJ_ROOT}/{TEST_ROOT}/torture/build/hex/test{}.hex", i.to_string()).as_str());
+            core.load_hex(format!("./tests/torture/build/hex/test{}.hex", i.to_string()).as_str());
             for _j in 0..1000000{
                 core.tik();
                 if core.read_from_host() == 1{
@@ -31,12 +28,10 @@
 
     #[test]
     fn predict_succ_rate_on_loop(){
-        let PROJ_ROOT = env!("PROJ_ROOT");
-        let TEST_ROOT = env!("TEST_ROOT");
         let mut core = HeHeCore::new();
-        let mut succ_msg: String = String::from("predict_succ_rate_on_torture:\n=============================\n");
+        let mut succ_msg: String = String::from("predict_succ_rate_on_loop:\n=============================\n");
         core.rst(true);
-        core.load_hex(format!("{PROJ_ROOT}/{TEST_ROOT}/selftest/build/hex/loop.hex").as_str());
+        core.load_hex(format!("./tests/selftest/build/hex/loop.hex").as_str());
         for _j in 0..100000{
             core.tik();
             if core.read_from_host() == 1{

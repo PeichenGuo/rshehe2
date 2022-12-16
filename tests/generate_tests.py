@@ -1,7 +1,5 @@
 import os
-PROJ_ROOT = os.environ['PROJ_ROOT']
-TEST_ROOT = os.environ['TEST_ROOT']
-TESTS_PATH = f'{PROJ_ROOT}/{TEST_ROOT}'
+TESTS_PATH = f'./tests'
 ISATEST_PATH = f"{TESTS_PATH}/isa/build/hex"
 TORTURE_PATH = f"{TESTS_PATH}/torture/build/hex"
 BENCHMARK_DIR = f'{TESTS_PATH}/benchmark'
@@ -35,7 +33,7 @@ for name in ISA_TEST_NAME:
         #[test]
         fn isatest_{name}_{test}(){{
             let mut core = HeHeCore::new();
-            core.load_elf("{ISATEST_PATH}/{name}/{test}.hex");
+            core.load_hex("{ISATEST_PATH}/{name}/{test}.hex");
             for _i in 0..3000{{
                 core.tik();
                 if core.read_from_host() == 1{{
@@ -65,7 +63,7 @@ for filename in os.listdir(TORTURE_PATH):
     #[test]
     fn torture_{test_name}(){{
         let mut core = HeHeCore::new();
-        core.load_elf("{TORTURE_PATH}/{filename}");
+        core.load_hex("{TORTURE_PATH}/{filename}");
         for _i in 0..1000000{{
             core.tik();
             if core.read_from_host() == 1{{
