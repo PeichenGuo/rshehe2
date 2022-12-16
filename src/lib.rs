@@ -1,7 +1,3 @@
-
-// use crate::cfg::memory_cfg::*;
-// use crate::cfg::core_cfg;
-
 use frontend::Frontend;
 use backend::FakeBackend;
 use interface::CtrlSignals;
@@ -20,6 +16,7 @@ pub mod buffers;
 pub mod frontend;
 pub mod backend;
 pub mod utils;
+pub mod bpu; 
 
 #[macro_use]
 extern crate lazy_static;
@@ -47,7 +44,7 @@ impl HeHeCore{
             _csrf: csrf .clone()
         }
     }
-    pub fn load_elf(&self, d:&str){
+    pub fn load_hex(&self, d:&str){
         ref_cell_borrow_mut(&self.mem).read_file(d, ELF_START_PADDR);
     }
 
@@ -58,6 +55,10 @@ impl HeHeCore{
 
     pub fn read_from_host(&self) -> u32{
         self.mem.borrow().lw(TOHOST_PADDR) as u32
+    }
+
+    pub fn predict_succ_rate(&self) -> f64{
+        self.backend.borrow().predict_succ_rate()
     }
 }
 
@@ -110,7 +111,7 @@ mod test{
     #[test]
     fn add_isa_test(){
         let mut core = HeHeCore::new();
-        core.load_elf("./isa/build/hex/rv64ui/add.hex");
+        core.load_hex("./tests/isa/build/hex/rv64ui/add.hex");
         for _i in 0..3000{
             core.tik();
             if core.read_from_host() == 1{

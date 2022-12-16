@@ -1,5 +1,5 @@
 use std::cell::{RefCell};
-use crate::buffers::delay_fifo::{DelayFIFO};
+use crate::buffers::fifo::{DelayFIFO};
 use crate::interface::{CtrlSignals, Interface};
 use crate::instr::Instr;
 use crate::memory::memory::Memory;
@@ -27,9 +27,6 @@ impl Interface for Fetch2{
 
     fn req_i(&mut self, req:(bool, Self::Input)){
         let raw = self.mem.borrow().lw(req.1.borrow().pc as u64) as u32;
-        if req.1.borrow().pc == 0x80000158{
-            println!("80000158 raw:{:8x}", raw);
-        }
         let mut tmp = ref_cell_borrow_mut(&req.1);
         tmp.raw_vld = true;
         tmp.raw = raw;
@@ -71,7 +68,7 @@ mod test{
     #[test]
     fn basic_fetch2_test(){
         let mem = Arc::new(RefCell::new(Memory::new()));
-        mem.borrow_mut().read_file("./isa/build/hex/rv64ui/add.hex", 0x8000_0000);
+        mem.borrow_mut().read_file("./tests/isa/build/hex/rv64ui/add.hex", 0x8000_0000);
         let mut fetch2 = Fetch2::new(mem.clone());
         let addr:u64 = 0x8000_0000;
 

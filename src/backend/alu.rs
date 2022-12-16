@@ -1,4 +1,4 @@
-use crate::buffers::delay_fifo::{DelayFIFO};
+use crate::buffers::fifo::{DelayFIFO};
 use std::sync::Arc;
 use std::cell::RefCell;
 

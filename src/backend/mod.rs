@@ -41,7 +41,7 @@ impl FakeBackend {
     pub fn flush_o(&self) -> bool{
         self.rcu.borrow().flush_o() 
     }
-    pub fn branch_o(&self) -> (bool, u64){
+    pub fn branch_o(&self) -> (bool, u64, bool, u64){
         self.rcu.borrow().branch_o()
     }
     // ! backend parse first 因为需要让rcu先处理腾出地方
@@ -51,6 +51,10 @@ impl FakeBackend {
     }
     pub fn rdy_o(&self) -> bool{
         self.rcu.borrow().rdy_o()
+    }
+
+    pub fn predict_succ_rate(&self) -> f64{
+        self.rcu.borrow().predict_succ_rate()
     }
 }
 
@@ -311,7 +315,8 @@ mod test{
 
         // nop
         backend.tik();
-        assert_eq!(backend.branch_o(), (true, 0x8000_0123));
+        assert_eq!(backend.branch_o().0, true);
+        assert_eq!(backend.branch_o().3, 0x8000_0123);
         backend.flush(true);
         backend.tik();
 

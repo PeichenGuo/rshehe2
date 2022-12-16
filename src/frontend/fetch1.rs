@@ -1,25 +1,32 @@
 use std::cell::{RefCell};
 
-use crate::buffers::delay_fifo::{DelayFIFO};
+use crate::buffers::fifo::{DelayFIFO};
 use crate::buffers::mux::{Mux};
 use crate::interface::{CtrlSignals, Interface};
 use crate::instr::Instr;
 use crate::utils::ref_cell_borrow_mut;
+use crate::bpu::{BPU, pht::PFSM};
 use std::sync::Arc;
+use crate::cfg::frontend_cfg::*;
 // use std::
 pub struct Fetch1{ // get pc and visit pht/btb to get a new pc
     // pc_i: Vec<(bool, u32)>,
     pc_mux: Mux<u64>, 
     output: DelayFIFO<Arc<RefCell<Instr>>>,
-    
+    bpu: BPU
 }
 
 impl Fetch1 {
     pub fn new(pc_i_size: u8) -> Self{
+        let pc_mux =  Mux::new(pc_i_size, 1);
+        let output =  DelayFIFO::<Arc<RefCell<Instr>>>::new(1, vec![1]);
+        let pfsm = PFSM::default();
         Fetch1{
             // pc_i: vec![(false, 0); pc_i_size as usize],
-            pc_mux: Mux::new(pc_i_size, 1),
-            output: DelayFIFO::<Arc<RefCell<Instr>>>::new(1, vec![1]),
+            pc_mux,
+            output,
+            bpu:BPU::new(BTB_WIDTH, BTB_PC_WIDTH, BTB_PC_LOW, GSHARE_HISTORY_WIDTH as u32, GSHARE_PC_WIDTH as u32, 
+                GSHARE_PC_LOW, GSHARE_PC_DO_HASH, pfsm)
         }
     }
 
@@ -28,11 +35,21 @@ impl Fetch1 {
         self.pc_mux.rdy_i(self.gen_rdy_o());
         if self.pc_mux.resp_o().get(0).unwrap().0 && self.output.rdy_o(){ // hsk
             let instr = Arc::new(RefCell::new(Instr::new(self.pc_mux.resp_o().get(0).unwrap().1)));
-            let mut tmp = ref_cell_borrow_mut(&instr);
-            tmp.predicted_direction = false;
-            tmp.predicted_pc = 0;
-            drop(tmp);
-            // println!("fetch1 pc_mux_in: 0x{:016x}", instr.borrow().pc);
+            if BPU_ENABLE{
+                let predriction = self.bpu.predict(instr.borrow().pc);
+                let mut tmp = ref_cell_borrow_mut(&instr);
+                tmp.predicted_direction = predriction.0;
+                tmp.predicted_pc = predriction.1;
+                self.bpu.disaplay();
+                drop(tmp);
+            }
+            else{
+                let mut tmp = ref_cell_borrow_mut(&instr);
+                tmp.predicted_direction = false;
+                tmp.predicted_pc = 0;
+                drop(tmp);
+            }
+        // println!("fetch1 pc_mux_in: 0x{:016x}", instr.borrow().pc);
             self.output.req_i((true, instr.clone()));
         }
         self.pc_mux.rdy_o()
@@ -40,6 +57,13 @@ impl Fetch1 {
 
     fn gen_rdy_o(&self) -> Vec<bool>{
         vec![self.output.rdy_o(); 1]
+    }
+
+    pub fn branch_i(&mut self, branch: (bool, u64, bool, u64)){
+        if branch.0{
+            // println!("+++ branch update @ {:016x} -> {:016x} {}", branch.1, branch.3, branch.2);
+            self.bpu.branch(branch.1, branch.2, branch.3);
+        }
     }
 }
 
@@ -68,8 +92,10 @@ impl CtrlSignals for Fetch1{
     }
     fn rst(&mut self, rst:bool){
         self.output.rst(rst);
+        self.bpu.rst(rst);
     }
     fn flush(&mut self, rst:bool){
+        // * do not flush bpu
         self.output.flush(rst)
     }
 }
@@ -98,6 +124,7 @@ mod test{
         fetch1.rdy_i(true);
         
         for _i in 0..100{
+            println!("_i:{}", _i);
             addr += 4;
             fetch1.pc_i(vec![
                 (false, 0), // branch unit

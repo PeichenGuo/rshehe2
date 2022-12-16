@@ -31,6 +31,7 @@ pub struct Instr{
     pub predict_fail:bool,
 
     pub branch_vld:bool,
+    pub branch_direction: bool,
     pub branch_pc:u64,
 
     pub exception_vld:bool,
@@ -73,6 +74,7 @@ impl Instr {
 
             predict_fail:false,
             branch_vld:false, 
+            branch_direction: false,
             branch_pc:0,
 
             exec:false,

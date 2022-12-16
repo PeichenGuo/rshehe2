@@ -1,4 +1,4 @@
-use crate::buffers::delay_fifo::{DelayFIFO};
+use crate::buffers::fifo::{DelayFIFO};
 use std::sync::Arc;
 use std::cell::RefCell;
 
@@ -37,7 +37,7 @@ impl MUL {
                 }
             },
             DIVW => {
-                if rs2 != 0 {
+                if rs2 as i32 != 0 {
                     sext(((rs1 as i32).wrapping_div(rs2 as i32)) as u64, 31)
                 }
                 else {
@@ -53,7 +53,7 @@ impl MUL {
                 }
             },
             DIVUW => {
-                if rs2 != 0{
+                if rs2 as u32 != 0{
                     sext(((rs1 as u32).wrapping_div(rs2 as u32)) as u64, 31)
                 }
                 else{
@@ -69,7 +69,7 @@ impl MUL {
                 }
             },
             REMW => {
-                if rs2 != 0{
+                if rs2 as i32 != 0{
                     sext(((rs1 as i32).wrapping_rem(rs2 as i32)) as u64, 31)
                 }
                 else {
@@ -85,7 +85,7 @@ impl MUL {
                 }
             },
             REMUW => {
-                if rs2 != 0{
+                if rs2 as u32 != 0{
                     sext(((rs1 as u32).wrapping_rem(rs2 as u32)) as u64, 31)
                 }
                 else {
